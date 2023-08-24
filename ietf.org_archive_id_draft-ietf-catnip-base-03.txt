@@ -1,0 +1,2669 @@
+
+Internet Draft                                         Robert L. Ullmann
+draft-ietf-catnip-base-03.txt              Lotus Development Corporation
+                                                           21 March 1994
+
+
+                                 CATNIP
+        Common Architecture for Next-generation Internet Protocol
+
+
+
+
+1       Status of this memo
+
+This memo describes a common architecture for the network layer
+protocol.
+
+This document is an Internet Draft.  Internet Drafts are working
+documents of the Internet Engineering Task Force (IETF), its Areas, and
+its Working Groups. This draft is a product of the CATNIP working group.
+
+Internet Drafts are draft documents valid for a maximum of six months.
+Internet Drafts may be updated, replaced, or obsoleted by other
+documents at any time.  It is not appropriate to use Internet Drafts as
+reference material or to cite them other than as a "working draft" or
+"work in progress."
+
+Please check the I-D abstract listing contained in each Internet Draft
+directory to learn the current status of this or any other Internet
+Draft.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ullmann                Expires: 21 September 1994               [Page 1]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+2       Table of Contents
+
+1       Status of this memo                                            1
+
+2       Table of Contents                                              2
+
+3       Introduction                                                   5
+        3.1     Objectives                                             5
+                3.1.1   Incremental Infrastructure Deployment          6
+                3.1.2   No Address Translation                         6
+                3.1.3   No Legacy Systems                              7
+                3.1.4   Limited Scope                                  7
+        3.2     Philosophy                                             7
+        3.3     Terminology                                            7
+        3.4     Overview of This Document                              8
+
+4       Network Layer                                                  9
+        4.1     Addresses and Network Numbers                          9
+        4.2     One Numbering System                                   9
+        4.3     Network Layer Address Format                          10
+        4.4     Network layer datagram format                         11
+                4.4.1   NLPID                                         12
+                4.4.2   Header Length                                 12
+                4.4.3   Flags                                         12
+                        4.4.3.1 Destination Address Omitted           12
+                        4.4.3.2 Source Address Omitted                12
+                        4.4.3.3 Report Fragmentation Done             12
+                        4.4.3.4 Mandatory Router Option               13
+                        4.4.3.5 Error Report Suppression              13
+                4.4.4   Time to live                                  13
+                4.4.5   Forward cache identifier                      14
+                4.4.6   Datagram Length                               14
+                4.4.7   Transport Protocol                            14
+                4.4.8   Checksum                                      14
+                4.4.9   Destination                                   14
+                4.4.10  Source                                        14
+                4.4.11  Options                                       14
+        4.5     Option Format                                         14
+                4.5.1   Class (C)                                     15
+                4.5.2   Copy on Fragmentation (F)                     15
+                4.5.3   Type                                          15
+                4.5.4   Length                                        16
+                4.5.5   Option data                                   16
+        4.6     Options                                               16
+                4.6.1   Null                                          16
+                4.6.2   Fragment                                      16
+                4.6.3   Last Fragment                                 17
+                4.6.4   Don't Fragment                                18
+                4.6.5   Don't Translate                               18
+                4.6.6   Multicast Enable                              18
+
+
+Ullmann                Expires: 21 September 1994               [Page 2]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+        4.7     Forward Cache Identifier                              18
+                4.7.1   Using ICMP Feedback to Provide FCIs           19
+                4.7.2   Using a Routing Protocol to Provide
+                        FCIs                                          20
+                4.7.3   Flows                                         21
+                4.7.4   Circuits                                      22
+                4.7.5   Mobile Hosts                                  22
+        4.8     Network Layer Translation                             23
+                4.8.1   Fragmented Datagrams                          23
+                4.8.2   Where Does the Translation Happen?            23
+                4.8.3   Forwarding and Redirects                      24
+                4.8.4   Design Considerations                         24
+
+5       OSI Connectionless Protocol                                   25
+        5.1     Translation from CLNP                                 25
+        5.2     Translation to CLNP                                   25
+
+6       Internet Protocol                                             27
+        6.1     Addressing and ADs                                    27
+        6.2     Version 4 IP Address Extension Option                 27
+        6.3     IP Version 7 Datagram Format                          28
+                6.3.1   Hybrid IPv4 Systems                           29
+        6.4     Translation from IPv4                                 29
+        6.5     Translation to IPv4                                   30
+
+7       Novell IPX                                                    32
+        7.1     IPX Network Numbering                                 32
+        7.2     IPX Transport Control Field                           33
+        7.3     Intermediate header                                   33
+                7.3.1   Destination Socket                            33
+                7.3.2   Source Socket                                 34
+                7.3.3   Remainder of the TPDU Header                  34
+        7.4     Translation from IPX                                  34
+        7.5     Translation to IPX                                    34
+
+8       SIPP                                                          36
+        8.1     SIPP addressing                                       36
+        8.2     Translation from SIPP                                 36
+        8.3     Translation to SIPP                                   37
+
+9       Transport Protocols                                           38
+        9.1     Internet Control Message Protocol                     38
+                9.1.1   ICMP Header Format                            39
+                9.1.2   Translation Failed ICMP Message               39
+                9.1.3   ICMP Translation                              40
+        9.2     Internet Transmission Control Protocol                41
+                9.2.1   TCP Checksum                                  41
+                9.2.2   Maximum Segment Size in TCP                   41
+        9.3     Internet User Datagram Protocol                       41
+                9.3.1   UDP Checksum                                  41
+
+
+Ullmann                Expires: 21 September 1994               [Page 3]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+10      Notes                                                         42
+        10.1    MTU discovery                                         42
+        10.2    Internet DNS                                          42
+                10.2.1  PTR zone                                      42
+                10.2.2  Implementation                                42
+
+11      Security                                                      43
+
+12      References                                                    44
+
+13      Author's Address                                              46
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ullmann                Expires: 21 September 1994               [Page 4]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+3       Introduction
+
+The common architecture described in this document provides a compressed
+form of the existing network layer protocols. Each compression is
+defined so that the resulting network protocol data units are identical
+in format to each other. The fixed part of the compressed format is 16
+bytes in length, and may often be the only part transmitted on the
+subnetwork.
+
+With some attention paid to details, it is possible for a transport
+layer protocol (such as TCP) to operate properly with one end system
+using one network layer (e.g. IP version 4) and the other using some
+other network protocol, such as CLNP. All of the existing transport
+layer protocols used on connectionless mode network services will
+operate over the common infrastructure.
+
+The architecture uses cache handles, carried in the fixed part of the
+network layer header, to provide both rapid identification of the next
+hop in high performance routing as well as abbreviation of the network
+header by permitting the addresses to be omitted when a valid cache
+handle is available.
+
+The cache handles are either provided by feedback from the downstream
+router in response to offered traffic, or explicitly provided as part of
+the establishment of a circuit or flow through the network. When used
+for flows, the handle is the locally significant flow identifier.
+
+When used for circuits, the handle is the layer 3 peer to peer logical
+channel identifier, and permits a full implementation of network layer
+connection oriented service if the routers along the path provide
+sufficient features. At the same time, the packet format of the
+connectionless service is retained, and hop by hop fully addressed
+datagrams can be used at the same time. Any intermediate model between
+the connection oriented and the connectionless service can thus be
+provided over cooperating routers.
+
+3.1     Objectives
+
+The first objective of the CATNIP is a practical recognition of the
+existing state of internetworking, and an understanding that any
+approach must encompass the entire problem. 
+
+CATNIP is designed to integrate CLNP, IP, and IPX. The architecture of
+SNA leads more toward providing SNA tunnels through the common
+architecture; there isn't any way to do network layer alignment. (It
+isn't clear that there is a network layer in SNA, given the classic OSI
+and Internet definitions of that term.)
+
+The CATNIP design provides for any of the transport layer protocols in
+use, for example TP4, CLTP, TCP, UDP, IPX and SPX to run over any of the
+
+
+Ullmann                Expires: 21 September 1994               [Page 5]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+network layer protocol formats: CLNP, IP (version 4), IPX, and the
+CATNIP.
+
+3.1.1   Incremental Infrastructure Deployment
+
+The best use of the CATNIP is to begin to build a common Internet
+infrastructure. The routers and other components of the common system
+are able to use a single consistent addressing method, and common terms
+of reference for other aspects of the system.
+
+CATNIP is designed to be incrementally deployable in the strong sense:
+you can plop a CATNIP system down in place of any existing network
+component and continue to operate normally with no reconfiguration. The
+vendors do all of the work. For example, the DNS records are to be
+generated automatically by the DNS software from the existing
+configuration, not by manual administration.
+
+There are also no external requirements, no "border routers", no
+requirement that administrators apply specific restrictions to their
+network designs, define special tables, or add things to the DNS.
+Eventually with full understanding of the combined system the end users
+and administrators will want to operate differently, but in no case, not
+even in small ways, will they be forced. Networks and end user
+organizations operate under sufficient constraints on deployment of
+systems anyway; they do not need a new network architecture adding to
+the difficulty.
+
+Typically deployment will occur as part of normal upgrade revisions of
+software, and due to the "swamping" of the existing base as the network
+grows. (When the Internet grows by a factor of 5, at least 80% will then
+be "new" systems.) The users of the network may then take advantage of
+the new capabilities. Some of the performance improvements will be
+automatic, others may require some administrative understanding to get
+to the best performance level. 
+
+The CATNIP definitions provide stateless translation of network
+datagrams to and from CATNIP and by implication directly between the
+other network layer protocols. A CATNIP capable system implementing the
+full set of definitions will be able to interoperate with any of the
+existing protocols. Various subsets of the full capability may be
+provided by some vendors.
+
+3.1.2   No Address Translation
+
+Note that there is no "address translation" in the CATNIP specification.
+(While it may seem odd to state a negative objective, this is worth
+saying as people seem to assume the opposite.) There are no "mapping
+tables", no magic ways of digging translations out of the DNS or X.500,
+no routers looking up translations or asking other systems for them.
+
+
+
+Ullmann                Expires: 21 September 1994               [Page 6]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+Addresses are modified with a simple algorithmic mapping, a mapping that
+is no more than using specific prefixes for IP and IPX addresses. Not a
+large set of prefixes; one prefix. The entire existing IP version 4
+network is mapped with one prefix and the IPX global network with one
+other prefix. (The IP mapping does provide for future assignment of
+other IANA/IPv4 domains, disjoint from the existing one.)
+
+This means that there is no immediate effect on addresses embedded in
+higher level protocols.
+
+Higher level protocols not using the full form (those native to IP and
+IPX) will eventually be extended to use the full addressing to extend
+their usability over all of the network layers.
+
+3.1.3   No Legacy Systems
+
+The CATNIP leaves no systems behind: any system presently capable of IP,
+CLNP, or IPX retains at least the connectivity it has now with no
+reconfiguration. With some administrative changes (such as assigning IPX
+domain addresses to some CLNP hosts for example) on other systems,
+unmodified systems may gain significant connectivity. IPX systems with
+registered network numbers may gain the most.
+
+3.1.4   Limited Scope
+
+This specification defines a common network layer packet format and
+basic architecture. It intentionally does not specify ES-IS methods,
+routing, naming systems, autoconfiguration and other subjects not part
+of the core Internet wide architecture. The related problems and their
+(many) solutions are not within the scope of the specification of the
+basic common network layer.
+
+There are some related issues discussed in the last section.
+
+3.2     Philosophy
+
+Protocols should become simpler as they evolve.
+
+"Perfection is attained not when there is nothing left to add, but when
+there is nothing left to take away."
+
+3.3     Terminology
+
+The following specification attempts to use simple terminology were
+possible. Words like address, route, flow, circuit, and mobile are used
+with specific abstract concepts in mind that can differ from other uses
+of the same word. In Internet specifications, this is seen as generally
+preferable to the alphabet soup typical of OSI specification: we prefer
+datagram to NPDU, even at the risk of being mistaken for the datagrams
+of the UDP, which is a different animal. But it requires some care on
+
+
+Ullmann                Expires: 21 September 1994               [Page 7]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+the part of the reader.
+
+This isn't unique to networking of course. Linnaeus invented a system
+for naming other sorts of flora and fauna, giving us wonderful terms
+like Drosophila Melanogaster (or Nepeta Cataria) for times when one
+wants to be pedantic. When one doesn't, one can use ordinary common
+terms, as long as one is willing to duck the flying fruit thrown by
+those who misunderstood.
+
+3.4     Overview of This Document
+
+Section 4 describes the common architecture and network layer addressing
+and packet format from a point of view independent of the network layer
+protocols.
+
+Section 5 specifies the detailed use of the common format to compress
+CLNP NPDUs and take advantage of the cache architecture.
+
+Section 6 details the use of the common architecture to support IP
+(version 4) in an extended version in the common internet.
+
+Section 7 describes using the common format to support IPX
+internetworking.
+
+Section 8 describes the interaction between CATNIP and the SIPP
+proposal, in particular the mapping of SIPP extended addresses into the
+common architecture.
+
+Section 9 discusses the various transport protocols, and the fine
+details of ensuring that they work directly over the CATNIP
+infrastructure, as well as over the network protocols other than their
+"native" protocol.
+
+Section 10 is a small collection of notes on higher level protocols and
+details that in a strict sense are out of the scope of the network layer
+specification.
+
+Section 11 describes the security aspects, in particular the interaction
+with the network layer security work in the IETF.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ullmann                Expires: 21 September 1994               [Page 8]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+4       Network Layer
+
+4.1     Addresses and Network Numbers
+
+The Internet's version 4 numbering system has proven to be very
+flexible, (mostly) expandable, and simple.  In short: it works.  There
+are two problems, neither serious when this specification was first
+developed in 1988 and 1989, but have as expected become more serious:
+
+o       The division into network, and then subnet, is insufficient.
+        Almost all sites need a network assignment large enough to
+        subnet. At the top of the hierarchy, there is a need to assign
+        administrative domains.
+
+o       As bit-packing is done to accomplish the desired network
+        structure, the 32 bit limit causes more and more aggravation.
+
+Another major addressing system used in open internetworking is the OSI
+method of specifying Network Service Access Points (NSAPs). The NSAP
+consists of an authority and format identifier, a number assigned to
+that authority, an address assigned by that authority, and a selector
+identifying the next layer (transport layer) protocol. This is actually
+a general multi-level hierarchy, often obscured by the details of
+specific profiles. (For example, CLNP doesn't specify 20 octet NSAPs, it
+allows any length. But various GOSIPs profile the NSAP as 20 octets, and
+IS-IS makes specific assumptions about the last 1-8 octets. And so on.)
+
+The NSAP does not directly correspond to an IP address, as the selector
+in IP is separate from the address. The concept that does correspond is
+the NSAP less the selector, called the Network Entity Title or NET. (An
+unfortunate acronym, but one we will use to avoid repeating the full
+term.) The usual definition of NET is an NSAP with the selector set to
+0; the NET used here omits the 0 selector.
+
+There is also a network numbering system used by IPX, a product of
+Novell, Inc. (which will be referred to from here on as simply Novell)
+and other vendors making compatible software. While IPX is not yet well
+connected into a global network, it has a larger installed base than
+either of the other network layers.
+
+4.2     One Numbering System
+
+Given the several systems in use, it is not reasonable to try to resolve
+the differences by introducing another. The differing systems already
+cause serious problems in the administration of networks; introducing
+another is not appropriate as long as an existing system can serve or be
+extended to serve. This leads to two possible paths.
+
+o       One path is to extend the existing version 4 addressing in a
+        logical manner, possibly to a 64 bit or longer fixed length
+
+
+Ullmann                Expires: 21 September 1994               [Page 9]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+        address. This is the approach taken in the first published
+        version of IPv7, described in RFC1475. One problem with this
+        approach is that the result is not usable for CLNP or the OSI
+        CONS without major modifications to those protocols.
+
+o       The other path, similar to the development work preceding
+        RFC1475 on version 7, (and, interestingly, very similar to the
+        ideas developed independently in the IAB proposal of June 1992),
+        is to incorporate the version 4 addressing into the OSI NET
+        addressing in such a way that it is usable for version 7 as well
+        as both CONS and CLNS.
+
+The second path, leading to a single addressing plan for the Internet,
+OSI, and Novell protocols is described in this document. A similar
+approach can be used to integrate other network layer protocols (of
+sufficient generality) into the common architecture.
+
+4.3     Network Layer Address Format
+
+The network layer address looks like:
+
+   +----------+----------+---------------+---------------+
+   |  length  |   AFI    |  IDI ...      | DSP ...       |
+   +----------+----------+---------------+---------------+
+
+The fields are named in the usual OSI terminology although that leads to
+an oversupply of acronyms. A more detailed description of each field:
+
+length          the number of bytes (octets) in the remainder of the
+                address.
+
+AFI             the Authority and Format Identifier. A single byte
+                value, from a set of well-known values registered by
+                ISO, that determines the semantics of the IDI field
+
+IDI             the Initial Domain Identifier, a number assigned by the
+                authority named by the AFI, formatted according to the
+                semantics implied by the AFI, that determines the
+                authority for the remainder of the address.
+
+DSP             Domain Specific Part, an address assigned by the
+                authority identified by the value of the IDI.
+
+Note that there are several levels of authority:
+
+ISO identifies (with the AFI) a set of numbering authorities (like
+X.121, the numbering plan for the PSPDN, or E.164, the numbering plan
+for the telephone system). Each authority numbers a set of organizations
+or individuals or other entities. (For example, E.164 assigns
+16172477959 to me as a telephone subscriber.)
+
+
+Ullmann                Expires: 21 September 1994              [Page 10]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+The entity then is the authority for the remainder of the address. I can
+do what I please with the addresses starting with (AFI=E.164)
+(IDI=16172477959). Note that this is a delegation of authority, and not
+(as is often erroneously concluded) an embedding of a data-link address
+(the telephone number) in a network layer address. The actual routing of
+the network layer address has nothing to do with the authority
+numbering.
+
+The domain specific part is variable length, and can be allocated in
+whatever way the authority identified by the AFI+IDI desires. (But note
+that things like GOSIPs and ES-IS as presently implemented put other,
+probably ill-advised, constraints on the DSP.)
+
+4.4     Network layer datagram format
+
+The common architecture format for network layer datagrams is described
+below. The design is a balance between use on high performance networks
+and routers and a desire to minimize the number of bits in the fixed
+header. Using the current state of processor technology (e.g., the Alpha
+AXP) as a reference, the fixed header is loaded into CPU registers on
+the first memory cycle, and is within the operation bandwidth. The
+header leaves the remaining data aligned on the header size (128 bits);
+with 64 bit addresses present and no options it leaves the transport
+header 256 bit aligned. Other things: the FCI (Forward Cache Identifier,
+see below) precedes the length and transport protocol, being needed as
+early as possible after format identification. The checksum is at the
+end of the fixed part, being updated last. (These may not be important,
+given the likelihood that it is all going to be loaded in parallel
+anyway.) And so on.
+
+On very slow and low performance networks, the header could be further
+compressed by methods similar to those used with IP version 4 on links
+that consider every bit precious. In between, it fits nicely into ATM
+cells and radio packets, leaving sufficient space for the transport
+header and application data. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 11]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+   +---------------+---------------+-+-+-+-+-+-+-+-+---------------+
+   |   NLPID (70)  | Header Length |D|S|R|M|E| MBZ | Time to Live  |
+   +---------------+---------------+-+-+-+-+-+-+-+-+---------------+
+   |                 Forward Cache Identifier                      |
+   +---------------------------------------------------------------+
+   |                      Datagram Length                          |
+   +---------------------------------------------------------------+
+   |     Transport Protocol        |          Checksum             |
+   +---------------------------------------------------------------+
+   |               Destination Address ...                         |
+   +---------------------------------------------------------------+
+   |               Source Address ...                              |
+   +---------------------------------------------------------------+
+   |               Options ...                                     |
+   +---------------------------------------------------------------+
+
+
+4.4.1   NLPID
+
+The first byte (the network layer protocol identifier in OSI) is a 8 bit
+constant 70 (hex). This corresponds to Internet Version 7.
+
+4.4.2   Header Length
+
+The header length is a 8-bit count of the number of 32 bit words in the
+header. This allows the header to be up to 1020 bytes in length.
+
+4.4.3   Flags
+
+This byte is a small set of flags determining the datagram header format
+and the processing semantics. The last three bits are reserved, and must
+be set to zero.
+
+4.4.3.1 Destination Address Omitted
+
+When the destination address omitted (DAO) flag is zero, the destination
+address is present as shown in the datagram format diagram. When a
+datagram is sent with an FCI that identifies the destination and the DAO
+flag is set, the address does not appear in the datagram.
+
+4.4.3.2 Source Address Omitted
+
+The source address omitted (SAO) flag is zero when the source address is
+present in the datagram. When datagram is sent with an FCI that
+identifies the source and the SAO flag is set, the source address is
+omitted from the datagram.
+
+4.4.3.3 Report Fragmentation Done
+
+When this bit (RFD) is set, an intermediate router that fragments the
+
+
+Ullmann                Expires: 21 September 1994              [Page 12]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+datagram (because it is larger than the next subnetwork MTU) should
+report the event with an ICMP Datagram Too Big message. (Unlike IP
+version 4, which uses DF for MTU discovery, the RFD flag allows the
+fragmented datagram to be delivered.)
+
+4.4.3.4 Mandatory Router Option
+
+The mandatory router option (MRO) flag indicates that routers forwarding
+the datagram must look at the network header options. If not set, an
+intermediate router should not look at the header options. (But it may
+anyway; this is a necessary consequence of transparent network layer
+translation, which may occur anywhere.)
+
+The destination host, or an intermediate router doing translation, must
+look at the header options regardless of the setting of the MRO flag.
+
+A router doing fragmentation will normally only use the RFD flag in
+options to determine whether options should be copied within the
+fragmentation code path. (It might also recognize and elide null
+options.) If the MRO flag is not set, the router may not act on an
+option even though it copies it properly during fragmentation.
+
+If there are no options present, MRO should always be zero, so that
+routers can follow the no-option profile path in their implementation.
+(Remember that the presence of options cannot be divined from the header
+length, since the addresses are variable length.)
+
+4.4.3.5 Error Report Suppression
+
+The ERS flag is set to suppress the sending of error reports by any
+system (whether host or router) receiving or forwarding the datagram.
+The system may log the error, increment network management counters, and
+take any similar action, but ICMP error messages or CNLP error reports
+must not be sent.
+
+The ERS flag is normally set on ICMP messages and other network layer
+error reports. It does not suppress the normal response to ICMP queries
+or similar network layer queries (CNLP echo request).
+
+If both the RFD and ERS flags are set, the fragmentation report is sent.
+(This definition allows a larger range of possibilities than simply
+over-riding the RFD flag would; a sender not desiring this behavior can
+see to it that RFD is clear.)
+
+4.4.4   Time to live
+
+The time to live is a 8-bit count, nominally in seconds. Each hop is
+required to decrement TTL by at least one. A hop that holds a datagram
+for an unusual amount of time (more than 2 seconds, a typical example
+being a wait for a subnetwork connection establishment) should subtract
+
+
+Ullmann                Expires: 21 September 1994              [Page 13]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+the entire waiting time in seconds (rounded upward) from the TTL.
+
+4.4.5   Forward cache identifier 
+
+The identifier provided by the next hop router via ICMP or a routing
+protocol. The next hop router uses it to find the following hop. (A more
+complete description is given below.) If an FCI is not available, this
+field must be zero, the SAO and DAO flags must be clear, and both
+destination and source addresses must appear in the datagram.
+
+4.4.6   Datagram Length
+
+The 32-bit length of the entire datagram in octets. A datagram can
+therefore be up to 4294967295 bytes in overall length. Particular
+networks normally impose lower limits.
+
+4.4.7   Transport Protocol
+
+The transport layer protocol. For example, TCP is 6. 
+
+4.4.8   Checksum
+
+The checksum is a 16-bit checksum of the entire header, using the
+familiar algorithm used in IP version 4.
+
+4.4.9   Destination
+
+The destination address, a count byte followed by the destination NSAP
+with the zero selector omitted. This field is present only if the DAO
+flag is zero. If the count field is not 3 modulo 4 (the destination is
+not an integral multiple of 32-bit words) zero bytes are added to pad to
+the next multiple of 32 bits. These pad bytes are not required to be
+ignored: routers may rely on them being zero.
+
+4.4.10  Source
+
+The source address, in the same format as the destination. Present only
+if the SAO flag is zero. The source is padded in the same way as
+destination to arrive at a 32-bit boundary.
+
+4.4.11  Options
+
+Options may follow. They are variable length, and always 32 bit aligned.
+If the MRO flag in the header is not set, routers will usually not look
+at or take action on any option, regardless of the setting of the class
+field.
+
+4.5     Option Format
+
+Each option begins with a 32-bit fixed header, followed by the option
+
+
+Ullmann                Expires: 21 September 1994              [Page 14]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+data and zero padding if needed:
+
+   +---+-+-------------------------+-------------------------------+
+   | C |F|   Option Type           |           Data Length         |
+   +---+-+-------------------------+---------------+---------------+
+   |         Option Data                           |    Padding    |
+   +-----------------------------------------------+---------------+
+
+A description of each field:
+
+4.5.1   Class (C)
+
+This two-bit field tells implementations what to do with datagrams that
+contain options the implementations do not understand. This
+specification does not require an implementation is required to
+implement (i.e. understand) any particular option.
+
+Classes:
+
+0       use or forward and include this option unmodified
+1       use this datagram, but do not forward the datagram
+2       discard, or forward and include this option unmodified
+3       discard this datagram
+
+A host receiving a datagram addressed to itself will use it if there are
+no unknown options of class 2 or 3. A router receiving a datagram not
+addressed to it will forward the datagram if and only if there are no
+unknown options of class 1 or 3. (The astute reader will note that the
+bits can also be seen as having individual interpretations, one allowing
+use even if unknown, one allowing forwarding if unknown.)
+
+Note that classes 0 and 2 are imperative: if the datagram is forwarded,
+the unknown option must be included.
+
+Class and type are entirely orthogonal, different implementations might
+use different classes for the same option, except where restricted by
+the option definition.
+
+Also note that for options that are known (implemented by) the host or
+router, the class has no meaning; the option definition totally
+determines the behavior. (Although it should be noted that the option
+might explicitly define a class dependent behavior.)
+
+4.5.2   Copy on Fragmentation (F)
+
+If the F bit is set, this option must be copied into all fragments when
+a datagram is fragmented. If the F bit is reset (zero), the option must
+only be copied into the first (zero-offset) fragment.
+
+4.5.3   Type
+
+
+Ullmann                Expires: 21 September 1994              [Page 15]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+The Type field (13 bits) identifies the particular option, types being
+registered as well-known values in the Internet. A few of the options
+with their types are described below in section 3.6.
+
+4.5.4   Length
+
+Length of the option data, in bytes. The offset from the start of this
+option to the start of the next option is length plus 4, rounded up to a
+multiple of 4 bytes.
+
+4.5.5   Option data
+
+Variable length specified by the length field, plus 0-3 bytes of zeros
+to pad to a 32-bit boundary. Fields within the option data that are 64
+bits long are normally placed on the assumption that the option header
+is aligned (the usual case when the option is the only one present), and
+immediately follows the fixed part of the header and the addresses (if
+present) are the same size.
+
+4.6     Options
+
+The following sections describe the options defined to provide features
+of the network layer protocols being represented, or necessary in the
+basic structure of the protocol. Other options will need to be defined
+to carry some of the idiosyncrasies of the various network layer
+services through the common infrastructure to be reproduced on the other
+side. These are not yet specified.
+
+4.6.1   Null
+
+The null option, type 0, provides for a space filler in the option area.
+The data may be of any size, including 0 bytes (which is perhaps the
+most useful case). The coding of type, class, fragment, and length are
+chosen so that an all-zero 32-bit word is interpreted as a null option,
+32 bits in overall length.
+
+Null may be used to change alignment of the options that follow it or to
+replace an option being deleted, by setting type to 0 and class to 0,
+leaving the length and content of the data unmodified. (Note that this
+implies that options must not contain "secret" data, relying on class 3
+to prevent the data from leaving the domain of routers that understand
+the option.)
+
+Null is normally class 0, and need not be implemented to serve its
+function. 
+
+4.6.2   Fragment
+
+Fragment (type 1) indicates that the datagram is part of a complete IP
+datagram. It is always class 2.
+
+
+Ullmann                Expires: 21 September 1994              [Page 16]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+The data consists of one of the addresses of the router doing the
+fragmentation, a 64-bit datagram ID generated by that router, and a 32-
+bit fragment offset. The IDs should be generated so as to be very likely
+unique over a period of time larger than the TCP MSL (maximum segment
+lifetime). 
+
+
+   +---+-+-------------------------+-------------------------------+
+   | C |F|   Type (1 or 2)         |           Data Length         |
+   +---+-+-------------------------+-------------------------------+
+   |         Fragment Offset                                       |
+   +---------------------------------------------------------------+
+   |                                                               |
+   |         Datagram ID                                           |
+   |                                                               |
+   +---------------+---------------+-------------------------------+
+   | Address length|  Router AFI   |     Router IDI ...            |
+   +---------------+---------------+-------------------------------+
+   |         Router DSP ...                                        |
+   +---------------------------------------------------------------+
+
+
+
+If a datagram must be re-fragmented, the original address and ID are
+preserved, so that the datagram can be reassembled from any sufficient
+set of the resulting fragments. 
+
+A router implementing Fragment (doing fragmentation) must recognize the
+Don't Fragment option.
+
+The Fragment Offset is from the start of the transport layer protocol
+data unit, not from the start of the network layer header as in IPv4 and
+CNLP. Note that both IPv4 and CLNP have implicitly assumed that the
+network layer header of the first fragment will be the same size when it
+arrives at the destination as it was when first fragmented. This
+assumption is not valid in the presence of network layer translation. It
+is also the reason that network layer translation (to or from IPv4 or
+CLNP) requires that the dtagram be reassembled first.
+
+4.6.3   Last Fragment
+
+Last Fragment (type 2) has the same format as Fragment, but implies that
+this datagram is the last fragment needed to reassemble the original
+datagram.
+
+Note that an implementation can reasonably add arriving datagrams with
+Fragment to a cache. It can then attempt a reassembly when a datagram
+with Last Fragment arrives (and the total length is known). This will
+work well when datagrams are not reordered in the network.
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 17]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+4.6.4   Don't Fragment
+
+This option (type 3, class 0) indicates that the datagram may not be
+fragmented. If it can not be forwarded without fragmentation, it is
+discarded, and the appropriate ICMP message sent. (Unless, of course,
+the datagram is an ICMP message or ERS is set.) There is no data field
+in the Don't Fragment option.
+
+4.6.5   Don't Translate
+
+The Don't Translate option prohibits translation from the common format
+to IP version 4, CLNP, or IPX, requiring instead that the datagram be
+discarded and an ICMP message sent (Translation Failed/Don't Translate
+Set). It is type 4, usually class 0, and must be implemented by any
+router implementing translation. A host is under no such constraint;
+like any protocol specification, only the "bits on the wire" can be
+specified, the host receiving the datagram may convert it as part of its
+procedure. There is no data present in this option.
+
+4.6.6   Multicast Enable
+
+The multicast enable option (type 5, usually class 1) permits multicast
+forwarding of the CATNIP datagram on subnetworks that directly support
+media layer multicasting; a vanishing species, even in 10 Mbps Ethernet,
+given the increasing prevalance of switching hubs. It also (perhaps more
+usefully) permits a router to forward the datagram on multiple paths
+when a multicast routing algorithm has established such paths. There is
+no option data.
+
+Note that there is no special address space for multicasting in the
+CATNIP. Multicast destination addresses can be allocated anywhere by any
+administration or authority. This supports a number of differing models
+of addressing. It does require that the transport layer protocol know
+that the destination is multicast; this is desireable in any case. (For
+example, the transport will probably want to set the ERS flag.)
+
+On an IEEE 802.x (ISO 8802.x) type media, the last 23 bits of the
+address (not including the 0 selector) are used in combination with the
+multicast group address assigned to the Internet to form the media
+address when forwarding a datagram with the multicast enable option from
+a router to an attached network provided that the datagram was not
+received on that network with either multicast or broadcast media
+addressing. A host may send a multicast datagram either to the media
+multicast address (the IP catenet model,) or media unicast to a router
+which is expected to repeat it to the multicast address within the
+entire level I area or to repeat copies to the appropriate end systems
+within the area on non-broadcast media (the more general CLNP model.)
+
+4.7     Forward Cache Identifier
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 18]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+Each datagram carries a 32 bit field, called "forward cache identifier",
+that is updated (if the information is available) at each hop. This
+field's value is derived from ICMP messages sent back by the next hop
+router, a routing protocol (e.g. RAP), or some other method. The FCI is
+used to expedite routing decisions by preserving knowledge where
+possible between consecutive routers. It can also be used to make
+datagrams stay within reserved flows, circuits, and mobile host tunnels.
+
+4.7.1   Using ICMP Feedback to Provide FCIs
+
+An ICMP message, Cache Setup, is defined to provide notification from a
+downstream router of an FCI assignment that the upstream router can then
+begin to use in forwarded datagrams.
+
+   +---------------+---------------+-------------------------------+
+   |     Type      |     Code      |          Checksum             |
+   +---------------+---------------+-------------------------------+
+   |                 Forward Cache Identifier                      |
+   +---------------------------------------------------------------+
+   |                 Valid Time in Seconds                         |
+   +---------------------------------------------------------------+
+   |                 Addresses and options ...                     |
+   +---------------------------------------------------------------+
+
+The type for Cache Setup is <tba>. Cache Setup messages should be sent
+with a network layer TTL of 1 to ensure that they are only received by
+adjacent routers.
+
+The codes are:
+
+0       Clear all entries
+1       Stop using this FCI
+2       Add FCI for destination and options.
+3       Add FCI for destination, source, and options.
+4       Add FCI for source and options.
+
+Other operations are to be assigned new codes requested from IANA.
+
+When a router sends code 0, the receiving router is instructed to clear
+all cache entries associated with tthe sender. Presumably the sending
+router has just started or restarted, or suffered some other event which
+caused it to discard its cache. The FCI and valid times are both set to
+zero.
+
+Code 1 specifies a single entry to be discarded. The FCI specifies the
+entry, the valid time is set to zero.
+
+Code 2 announces a new FCI for a particular destination, and, possibly,
+a set of options. The router receiving the ICMP message may then use the
+FCI in datagrams to that destination, setting DAO, and omitting the
+
+
+Ullmann                Expires: 21 September 1994              [Page 19]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+destination address. This can continue for the number of seconds
+indicated by the valid time field. All datagrams with the FCI are also
+assumed to carry the options specified, which can be omitted from the
+actual datagram as transmitted to the downstream router. (This is
+expected to be useful with options that specify global flow identifiers,
+multicast groups, types of service, etc.)
+
+The addresses are in their usual padded to 32 bit formats, followed by
+any options in the same format as the options appear in CATNIP
+datagrams.
+
+Codes 3 and 4 permit the use of the specified FCI to elide both source
+and destination, or just the source.
+
+The router receiving the ICMP message is expected to apply some
+reasonableness check to the valid time, and not simply accept
+arbitrarily large values.
+
+4.7.2   Using a Routing Protocol to Provide FCIs
+
+Consider 3 routers, A, B, and C. Traffic is passing through them,
+between two other hosts (or networks), X and Y. Packets are going XABCY
+and YCBAX. Consider only one direction: routing information flowing from
+C to A, to provide a route from A to C. The same thing will be happening
+in the other direction.
+
+An explanation of the notation:
+
+R(r,d,i,h)      A route that means: "from router r, to go toward final
+                destination d, replace the forward route identifier in
+                the packet with i, and take next hop h."
+
+Ri(r,d)         An opaque (outside of router r) identifier, that can be
+                used by r to find R(r,d,...).
+
+Flowi(r,rt)     An opaque (outside of router r) identifier, that router
+                r can use to find a flow or tunnel with which the
+                datagram is associated, and from that the route rt on
+                which the flow or tunnel is built, as well as the
+                Flowi() for the subsequent hop.
+
+Ri(Dgram)       The forward route identifier in a datagram.
+
+One possible sequence of events:
+
+o       Router C announces a route R(C,Y,0,Y) to router B. It includes
+        an identifier Ri(C,Y) internal to C, allows C to find the route
+        rapidly. (The identifier may be a table index, or an actual
+        memory address.)
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 20]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+o       Router B creates a route R(B,Y,Ri(C,Y),C) via router C and
+        announces it to A. The route includes an identifier Ri(B,Y),
+        internal to B, and used by A as an opaque object.
+
+o       Router A creates a route R(A,Y,Ri(B,Y),B) via router B. It has
+        no one to announce it to. (Poor thing.)
+
+o       Now: X originates a datagram addressed to Y. It has no routing
+        information, and sets Ri(Dgram) to zero. It forwards the
+        datagram to router A (X's default gateway).
+
+o       A finds no valid Ri(Dgram), and looks up the destination (Y) in
+        its routing tables. It finds R(A,Y,Ri(B,Y),B), sets Ri(Dgram) to
+        Ri(B,Y), and forwards the datagram to B.
+
+o       Router B looks at Ri(Dgram) which directly identifies the next
+        hop route R(B,Ri(C,Y),C), sets Ri(Dgram) to Ri(C,Y) and forwards
+        it to router C.
+
+o       Router C looks at Ri(Dgram) which directly locates R(C,0,Y),
+        sets Ri(Dgram) <- 0 and forwards to Y.
+
+o       Y recognizes its own address in Dest(Dgram), ignores Ri(Dgram).
+
+Of course, the routers will validate the Ri's received, particularly if
+they are memory addresses (e.g. M(a) < Ri < M(b), Ri mod N == 0), and
+probably check that the route in fact describes the destination of the
+datagram. If the Ri is invalid, the router must use the ordinary method
+of finding a route (this is what it would have done if Ri was 0), and
+silently ignore the invalid Ri.
+
+When a route has been implicitly or explicitly aggregated at some
+router, the router will find that the incoming Ri(Dgram) at most can
+identify the aggregation, and that it must make a decision. The router
+inserts into the forwarded datagram the Ri for the specific route. (Note
+this may happen well upstream of the point at which the routes actually
+diverge.)
+
+This routing procedure allows all cooperating routers to make immediate
+forwarding decisions, without any searching of tables or caches once the
+datagram has entered the routing domain. If the host participates in the
+routing, at least to the extent of acquiring the initial Ri required
+from the first router, then only routers that have done aggregations
+need make decisions. (If the routing changes with datagrams in flight,
+some router will be required to make a decision to re-rail each
+datagram.)
+
+4.7.3   Flows
+
+If a "flow" is to be set up, the identifiers are replaced by
+
+
+Ullmann                Expires: 21 September 1994              [Page 21]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+Flowi(router,route). In this case, each router's structure for the flow
+contains a pointer to the route on which the flow is built. Datagrams
+can drop out of the flow at some point, and can be inserted either by
+the originating host or by a cooperating router near the originator.
+Since the forward route identifier field is opaque to the sending
+router, and implicitly meaningful only to the next hop router, use for
+flows (or similar optimizations) need not be otherwise defined by the
+protocol. (This presumes that a router issuing both Ri's and Flowi's
+will take care to make sure that it can distinguish them by some private
+method.)
+
+If a flow has been set up by (for example) a restricted target RAP route
+announcement, it looks no different from a route in the implementation.
+If this announcement originates from the host itself, the Ri in incoming
+datagrams can be used to determine whether they followed the flow. The
+incoming Ri can also be used to optimize delivery of the datagrams to
+the next layer protocol. If the Flow Setup option is included in the
+route, datagrams can use the DAO flag and omit the destination address.
+
+4.7.4   Circuits
+
+In a similar manner to flows, a circuit can be established by
+propagating a route from a destination host to an identified source.
+This sets up half of a full two-way circuit. Since the two directions
+are independent, the term circuit is used here to refer only to the
+establishment of the route in one direction. (Never mind that the origin
+of the term "circuit" imputes the existence of both.)
+
+If the circuit is set up with RAP (it can be set up by other methods),
+and the Circuit Setup option is included, both the source and
+destination addresses can be omitted from datagrams transmitted on the
+circuit. If the circuit is established by a method other than RAP, that
+method will need to provide some way to specify whether this can be
+done, i.e., whether all routers in the circuit will support forwarding
+without the destination address.
+
+A datagram traveling on an established circuit may have both SAO and DAO
+flags set. If there are also no options present, the entire header is 16
+bytes in length. Circuits do not have to be established all the way from
+source to destination to make this possible. If an intermediate router
+is the entering endpoint of a circuit, it can insert matching datagram
+traffic as it arrives while removing the source and destination
+addresses. A similar operation can insert datagrams into a single
+destination flow while removing the destination address. If a router is
+the exit endpoint of a circuit or flow, it must add the addresses into
+the datagram and clear the corresponding flags.
+
+4.7.5   Mobile Hosts
+
+First, a definition: A "mobile host" is a host that can move around,
+
+
+Ullmann                Expires: 21 September 1994              [Page 22]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+connecting via different networks at different times, while maintaining
+open TCP connections. It is distinguished from a "portable host", which
+is simply a host that can appear in various places in the net, without
+continuity. A portable host can be implemented by assigning a new
+address for each location (more or less automatically), and arranging to
+update the domain system. Supporting truly mobile hosts is the more
+interesting problem.
+
+To implement mobile host support in a general way, either some layer of
+the protocol suite must provide network-wide routing, or the datagrams
+must be tunneled from the "home" network of the host to its present
+location. In the real network, some combination of these is probable:
+most of the net will forward datagrams toward the home network, and then
+the datagrams will follow a specific host route to the mobile host.
+
+The requirement on the routing system is that it must be able to
+propagate a host route at least to the home network; any other
+distribution is useful optimization. When a host route is propagated by
+RAP as a targeted route and the routers use the resulting Ri's, the
+datagram follows an effective tunnel to the mobile host. (Not a real
+tunnel, in the strict sense; the datagrams are following an actual route
+at the network protocol layer.)
+
+As explained in RAP, a targeted route can be issued when desired. In
+particular, it can be triggered by the establishment of a TCP connection
+or by the arrival of datagrams that do not carry Ri's indicating that
+they have followed a direct route.
+
+The more serious problem with mobile hosts is not finding them or
+routing to them; that works altogether too well. The problem is
+authenticating them.
+
+4.8     Network Layer Translation
+
+4.8.1   Fragmented Datagrams
+
+The translating host or router must reassemble datagrams that have been
+fragmented before translation. Where the translation is being done by
+the destination host (for example, the case of a native CATNIP host
+receiving IP version 4 datagrams), this is similar to the present
+fragmentation model.
+
+When it is being done by an intermediate router (acting as an
+internetwork layer gateway) the router should use all of source,
+destination, and datagram ID for identification of fragments. Note that
+destination is used implicitly in the usual reassembly at the
+destination. If the fragments take different paths through the net, and
+arrive at different translation points, the datagram is lost. 
+
+4.8.2   Where Does the Translation Happen?
+
+
+Ullmann                Expires: 21 September 1994              [Page 23]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+The objective of translation is to be able to upgrade systems, both
+hosts and routers, in whatever order desired by their owners.
+Organizations must be able to upgrade any given system without
+reconfiguration or modification of any other, and existing hosts must be
+able to interoperate essentially forever. (Non-CATNIP routers will
+probably be effectively eliminated at some point, except where they
+exist in their own remote or isolated corners.)
+
+Each CATNIP system, whether host or router, must be able to recognize
+adjacent systems in the topology that are (only) IP version 4, CLNP, or
+IPX and call the appropriate translation routine just before sending the
+datagram.
+
+Digression: I believe CATNIP hosts will get much better performance by
+doing everything internally on the common format and using translation
+to filter datagrams when necessary. This keeps the usual code path
+simple, with only a "hook" right after receiving to convert incoming
+datagrams and just before sending to convert as necessary. Routers may
+prefer to keep datagrams in their incoming version, at least until after
+the routing decision is made and then doing the translation only if
+necessary. In either case, this is an implementation specific decision.
+
+4.8.3   Forwarding and Redirects
+
+It may be important for a router to not send ICMP redirects when it
+finds that it must do a translation as part of forwarding the datagram.
+In this case, the hosts involved may not be able to interact directly.
+The sending host could ignore the redirect, but this results in an
+unpleasant level of noise as the sequence continually recurs.
+
+4.8.4   Design Considerations
+
+The translations are designed to be fairly efficient in implementation,
+especially on RISC architectures, assuming they can either do a
+conditional move (or store), or do a short forward branch without losing
+the instruction cache. The other conditional branches in the body of the
+code are usually not-taken out to the failure/discard case.
+
+Handling options does involve a loop and a dispatch (case) operation.
+The options in IP version 4 are more difficult to handle, not being
+designed for speed on a 32-bit aligned RISCish architecture -- but they
+do not occur often, except perhaps the address extension option.
+
+For CISC machines, the same considerations will lead to fairly efficient
+code.
+
+The translation code must be extremely careful to be robust when
+presented with invalid input. In particular, it may be presented with
+truncated transport layer headers when called recursively from the ICMP
+translation.
+
+
+Ullmann                Expires: 21 September 1994              [Page 24]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+5       OSI Connectionless Protocol
+
+5.1     Translation from CLNP
+
+Translation from CLNP version 1 to the common architecture NPDU is
+mostly a matter of moving fields. The steps follow; the order is not
+necessarily significant. The NPDU must have been reassembled if it had
+been segmented.
+
+o       Verify header checksum.
+
+o       Verify NLPID is 129 (hex 81), version is 1.
+
+o       Set first octet of CATNIP datagram to 112 (hex 70).
+
+o       Verify type is data, error report, or multicast. If multicast,
+        add multicast enable option, set ERS.
+
+o       If "Don't Segment" set, set RFD flag.
+
+o       If "Suppress Errors" set or type is error report, set ERS flag.
+
+o       Copy TTL.
+
+o       Set FCI to 0
+
+o       Copy destination address, without transport selector.
+
+o       If type is error report, convert to ICMP, set protocol to 1, and
+        skip the next step.
+
+o       Copy destination selector to transport protocol.
+
+o       Copy source address, without transport selector.
+
+o       Calculate header length.
+
+o       Calculate new datagram length.
+
+o       Calculate new network header checksum.
+
+5.2     Translation to CLNP
+
+o       Verify header checksum.
+
+o       Verify first octet is 112 (hex 70).
+
+o       Set NLPID to 129 (hex 81), version to 1.
+
+o       If RFD set, set "Don't Segment".
+
+
+Ullmann                Expires: 21 September 1994              [Page 25]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+o       Set type to data. If multicast enable option present set to
+        multicast.
+
+o       If ERS set, set CLNP Suppress Error Reports flag.
+
+o       Copy TTL.
+
+o       Copy destination address.
+
+o       If transport protocol is greater than 255, fail.
+
+o       Copy transport protocol to destination selector.
+
+o       If protocol is ICMP, set type to error report, convert to error
+        report.
+
+o       Copy source address, add copy of destination selector. [Open
+        issue: should SEL be 0?]
+
+o       Compute header length and segment length.
+
+o       Compute new header checksum.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 26]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+6       Internet Protocol
+
+6.1     Addressing and ADs
+
+All existing version 4 numbers are defined as belonging to the Internet
+by using a new AFI, to be assigned to IANA by the ISO. This document
+uses 192 at present for clarity in examples; it is to be replaced with
+the assigned AFI. The AFI specifies that the IDI is two bytes long,
+containing an addressing domain number.
+
+The AD (Addressing Domain), identifies an administration which may be a
+international authority (such as the existing InterNIC), a national
+administration, or a large multi-organization (e.g., a government). The
+idea is that there should not be more than a few hundred of these at
+first, and eventually thousands or tens of thousands at most. 
+
+Most individual organizations would not be ADs. In the short term, ADs
+are known to the "core routing"; it pays to keep the number smallish, at
+most a few thousand given current routing technology. In the long term,
+this is not necessary. Big administrations (i.e. with tens of millions
+of networks) get small blocks where needed, or additional single AD
+numbers when needed.
+
+AD numbers are assigned by IANA. Initially, the only assignment is the
+number 0.0, assigned to the InterNIC, encompassing the entire existing
+version 4 Internet. (Also see section 8 for a possible use of 0.1)
+
+Some ADs (e.g. the InterNIC) may make permanent assignments; others
+(such as a telephone company defining a network number for each
+subscriber line) may tie the assignment to such a subscription. But in
+no case does this require traffic to be routed via the AD.
+
+The mapping from/to version 4 IP addresses:
+
+   +----------+----------+---------------+---------------------+
+   |  length  |   AFI    |  IDI ...      | DSP ...             |
+   +----------+----------+---------------+---------------------+
+   |     7    |   192    |  AD number    | version 4 address   |
+   +----------+----------+---------------+---------------------+
+
+While the address (DSP) is initially always the 4 byte version 4
+address, it can be extended to arbitrary levels of subnetting within the
+existing Internet numbering plan. Hosts with DSPs longer than 4 bytes
+will not be able to interoperate with version 4 hosts.
+
+6.2     Version 4 IP Address Extension Option
+
+When a datagram is translated to version 4, the additional (prefix)
+bytes in the addresses are moved into an address extension option so
+that they may be restored if the datagram is translated back. (The
+
+
+Ullmann                Expires: 21 September 1994              [Page 27]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+datagram may start on a native CATNIP host, be translated to IP version
+4 along the way, and end in CLNP, or vice versa.)
+
+   +---------------+---------------+---------------+---------------+
+   |   Type (147)  |    Length     |  Source count | Source AFI    |
+   +---------------+---------------+---------------+---------------+
+   |   Source IDI ... DSP prefix   |  Dest. count  | Dest. AFI     |
+   +---------------+---------------+---------------+---------------+
+   |   Destination IDI ... DSP prefix bytes ...    |
+   +-----------------------------------------------+
+
+The source and destination are in this order,  with source first, for
+consistency with version 4. The type code is 147. The additional bytes
+when the networks are subnetted further than in version 4 (i.e., when
+the source or destination NET is longer than 7 bytes) are included as
+the DSP prefix bytes. If both addresses were in the 7 byte form with the
+Internet AFI, the option looks like:
+
+   +---------------+---------------+-------------------------------+
+   |   Type (147)  |  Length (10)  | Src. count (3)| Src. AFI (192)|
+   +---------------+---------------+---------------+---------------+
+   |   Source AD (0.0)             | Dest count (3)| Dest AFI (192)|
+   +---------------+---------------+---------------+---------------+
+   |   Destination AD (0.0)        |
+   +-------------------------------+
+
+Note that even if both ADs are also zero, the option still has meaning:
+the translating router is to restore the zero ADs to the full addresses,
+rather than its local AD. If both of the addresses are 20 byte NSAPs (19
+significant bytes in the NET) the option will just fit into the IP
+version 4 header if there are no other options.
+
+If the last 4 bytes of the NSAP, placed in the version 4 address fields,
+are not a version 4 address, this option is not as useful. However, this
+option can be used by version 4 hosts to participate in the extended
+addressing, even without implementation of any other part of the
+protocol; see the description of hybrid systems below.
+
+The use of the address extension option is particularily important for
+SIPP interoperation over IPv4, where the remote provider prefix must
+otherwise be obtained by arcane magic.
+
+6.3     IP Version 7 Datagram Format
+
+The common architecture form of the IP datagram, Internet Version 7, is
+defined to increase the size of the address field while removing other
+fields not always used. This results in some simplification, a length
+less than twice the size of IP even with both extended addresses
+present, and an expanded space for options.
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 28]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+There is a change in the option philosophy from version 4. Version 4
+specified that implementation of options was not optional, what was
+optional was the existence of options in any given datagram. This is
+changed in version 7: no option need be implemented to be fully
+conformant. However, implementations must understand the option classes;
+and a future Host Requirements specification for hosts and routers used
+in the "connected Internet" may require some options in its profile, for
+example, Fragment would probably be required.
+
+The network layer datagram looks like this:
+
+   +-------+-------+---------------+-+-+-+-+-+-+-+-+---------------+
+   |Version|  (0)  |  Header Size  |D|S|M|R|E| MBZ | Time to Live  |
+   +-------+-------+---------------+-+-+-+-+-+-+-+-+---------------+
+   |                 Forward Cache Identifier (0)                  |
+   +---------------------------------------------------------------+
+   |                      Datagram Length                          |
+   +-------------------------------+-------------------------------+
+   |     Transport Protocol        |          Checksum             |
+   +---------------+---------------+-------------------------------+
+   | Dest Len (7)  | Dest AFI (192)|      Destination AD (0.0)     |
+   +---------------------------------------------------------------+
+   |               Destination Address                             |
+   +---------------------------------------------------------------+
+   |  Src Len (7)  | Src AFI (192) |      Source AD (0.0)          |
+   +---------------------------------------------------------------+
+   |               Source Address                                  |
+   +---------------------------------------------------------------+
+   |               Options ...                                     |
+   +---------------------------------------------------------------+
+
+The version number is 7. Source and destination addresses are the
+version 4 addresses. Other fields are as described in the common
+architecture.
+
+6.3.1   Hybrid IPv4 Systems
+
+In the course of implementing the new common layer, especially in
+constrained environments such as small terminal servers, it may be
+useful to implement the IPv4 address extension option directly. This
+regains connectivity within the extended Internet, permitting the host
+to reach all other addressing domains. This may be a useful interim step
+for vendors not prepared to do a major rework of an implementation. 
+
+A hybrid IPv4 plus address extension system does not have to implement
+the translation, it places this onus on its neighbors. The implication
+of hybrid systems is that it is not valid to assume that a host that
+appears to have a CATNIP address is a native implementation.
+
+6.4     Translation from IPv4
+
+
+Ullmann                Expires: 21 September 1994              [Page 29]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+Individual steps in the translation; the order is in most cases not
+significant.
+
+o       Verify checksum.
+
+o       Verify fragment offset is 0, MF flag is 0.
+
+o       Verify version is 4.
+
+o       Copy TTL.
+
+o       Set forward route identifier to 0.
+
+o       Set first 4 octets of destination to length (usually 7), AFI
+        (192) and local AD, copy v4 address to next 4 octets.
+
+o       If destination is class D (first octet between 224 and 239
+        inclusive), generate multicast enable option.
+
+o       Do the same mapping for the source address. (Without class D
+        check.)
+
+o       If Address Extension option replace the AFI and prefixes in the
+        addresses with the strings in the option.
+
+o       Copy protocol, set high 8 bits to zero.
+
+o       If DF flag set, set RFD flag. (Do not generate Don't Fragment
+        option.)
+
+o       Translate other options where possible. If an unknown option
+        with Copy-on-Fragment is found, fail. If Copy-on-Fragment is not
+        set, ignore the option. (I.e., the flag is (ab)used as an
+        indicator of whether the option is mandatory.)
+
+o       Compute new IP header length.
+
+o       Compute new overall datagram length.
+
+o       Calculate new checksum.
+
+6.5     Translation to IPv4
+
+The steps to convert to IPv4 follow. Note that the translating router or
+host is partly in the role of destination host; it checks both bits of
+class in IP options, and (as in the other direction) must reassemble
+fragmented datagrams.
+
+o       Verify checksum.
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 30]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+o       Verify version is 7.
+
+o       Set type-of-service to 0 (there may be an option defined, that
+        will be handled later).
+
+o       If length is greater than (about) 65549, fail. (That number is
+        not a typographical error. Note that the header adds up to 14
+        bytes more than the corresponding version 4 header in the usual
+        case.) This check is only to avoid useless work, the precise
+        check is later.
+
+o       Generate an ID (using an ISN based sequence generator, possibly
+        also based on destination or source or both).
+
+o       Set flags and fragment field to 0.
+
+o       Copy TTL.
+
+o       If next layer protocol is greater than 255, fail. Else copy.
+
+o       Copy the last 4 bytes of the NSAP to destination address.
+
+o       If address is class D and multicast enable option is not
+        present, fail with ICMP Translation Failed, code 9.
+
+o       Do the same mapping for source address. (Without class D check.)
+
+o       Generate v4 address extension option if enabled; this probably
+        should be a configuration option, should default to on. If the
+        AFIs were not both Internet (192), indicating that the last 4
+        bytes were not useful IPv4 addresses, fail and send ICMP
+        Translation Failed, code 11. 
+
+o       Process options. If any unknown options of class not 0 found,
+        fail.
+
+o       If Don't Translate option found, fail.
+
+o       Translate other options where possible, or fail.
+
+o       Compute new IP header length. This may fail (too large), fail
+        translation if so.
+
+o       Compute new overall datagram length. If greater than 65535,
+        fail.
+
+o       Compute IPv4 checksum.
+
+
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 31]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+7       Novell IPX
+
+The Internetwork Packet Exchange protocol, developed by Novell based on
+the XNS protocol (Xerox Network System) has many of the same
+capabilities as the Internet and OSI protocols. At first look, it
+appears to confuse the network and transport layers, as IPX includes
+both the network layer service and the user datagram service of the
+transport layer, while SPX (sequenced packet exchange) includes the IPX
+network layer and provides service similar to TCP or TP4. This turns out
+to be mostly a matter of the naming and ordering of fields in the
+packets, rather than any architectural difference.
+
+The terminology may be a little confusing. Just remember that SPX/IPX
+does not correspond to TCP/IP in the "obvious" way; rather, IPX is
+UDP/IP (CLTP/CLNP) and SPX is TCP/IP (TP4/CLNP).
+
+The mapping of transport layers over IP version 4 and IPX is not as
+useful as it might seem because an IPX host does not have an address
+usable in the Internet version 4 domain, and vice versa. The major
+objective is accomplished: IPX systems can communicate over the common
+infrastructure, and a native CATNIP system can implement the IPX and SPX
+transport layer protocols if it has an IPX domain address assigned to
+it. A host implementing both IP version 4 and IPX (or implementing CLNP
+or CATNIP), and having addresses in both domains will be able to use any
+of TCP, UDP, TP4, CLTP, IPX, or SPX to communicate with any other host.
+
+7.1     IPX Network Numbering
+
+IPX uses a 32-bit network number, concatenated with a 48-bit identifier
+(on a LAN, this is typically the MAC layer address) to form an internet
+address. Initially, the network numbers were not assigned by any central
+authority, and thus were not useful for inter-organizational traffic
+without substantial prior arrangement. There is now an authority
+established by Novell to assign unique 32-bit numbers and blocks of
+numbers to organizations that desire inter-organization networking with
+the IPX protocol.
+
+The Novell/IPX authority may be contacted to request assignments by
+calling +1 408 321 1506 or by sending mail to registry@novell.com.  
+
+The Novell/IPX numbering plan uses an ICD, to be assigned, to designate
+an address as an IPX address. This means Novell uses the authority
+(AFI=47)(ICD=Novell) and delegates assignments of the following 32 bits.
+
+
+
+
+
+
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 32]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+An IPX address in the common form looks like:
+
+   +----------+----------+---------------+---------------------+
+   |  length  |   AFI    |  IDI ...      | DSP ...             |
+   +----------+----------+---------------+---------------------+
+   |    13    | 47 (hex) |  Novell ICD   | network+MAC address |
+   +----------+----------+---------------+---------------------+
+
+This will always be followed by two bytes of zero padding when it  
+appears in a common network layer datagram. Note that the socket numbers
+included in the native form IPX address are part of the transport layer.
+
+7.2     IPX Transport Control Field
+
+The IPX concept corresponding to time to live is a field that starts at
+zero and counts upward, with 16 being considered expired. There is no
+nominal time associated with each hop in IPX. We use 4 seconds, to give
+a similar range to existing Internet TTL values. This is a compromise
+between extending the limited range of the IPX field to the Internet
+diameter and avoiding large TTL values in the CATNIP.
+
+An IPX transport control of 0 (the initial value) corresponds to a TTL
+of 64. The limiting value of 16 corresponds to a TTL of zero in the
+other domains. Some care must be taken in the math at each translation
+to ensure that the time to live (best thought of in the nominal real
+time) actually decreases at each hop.
+
+7.3     Intermediate header
+
+Each Novell-class transport protocol has a transport layer data unit
+beginning with a common header. This contains fields expelled from the
+network layer header. It is 4 bytes in length:
+
+   +-------------------------------+-------------------------------+
+   |       Source Socket           |      Destination Socket       |
+   +-------------------------------+-------------------------------+
+
+When a non-IPX transport protocol is translated into IPX, the first two
+16 bit words of the TPDU are unceremoniously moved into the "socket"
+fields in the addresses. If the protocol is TCP or UDP, the effect is
+serendipitous. (Or would be, had it not been intentional.) For example,
+if the protocol is TP4 or CLTP, it means that some fields are to be
+found in odd places in the resulting IPX packet.
+
+7.3.1   Destination Socket
+
+Note that "socket" is the IPX terminology; this is a "port number" in
+Internet terminology (almost, but not quite, the OSI "destination
+reference"). This is the 16-bit network order ("high-low") socket number
+left out of the address in the network layer header. SPX also uses a
+
+
+Ullmann                Expires: 21 September 1994              [Page 33]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+"connection ID", not visible here (it is inside the TPDU header); this
+is needed because connections are not identified by the full Internet
+socket-pair concept.
+
+7.3.2   Source Socket
+
+The 16-bit source socket number from the IPX source address.
+
+7.3.3   Remainder of the TPDU Header
+
+Any other fields in the packet header (i.e. after the source IPX
+address) then follow the intermediate header in the transport layer
+header.
+
+7.4     Translation from IPX
+
+As mentioned previously, these translations are a bit more involved
+because network and transport layer fields need to be sorted out.
+
+o       Subtract "transport control" from 16, multiply by 4, store in
+        TTL.
+
+o       Add 160 modulo 256 to packet type, put in transport protocol.
+
+o       Set FCI to 0.
+
+o       Set first 4 bytes of destination to 13, 47, (2 for Novell ICD).
+
+o       Copy 10 bytes from IPX destination address.
+
+o       Set next 2 bytes (pad) to 0.
+
+o       Repeat last 3 steps for source address.
+
+o       Compute header length (usually 48 bytes).
+
+o       Copy last 2 bytes of destination to intermediate header.
+
+o       Copy last 2 bytes of source to intermediate header.
+
+o       Compute network header checksum.
+
+7.5     Translation to IPX
+
+In translating back to IPX and SPX, the appropriate fields are borrowed
+from the intermediate header to complete the addresses.
+
+o       Verify header checksum
+
+o       Verify version is 7.
+
+
+Ullmann                Expires: 21 September 1994              [Page 34]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+o       Divide TTL by 4, subtract from 16, if less than 0 set to 0,
+        store in "transport control" field.
+
+o       If transport protocol is greater than 255, fail.
+
+o       Set IPX packet type to transport protocol plus 96 modulo 256.
+
+o       If length is greater than 65553, fail. (If length will be
+        greater than destination interface MTU, fail.)
+
+o       If first 4 bytes of destination are not 13, 47, Novell ICD,
+        fail.
+
+o       Copy next 10 bytes of destination to IPX destination.
+
+o       Copy destination socket from intermediate header into
+        destination address.
+
+o       Repeat last three steps for source.
+
+Followed, of course, by copying the remainder of the TPDU into the IPX
+packet.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 35]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+8       SIPP
+
+It may seem a little odd to describe the interaction with SIPP (version
+6 of IP) which is now only another experimental candidate for the next
+generation of network layer protocols. However: if SIPP is deployed,
+whether or not as the protocol of choice for replacement of IP version
+4, there will then be four network protocols to accomodate; it is
+prudent to investigate how SIPP could then be integrated into the common
+addressing plan and datagram format.
+
+8.1     SIPP addressing
+
+SIPP defines 64 bit addresses, which are included in the NSAP addressing
+plan under the Internet AFI as AD number 0.1. It is not clear at this
+time what administration will hold the authority for the SIPP numbering
+plan.
+
+   +----------+----------+---------------+---------------------+
+   |  length  |   AFI    |  IDI ...      | DSP ...             |
+   +----------+----------+---------------+---------------------+
+   |    11    |   192    |  AD (0.1)     | SIPP 64 bit address |
+   +----------+----------+---------------+---------------------+
+
+The SIPP addressing method (the definition of the 64 bits) will not be
+described here, except to note that in the cases in which SIPP is
+intended to interoperate directly with IP version 4 the last 32 bits of
+the address is the IP version 4 address. This permits a convenient set
+of translations without disturbing the transport protocols.
+
+The SIPP proposal also includes an encapsulated-tunnel proposal called
+IPAE, to address some of the issues that are designed into CATNIP; the
+SIPP-IPAE packet formats are not used in the CATNIP direct translations.
+IPAE also specifies a "mapping table" for prefixes. This table is kept
+up to date by periodic FTP transfers from a "central site." The CATNIP
+definitions leave the problem of prefix selection when converting into
+SIPP firmly within the scope of the SIPP-IPAE proposal, and possible
+methods are not described here.
+
+8.2     Translation from SIPP
+
+In translating from SIPP (IPv6) to CATNIP (IPv7) the only unusual aspect
+is that SIPP defines some things that are normally considered options to
+be "payloads" overloaded onto the transport protocol numbering space.
+Fortunately, the only one that need be considered is fragmentation; a
+fragmented SIPP datagram must be reassembled prior to conversion. Other
+"payloads" such as routing are ignored (translated verbatim) and will
+normally simply fail to achieve the desired effect.
+
+o       Verify version is 6, set version to 7.
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 36]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+o       Copy hop limit to TTL.
+
+o       Set FCI to 0.
+
+o       Copy payload type to transport protocol.
+
+o       Set first 4 octets of address to 11, 192, 0, 1, copy 64 bit
+        address to next 8 octets.
+
+o       Do the same for the destination address.
+
+o       If the destination is SIPP multicast (specification of this is
+        out of the scope of this document) generate a multicast enable
+        option and set the ERS flag. (SIPP lacks a concept equivalent to
+        ERS, we assume it is desireable in this case.)
+
+o       If payload type was 1 (ICMP), do possible conversion of ICMP
+        message and set ERS flag.
+
+o       Set header length, add payload length to get total length.
+
+o       Calculate new header checksum.
+
+8.3     Translation to SIPP
+
+Translation to SIPP is simple, except for the difficult problem of
+inventing the "prefix" if an implementation wants to support translating
+Internet AD 0.0 numbers into the SIPP addressing domain.
+
+o       Verify version is 7, set to 6.
+
+o       Set SIPP flow ID to 0.
+
+o       Set payload length to the length of the TPDU.
+
+o       Copy transport protocol to payload type. If greater than 255,
+        fail.
+
+o       Copy TTL to hop limit.
+
+o       If source address is AFI 192, AD 0.1, copy remaining 64 bits of
+        address. If AD is 0.0, copy low 32 bits of address, and set high
+        32 bits with "C" bit (defined in SIPP) on, and "local prefix".
+        If AFI is not 192, fail. (code 11, non-conformable address)
+
+o       If destination AFI is 192, follow the same mapping, but set
+        prefix using magic mapping table. If the result is a SIPP
+        multicast address (defined in SIPP) and multicast enable option
+        is not present, fail with ICMP Translation Failed, code 9.
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 37]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+9       Transport Protocols
+
+This section describes specific implications for the various transport
+layer protocols operating on the CATNIP. ICMP is included here because
+of its place in the layering.
+
+The following table lists some of the transport layer protocols with
+their assigned numbers. It does not attempt to be complete. IANA holds
+the authority for number assignments. The transport protocol code points
+native to IPX are rotated (since it uses similar small numbers) so that
+all of the transports can be used over any of the underlying network
+layers. In OSI, each host is expected to chose selectors for TP4 and
+CLTP that do not conflict with other transports supported by that host;
+the Internet assigned numbers are to be preferred.
+
+
+Number          Transport layer protocol
+
+1               Internet Control Message Protocol
+6               Internet Transmission Control Protocol
+17              Internet User Datagram Protocol
+29              OSI TP4
+tba             OSI CLTP
+160-191         Novell/IPX block
+164             Novell Internetwork Packet Exchange
+165             Novell Sequenced Packet Exchange
+177             Novell NCP
+256-65535       CATNIP native protocols
+
+This table shows the numbers in IPv4, CATNIP (IPv7), CLNP (IPv8?), and
+SIPP (IPv6) space. On IPX (obviously version 10 ...), the "packet type"
+field has values:
+
+Type            Transport layer protocol
+
+0-31            Novell/IPX block
+4               Novell Internetwork Packet Exchange
+5               Novell Sequenced Packet Exchange
+17              Novell NCP
+97              Internet Control Message Protocol
+102             Internet Transmission Control Protocol
+113             Internet User Datagram Protocol
+125             OSI TP4
+96+tba          OSI CLTP
+
+9.1     Internet Control Message Protocol
+
+The ICMP protocol is very similar to ICMP on IP version 4, in most cases
+not requiring any translation. There is translation required in
+interoperation with CLNP, where datagrams of type error report are
+
+
+Ullmann                Expires: 21 September 1994              [Page 38]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+expected.
+
+The complication is that datagrams are nested within ICMP messages and
+must be translated. This is discussed later.
+
+9.1.1   ICMP Header Format
+
+The ICMP header format is the same as in Internet version 4.
+
+   +---------------+---------------+-------------------------------+
+   |     Type      |     Code      |          Checksum             |
+   +---------------+---------------+-------------------------------+
+   |                 Type-specific parameter                       |
+   +---------------------------------------------------------------+
+   |                   Type-specific data                          |
+   +---------------------------------------------------------------+
+
+Type and code are well-known values, defined in [RFC792]. The codes have
+meaning only within a particular type, they are not orthogonal.
+
+The next 32-bit word is usually defined for the specific type, sometimes
+it is unused.
+
+For many types, the data consists of a nested IP datagram (usually
+truncated) which is a copy of the datagram causing the event being
+reported. In IPv4, the nested datagram consists of the IP header, and
+another 64 bits (at least) of the original datagram.
+
+For CATNIP/IPv7, the nested datagram must include the header plus 64
+bits of the remaining datagram, and should include the first 256 bytes
+of the datagram. That is, in most cases where the original datagram was
+not large, it will return the entire datagram.
+
+9.1.2   Translation Failed ICMP Message
+
+The introduction of network layer translation requires a new message
+type, to report translation errors. Note that an invalid datagram should
+result in the sending of some other ICMP message (for example, a
+Parameter Problem message) or the silent discarding of the datagram.
+This message is only sent when a valid datagram cannot be translated.
+
+Note: implementations are not expected to, and should not, check the
+validity of incoming datagrams just to accomplish this. It simply means
+that an error detected during translation that is known to be an actual
+error in the incoming datagram should be reported as such, not as a
+translation failure.
+
+
+
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 39]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+   +---------------+---------------+-------------------------------+
+   |     Type      |     Code      |          Checksum             |
+   +---------------+---------------+-------------------------------+
+   |                 Pointer to problem area                       |
+   +---------------------------------------------------------------+
+   |         Copy of datagram that could not be translated ...     |
+   +---------------------------------------------------------------+
+
+The type for Translation Failed is 31.
+
+The codes are:
+
+
+0       Unknown/unspecified error
+1       Don't Translate option present
+2       Unknown mandatory option present
+3       Known unsupported option present
+4       (unused)
+5       Overall length exceeded
+6       Network layer header length exceeded
+7       Transport protocol out of range
+8       (unused)
+9       Multicast address vs multicast enable option conflict
+10      (unused)
+11      Address not in compatible prefix
+
+The use of code 0 should be avoided, any other condition found by
+implementors should be assigned a new code requested from IANA. When
+code 0 is used, it is particularly important that the pointer is set
+properly.
+
+The pointer is an offset from the start of the original datagram to the
+beginning of the offending field.
+
+The data is part of the datagram that could not be translated. It must
+be at least the IP and transport headers, and must include the field
+pointed to by the previous parameter. If the transport header is not
+identifiable (not known to the router) the data should include 256 bytes
+of the original datagram.
+
+9.1.3   ICMP Translation
+
+ICMP messages are translated by copying the type and code into the new
+packet, and copying the other type specific fields directly.
+
+If the message contains an encapsulated and possibly truncated datagram,
+the translation routine is called recursively to translate it as far as
+possible. There are some special considerations:
+
+o       The encapsulated datagram is less likely to be valid, given that
+
+
+Ullmann                Expires: 21 September 1994              [Page 40]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+        it did generate an error of some kind.
+
+o       The translation should attempt to complete all fields available,
+        even if some would cause failures in the general case. Note, in
+        particular, that in the course of translating a datagram, when a
+        failure occurs, an ICMP message (translation failed) is sent;
+        this message itself may immediately require translation. Part of
+        that translation will involve translating the original datagram.
+
+o       Conditions such as overall datagram length too large are not
+        checked.
+
+o       The addresses generated in the nested translation may not be
+        sensible if an address extension option is not present and the
+        datagram has strayed from the expected domain. (Not unlikely,
+        given that we know a priori that some error occurred.)
+
+o       The translation must be very sure not to make another recursive
+        call if the nested datagram is an ICMP message. (This should not
+        occur, but obviously may.)
+
+It may be best in a given implementation to have a separate code path
+for the nested translation, that handles these issues out of the
+optimized usual path.
+
+9.2     Internet Transmission Control Protocol
+
+9.2.1   TCP Checksum
+
+The TCP checksum uses network layer addresses. In a native
+implementation on the common architecture, the TCP uses the last 4
+octets from the address(es), re-aligned to a 16 bit boundary.
+
+9.2.2   Maximum Segment Size in TCP
+
+It is probably advisable for IP version 4 implementations to reduce the
+MSS offered by a small amount where possible, to avoid fragmentation
+when datagrams are translated to version 7. This arises when version 4
+hosts are communicating through the common infrastructure, with the same
+MTU as the local networks of the hosts. If MTU discovery is used to
+control the TCP segmentation, this is not necessary, as MTU discovery
+will make the correct determination of the MTU of the entire path. (See
+RFC 1191.)
+
+9.3     Internet User Datagram Protocol
+
+9.3.1   UDP Checksum
+
+The UDP checksum is similar to the TCP, in using the network layer
+addresses. As in TCP, hosts using the full common addressing should use
+
+
+Ullmann                Expires: 21 September 1994              [Page 41]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+only the last 4 octets when computing the UDP checksum.
+
+10      Notes
+
+10.1    MTU discovery
+
+Note that the ICMP datagram too large message must report the size of
+the transport layer data unit that can be sent, not the NPDU size. The
+network layer header size can vary; the source host does not know the
+size at the router, and the router cannot determine the size of the
+header as it left the source host.
+
+This will cause Internet version 4 hosts doing MTU discovery to use a
+size somewhat smaller than the maximum possible.
+
+10.2    Internet DNS
+
+CATNIP addresses are represented in the DNS with the NSAP RR. The data
+in the resource record is the NSAP, including the zero selector at the
+end. The zone file syntax for the data is a string of hexadecimal
+digits, with a period "." inserted between any two octets where desired
+for readability. For example:
+
+ariel   IN      NSAP    C0.0000.82.67.22.96.00
+        IN      A       130.103.34.150
+
+10.2.1  PTR zone
+
+The inverse (PTR) zone is .NSAP, with the CATNIP address (reversed).
+That is, like .IN-ADDR.ARPA, but with .NSAP instead. The octets are
+represented as hexadecimal numbers, with leading 0's. (Zero is always
+written as ".00.")
+
+This respects the difference in actual authority: the IANA is the
+authority for the entire space rooted in .IN-ADDR.ARPA. in the version 4
+Internet, while in the new Internet it holds the authority only for
+C0.NSAP. The domain 00.00.C0.NSAP is to be delegated by IANA to the
+InterNIC. (Understanding that in present practice the InterNIC is the
+operator of the authoritative root.)
+
+10.2.2  Implementation
+
+These mappings should not require administrative work to create new zone
+files from the existing files. Vendors of DNS software are expected to
+provide the capability of automatically generating the new zones and RRs
+from the old, and generate the old from the new where the administrator
+is defining zones in the new world order. The automatic generation of
+new from old should default to on, while the generation of old from new
+should be off by default. Both must be configurable.
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 42]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+A host serving zones (as the zone primary) in multiple ADs will not be
+able to automatically generate new RRs from the old; it must be
+configured using NSAP/IPv7 addresses in the zone files. Servers acting
+as secondaries should request both the new and old zones automatically
+for the PTR zone; if a host is secondary for PTR sub-zones in more than
+one AD it will need to be configured with the new zone names.
+
+
+11      Security
+
+The CATNIP design permits the direct use of the present proposals for
+network layer security being developed in the IPSEC WG of the IETF.
+There are a number of detailed requirements; the most relevent being
+that network layer datagram translation must not affect (cannot affect)
+the transport layers, since the TPDU is mostly inaccessible to the
+router. For example, the translation into IPX will only work if the port
+numbers are shadowed into the plaintext security header.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 43]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+12      References
+
+[Chapin93]      A. Lyman Chapin, David M. Piscitello. Open Systems
+                Networking. Addison-Wesley, Reading, Massachusetts,
+                1993.
+
+[Perlman92]     Radia Perlman. Interconnections: Bridges and Routers.
+                Addison-Wesley. Reading, Massachusetts, 1992.
+
+[RFC768]        Jon Postel. User Datagram protocol. August, 1980
+
+[RFC791]        Jon Postel, editor. Internet Protocol. DARPA Internet
+                Program Protocol Specification, ISI/USC, September,
+                1981.
+
+[RFC792]        Jon Postel, editor. Internet Control Message Protocol.
+                DARPA Internet Program Protocol Specification, ISI/USC,
+                September, 1981.
+
+[RFC793]        Jon Postel, editor. Transmission Control Protocol. DARPA
+                Internet Program Protocol Specification, ISI/USC,
+                September, 1981.
+
+[RFC801]        Jon Postel, NCP/TCP transition plan. November, 1981.
+
+[RFC1058]       C. Hedrick. Routing Information Protocol. June, 1988.
+
+[RFC1191]       J. Mogul, S. Deering. Path MTU Discovery. November,
+                1990.
+
+[RFC1234]       D. Provan. Tunneling IPX Traffic through IP Networks.
+                Novell, Inc., June, 1991.
+
+[RFC1247]       J. Moy. OSPF Version 2. Proteon, Inc., July, 1991.
+
+[RFC1287]       D. Clark, L. Chapin, V. Cerf, R. Braden, R. Hobby.
+                Towards the Future Internet Architecture. December,
+                1991.
+
+[RFC1323]       V. Jacobson, R. T. Braden, D. A. Borman. TCP extensions
+                for high performance. May, 1992.
+
+[RFC1335]       Z. Wang, J. Crowcroft, Two-tier address structure for
+                the Internet: A solution to the problem of address space
+                exhaustion. May, 1992.
+
+[RFC1338]       V. Fuller, T. Li, J. Yu, K. Varadhan. Supernetting: an
+                Address Assignment and Aggregation Strategy. June, 1992.
+
+[RFC1347]       R. W. Callon. TCP and UDP with Bigger Addresses (TUBA),
+
+
+Ullmann                Expires: 21 September 1994              [Page 44]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+                A simple proposal for Internet addressing and routing. 
+                June, 1992.
+
+[RFC1466]       E. Gerich. Guidelines for Managemnet of IP Address
+                Space. Merit, May, 1993.
+
+[RFC1475]       Robert Ullmann. TP/IX: The Next Internet. Process
+                Software Corporation. June, 1993.
+
+[RFC1476]       Robert Ullmann. RAP: Internet Route Access Protocol.
+                Process Software Corporation. June, 1993.
+
+[RFC1561]       D. Piscitello.  Use of ISO CLNP in TUBA Environments.
+                Core Competence. December, 1993.
+
+[Rose90]        Marshall T. Rose. The Open Book. Prentice-Hall,
+                Englewood Cliffs, New Jersey, 1990.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 45]
+
+Internet Draft                   CATNIP                    21 March 1994
+
+
+
+13      Author's Address
+
+Robert Ullmann
+Lotus Development Corporation
+1 Rogers Street
+Cambridge Massachusetts 02142
+USA
+
+Phone: +1 617 693 1315
+
+Email: rullmann@crd.lotus.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ullmann                Expires: 21 September 1994              [Page 46]
+

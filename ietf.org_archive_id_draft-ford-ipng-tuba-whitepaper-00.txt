@@ -1,0 +1,910 @@
+
+Network Working Group                                         Peter Ford
+INTERNET DRAFT                                                      LANL
+Expires:  September 1994                                    Mark Knopper
+                                                                    AADS
+                                                           20 March 1994
+
+
+                            TUBA as IPng: A White Paper
+			<draft-ford-ipng-tuba-whitepaper-00.txt>
+                                Draft 0.5
+
+Status of this Memo
+
+   This document was submitted to the IETF IPng area in response to
+   RFC 1550  Publication of this document does not imply acceptance 
+   by the IPng area of any ideas expressed within.  Comments should
+   be submitted to the big-internet@munnari.oz.au mailing list.
+
+   Distribution of this memo is unlimited.
+
+   This document is an Internet Draft.  Internet Drafts are working
+   documents of the Internet Engineering Task Force (IETF), its Areas,
+   and its Working Groups.  Note that other groups may also distribute
+   working documents as Internet Drafts.
+
+   Internet Drafts are draft documents valid for a maximum of six
+   months.  Internet Drafts may be updated, replaced, or obsoleted by
+   other documents at any time.  It is not appropriate to use Internet
+   Drafts as reference material or to cite them other than as a
+   ``working draft'' or ``work in progress.''
+
+   Please check the 1id-abstracts.txt listing contained in the
+   internet-drafts Shadow Directories on nic.ddn.mil, nnsc.nsf.net,
+   nic.nordu.net, ftp.nisc.sri.com, or munnari.oz.au to learn the
+   current status of any Internet Draft.
+
+1 Executive Summary
+
+   1.1 Introduction
+
+   TUBA (TCP and UDP with Bigger Addresses) is a solution for IPng.
+   TUBA has two components: a replacement for the IPv4 network layer
+   protocol and a transition strategy. The TUBA transition strategy is
+   fully documented in another "Transition Plan for TUBA/CLNP," draft-
+   tuba-transition-00.txt, by D. Piscitello. The TUBA concept for IPng
+   was originally presented in RFC 1347 [4] in June, 1992.
+
+   As the customer base of the Internet grows and the demand for new
+   services continues, it is anticipated that new functionality in the
+   Internet suite of protocols will be introduced, e.g., security [42],
+   multicasting [10], autoconfiguration[29], mobility, resource
+   reservation, and enhanced support for policy-based routing. Many of
+   these problems can and are being addressed within the IPv4 context
+   and can be analogously implemented in TUBA systems. For several of
+   these functions, there are standardization efforts and experimental
+   implementations in progress for CLNP.  Other functions, like
+   autoconfiguration in the ES-IS protocol, have been largely completed.
+   The TUBA working group is tracking the efforts of the CDPD (cellular
+   digital packet data [48]) group in the use of CLNP in mobile
+   internets.  Efforts in the IETF Source Demand Routing Protocol (SDRP)
+   Working Group [46] can be applied to CLNP to solve policy routing
+   issues such as provider selection.
+
+
+
+Ford, Knopper                                                   [Page 1]
+
+
+
+
+
+TUBA White Paper      TUBA as IPng: A White Paper          20 March 1994
+
+
+   This White Paper discusses engineering considerations along with
+   general characteristics of TUBA in order to bring about a greater
+   understanding of this approach for the IPng Directorate and the wider
+   IETF community. References to existing and in-progress documents are
+   provided.
+
+
+1.2 Brief Overview of TUBA
+
+   TUBA replaces the Internet network layer, IPv4, with the OSI
+   connectionless network layer protocol, CLNP [8]. TUBA systems allow
+   the current Internet applications, such as Telnet, FTP, Mosaic and
+   Electronic Mail, to operate using CLNP as the network layer protocol.
+   CLNP shares most of the architectural features and functionality of
+   IPv4, but is distinguished by its use of flexible, variable length
+   addresses called Network Service Access Points (NSAPs).  The IETF OSI
+   operations planning (NOOP) group has developed an NSAP addressing
+   plan [2] that meets the objective of addressing for an Internet
+    of the size anticipated in the next century.  The flexibility of
+   NSAPs allows the embedding of other network layer addresses, such as
+   IPv4 and Novell IPX.  Other organizations have selected NSAPs for
+   addressing, such as the ATM Forum's use of NSAPs for addressing
+   within ATM networks.
+
+   The use of the CLNS MIB [34] allows management of CLNP systems using
+   SNMP.
+
+   The routing architecture for CLNP has already been specified,
+   standardized, and implemented in products. Routing protocols used
+   with CLNP include IDRP [15], IS-IS [14], and ES-IS [13].  The TUBA
+   routing architecture and protocols (IDRP and IS-IS) follow IPv4's
+   CIDR architecture and protocols (BGP and OSPF). IDRP and IS-IS are
+   sufficiently flexible that they can be used to route multiple network
+   layer protocols including IPv4, IPX and SIPP.
+
+2 Engineering Considerations:
+
+2.1 Scaling.
+
+   The ability of the Internet to scale to a practically unlimited
+   number of nodes (10^12 - 10^16) is one of the major driving forces
+   behind IPng. One may argue that this is the only problem that can't
+   be solved within the IPv4 context. If one expects IPng to last for
+   several decades, then it is important that IPng should be capable to
+   scale well beyond the current requirements.
+
+   To adequately scale, the new IPng must meet the requirements:
+
+
+
+
+Ford, Knopper                                                   [Page 2]
+
+
+
+
+
+TUBA White Paper      TUBA as IPng: A White Paper          20 March 1994
+
+
+           1) Meet the total size requirement: 10^12 to 10^16 nodes.
+           2) Allow for evolution of the variety of addressing and
+   routing                  plans of the Internet.          3) There is
+   no single trusted party who will determine                 all
+   addressing and routing plans.         4) There is some degree of
+   fault isolation; if party X                 fails to generate a
+   reliable and workable routing and                 addressing
+   plan,then only those elements of the system                 that
+   depend on X will be impacted.          5) The overhead of routing
+   through such an internet will                 grow much slower than
+   linearly with respect to the                 number of nodes that
+   comprise the internet.
+
+   These requirements dictate a hierarchic structure to meet the desired
+   scaling properties.
+
+   TUBA easily meets the requirement to address and hierarchically
+   organize 10^12 - 10^16 nodes.  TUBA uses variable length NSAPs, and
+   the common addressing profiles for NSAPs specify NSAPs of up to 20
+   octets.  If 20 bytes is not enough, CLNP can carry network layer
+   addresses of up to 255 octets long.
+
+   The only scalable routing technology that is known to grow less than
+   linearly is the technique of hierarchical routing described in
+   Kleinrock and Farouk [50]. This technique is based on the following
+   two assumptions:  (a) network topology is hierarchical in nature, and
+   (b) network addresses assigned to network nodes reflect the network
+   topology. The first assumption is outside the scope of the IPng, but
+   has to do with how different networks interconnect with each other.
+   While we can't predict the future, the current Internet fits quite
+   well into the hierarchical topology model. The second assumption,
+   topologically significant addressing, is satisfied by using
+   provider-based addressing. This technique is already deployed in the
+   current Internet in the context of CLNP ("NSAP Address Guidelines")
+   and IPv4 (Classless Inter-Domain Routing (CIDR)).
+
+   It is generally well accepted that hierarchical address assignment
+   implies relatively low utilization of the address space. Thus an IPng
+   that should be capable of supporting an internet of 10^12 - 10^16
+   nodes should have a much larger address space to accomodate low
+   utilization.  Support for variable length addresses in TUBA allows
+   flexible, yet efficient way of dealing with large internets where
+   address space utilization is relatively low.
+
+   NSAPs also allow for multiple domains of administration of routing
+   and addressing plans thorugh the use of Address Format Identifiers
+   (AFIs). An AFI is the leading byte of an NSAP. This allows new
+   addressing and routing plans to be introduced over the course of
+
+
+
+Ford, Knopper                                                   [Page 3]
+
+
+
+
+
+TUBA White Paper      TUBA as IPng: A White Paper          20 March 1994
+
+
+   time. It also allows parties who are not necessarily part of the
+   Internet community to separately develop addressing and routing
+   plans, implement and operate their networks, and at any later point
+   in time to join their internet with the Internet. At first blush,
+   this would appear to provide the opportunity of introducing routing
+   chaos. The truth is that since separate addressing plans are
+   identified by different AFIs, an internet can simply import a single
+   route for an AFI and use it to route traffic between itself and the
+   foreign network.
+
+   Hierarchial addressing in TUBA is complemented by the OSI routing
+   protocols (IDRP, IS-IS, ES-IS) that can explore the hierarchy to
+   reduce the volume of routing information, thus providing the required
+   scaling properties.  Scaling characteristics of IDRP are analyzed in
+   Rekhter, Y., "Forwarding Database Overhead for Inter-Domain Routing",
+   ACM CCR, Vol 23, No. 1, January 1993, and in Rekhter, Y., "IDRP
+   Protocol Analysis: Storage Overhead", ACM CCR, Vol 22, No 2, April
+   1992.  IDRP is described in Rekhter, Y., "Inter-Domain Routing
+   Protocol (IDRP)", Internetworking: Research and Experience, VOl 4,
+   1993.
+
+   It is important to understand that while hierarchical routing
+   provides a powerful mechanism for scaling, it is in no way forces all
+   the routes to follow the hierarchy.   The OSI routing protocols
+   support "mask and match" exploration of the hierarchical structure,
+   so that at any point of the system, one can take advantage of
+   multiple positions  in the hierarchy.  The inter-domain routing
+   protocol used by TUBA  (IDRP) allows to support both the routing
+   along the strict hierarchy, as well as routing that doesn't follow
+   the hierarchy.
+
+2.2  Timescale
+
+   TUBA depends on significant longevity of the IPv4 Internet.  All
+   efforts should be made to extend the lifetime of the IPv4 address
+   space. Transition to any IPng will take a significant amount of time
+   (>4 years) and thus any IPng will require that IPv4 last a long time.
+
+2.3  Transition and deployment
+
+   The TUBA transition strategy is fully documented in another
+   "Transition Plan for TUBA/CLNP," draft-tuba-transition-00.txt, by D.
+   Piscitello.
+
+   The transition strategy for TUBA is based on coexistence of TUBA/IPng
+   with IPv4, with incremental deployment and upgrade of both IPv4 and
+   CLNP.  CLNP is deployed in the network infrastructure, and on hosts,
+   as co-existent protocols with IPv4 during an indeterminable
+
+
+
+Ford, Knopper                                                   [Page 4]
+
+
+
+
+
+TUBA White Paper      TUBA as IPng: A White Paper          20 March 1994
+
+
+   transition period. Tunneling may be necessary to span areas which
+   have not completed the transition.
+
+2.4 Security
+
+   Access control, authentication, data integrity, and confidentiality
+   are recognized as security services that are required in the current
+   as well as future global Internet.  A widely recognized solution to
+   providing these services is through a secure network layer packet
+   encapsulation protocol supported by a key management protocol for
+   exchanging security information associated with a particular instance
+   of communication.
+
+   The Internet, through the IETF IPSEC Working Group, is currently
+   working towards an encapsulation protocol solution for IPv4.  TUBA,
+   as a functionally isomorphic datagram protocol, also requires an
+   encapsulation protocol; it is desirable that the same protocols that
+   provide these security services for IPv4 also provide them for CLNP.
+   TUBA-knowledgeable people attend the IPSEC WG to encourage this
+   convergence, although it is not explicitly part of their charter.
+
+   There are at least two existence proofs that a single security
+   encapsulation protocol can be used to support both IPv4 and CLNP.
+   The SDNS protocol, SP3 [42], and the connection-less portion of the
+   OSI Network Layer Security Protocol [43], NSLP-CL, provide the same
+   sets of security services for both IPv4 and CLNP.  SP3 specifically
+   allows for both IPv4 and CLNP packets to be encapsulated by the SP3
+   protocol.  NLSP-CL, while originally designed to provide security for
+   CLNP, has been shown to provide the same set of services for IPv4.
+   The Internet Draft I-NLSP (Integrated Network Layer Security
+   Protocol) [44], describes in detail how NLSP-CL can provide these
+   services for both IPv4 and CLNP.  Hughes Networking has an
+   implementation of NLSP-CL that provides these security services for
+   IPv4.  While the IPSEC Working Group is chartered to provide a set of
+   security protocols only for IPv4, the protocol that they are
+   designing can provide the same security services for CLNP.
+
+   The key management protocol work of the IPSEC WG has not yet gotten
+   off the ground.  Assuming that the encapsulation protocol for IPv4
+   and CLNP is the same, it follows that the key management protocol
+   developed by the IPSEC WG also could be used to support secure
+   operation of both datagram protocols.  Since key management is viewed
+   as an application, such dual use is not expected to pose any
+   significant technical hurdles.
+
+
+2.5  Configuration, administration and operation
+
+
+
+
+Ford, Knopper                                                   [Page 5]
+
+
+
+
+
+TUBA White Paper      TUBA as IPng: A White Paper          20 March 1994
+
+
+   The biggest configuration requirement in any network is that of the
+   hosts.  TUBA provides fully automated administration of network
+   addresses, with the option of having the host supply the System ID
+   portion of the address.  This capability is present in shipping
+   product today.  Registration of these addresses in the DNS will be
+   possible when the appropriate DNS changes have been completed.
+   Higher-layer system configuration can be accomplished using DHCP.
+
+   Address administration in a network is simplified by the absence of
+   the "subnet" model--it is not necessary to administer subnet
+   addresses; instead, the granularity of address administration is at
+   the routing area level.  This makes it easy to add LAN segments
+   without address adminstration overhead, as well as allowing hosts to
+   be moved from one LAN segment to another without changing network
+   addresses.
+
+   Router administration is also simplified by the lack of subnet
+   addresses; routers need at most one address per area in which they
+   participate.  The IS-IS routing protocol also greatly simplifies
+   router administration, as summarization of routing information is
+   fully automatic at area boundaries.  Typically, the only
+   configuration necessary on a router is to assign a network address
+   and decide which interfaces IS-IS will be running on.
+
+   All of the standard tools for network management (ping, traceroute,
+   SNMP) are or will be available for use with TUBA. [37]
+
+
+2.6  Mobile hosts
+
+   Wireless technology, including RF and Infrared, enables a new
+   paradigm - mobile computing.  Portable computers and the highly
+   portable Personal Data Assistants (PDAs)  can either communicate by
+   wireless technology, or can plug into the Internet analogously to the
+   current use of cellular phones that acquire cells when they a set up
+   for roaming.  While mobile computing can be supported in a variety of
+   ways, in the context of IPng this implies support for the network
+   layer mobility, where a host can change its attachment point(s) to a
+   network without necessarily changing its network layer address (by
+   which it is know in the directory service).
+
+   Work in currently under way within the IETF's mobile-ip WG to define
+   how network layer mobility will be supported in the context of IPv4.
+   It is expected that this work can be used almost directly in the
+   context of TUBA, substituting CLNP for IPv4 and making sure the
+   routing protocol can support NSAPs.
+
+   Since CLNP doesn't assume the traditional IPv4 subnet model, this
+
+
+
+Ford, Knopper                                                   [Page 6]
+
+
+
+
+
+TUBA White Paper      TUBA as IPng: A White Paper          20 March 1994
+
+
+   will further simplify support for network layer mobility by allowing
+   a mobile host to acquire its temporary address via ES-IS
+   autoconfiguration functionality. Moreover, ES-IS functionality will
+   allow two hosts (where at least one of the hosts is mobile) attached
+   to a common Link Layer subnetwork to communicate directly with each
+   other without any third party involved. This is certainly an
+   improvement over network layer mobility in IPv4, since the IPv4
+   subnet model makes direct communication without a third party
+   problematic, if not impossible.
+
+
+2.7  Flows and resource reservation
+
+   An important requirement of IPng is the support of "flows" (that is,
+   somewhat connection-oriented capabilities in order to reserve
+   resources and/or guarantee certain characteristics to particular
+   applications, hosts or users). Work is in progress on flows for CLNP
+   (see [9]).
+
+
+2.8 Policy Based Routing
+
+   Support for policy based routing for CLNP can be based on the Unified
+   Architecture as described in RFC1322, in (Estrin, D., Rekhter, Y.,
+   Hotz, S., "Scalable Inter-Domain Routing Architecture", SIGCOMM
+   1992).  Support for most of the routing requirements is realized via
+   IDRP. Support for specialized routing requirements is realized via
+   domain-level source routing mechanisms, like SDRP or GRE.  A
+   combination of domain-level source routing and IDRP allows
+   straightforward support for such policy based routing features as
+   selecting an indirect provider (as described in I-D draft-rekhter-
+   select-providers-01.txt), or selecting a direct provider (as describe
+   in draft-rekhter-direct-provider-00.txt).
+
+   CLNP allows a host to have one or more addresses (NSAPs) assigned to
+   it.  The ability to assign multiple addresses to a host could be a
+   useful mechanism to address certain requirements for policy based
+   routing. Different prefixes for a host could be used to indicate
+   different routes to that host.
+
+
+2.9 Topological flexibility.
+
+   IPv4 is based on the subnet model, where each link is assigned a
+   unique number (known as the subnet number). Emergence of new
+   technologies (like ATM and SMDS) poses a certain challenge to the
+   traditional IP subnet model (see draft-braden-shared-media-00.txt).
+   Likewise, support for network layer mobility is impeded by the subnet
+
+
+
+Ford, Knopper                                                   [Page 7]
+
+
+
+
+
+TUBA White Paper      TUBA as IPng: A White Paper          20 March 1994
+
+
+   model.  As the demand for reliable connectivity increases, the need
+   to eliminate
+    single points of failure will drive an increase in the number of
+    multi-point attached hosts. All that suggests that IPng needs an
+   addressing model more flexible than the current IPv4 model.  The CLNP
+   model, where subnets (aka areas) are logical, and not bound to a
+   particular data link may be more  suitable to deal with all these
+   issues.
+
+
+2.10 Applicability
+
+   The key to broadening the potential applicability for TUBA as IPng is
+   in the flexible NSAP addressing. Part of the attractiveness of IPv4
+   is in its use in private and application-specific nets, and CLNP
+   retains that quality. If anything the niche applicability aspect will
+   continue with usage in large hidden networks such as mobile and
+   wireless devices, large scale cable TV distribution networks, or
+   corporate networks which may or may not be globally reachable. Use of
+   CLNP will support continued phenomenal growth of the Internet: in
+   number of hosts (supported by large address space), managing routing
+   tables (prefix-based aggregation for NSAP addressing was the basis
+   for the CIDR design for IPv4), and conserving host and router
+   resources (the connectionless datagram model allows stateless
+   forwarding and both existing and new routing protocol standards can
+   be used with CLNP/TUBA).
+
+   NSAP addresses provide for a high degree of structure in order to
+   carry variable semantics. Some examples of addresses which can be
+   carried in NSAPs include class D addresses for multicast groups,
+   provider selection, encapsulated multi-protocols e.g. DECnet, IPX,
+   IPv4, etc., and data link layer addresses for switch fabric
+   infrastructure.
+
+2.11 Datagram Service
+
+   The TUBA datagram service is described in ISO 8473 and in RFC 1561
+   (D. Piscitello, "Use of ISO CLNP in TUBA Environments").  Significant
+   features of the CLNP datagram service include optional 16-bit
+   fletcher checksum, NSAP addressing, and the congestion experienced
+   bit.  RFC 1561 describes a means of using CLNP in a manner which is
+   semantically very similar to IPv4 except with bigger and more
+   structured addresses.
+
+
+2.12 Accounting
+
+   Like security, accounting or charging and billing can be done at the
+
+
+
+Ford, Knopper                                                   [Page 8]
+
+
+
+
+
+TUBA White Paper      TUBA as IPng: A White Paper          20 March 1994
+
+
+   application layer or within the internetwork itself. To allow
+   expected features to be supported, eventually both layers must
+   provide support.  No standards for connectionless network layer
+   (including IPv4 or CLNP) accounting exist at this time, however some
+   preliminary work has emerged.  The CDPD specification includes an
+   agreement on implementation of network layer accounting and billing
+   record transmission for settlement between providers [47]. Bellcore
+   has done some work on an Internet Billing Server, and there is work
+   being done in the IP Accounting working group. IPv4 and CLNP share
+   qualities with respect to accounting and it is expected that work
+   will proceed in parallel with both protocols.
+
+
+2.13 Support of communication media
+
+   IPng must be at least as adaptable as IPv4 to operation over various
+   communications media.  It will be required to operate over
+   essentially any communication media that might reasonably support
+   packet-based data transfers.  From a perspective of the network layer
+   protocol, there are three important areas that must be considered for
+   suitability with respect to particular media: link-speed, error
+   characteristics, and topology.
+
+   Link-speed is perhaps the most often discussed issue: can IPng
+   provide adequate performance over very slow links, and can it be
+   processed fast enough for very fast links?  In both cases the answer
+   to these questions for TUBA is yes, with the low-speed support
+   provided through CLNP header compression (see TUBA Transition ID for
+   reference) and with the possibility of high-speed support. At least
+   one router vendor has preliminary results indicating that IP and CLNP
+   can be switched at similar very high rates.  It should be noted that
+   header processing rates are of concern mainly in the router area
+   where protocol optimizations can reasonably be expected to take
+   place, while hosts are mainly concerned with TCP and higher layer
+   performance issues, which remain essentially unchanged with TUBA.
+
+   Error characterists of communications media vary greatly, but
+   normally are hidden from the network layer protocol by link-layer
+   checksums that catch most errored frames before they are ever
+   processed.  The issues of delivering packets with errored headers to
+   hosts are a topic much too large to discuss here, but it should be
+   noted that the CLNP header checksum is much stronger than IPv4, and
+   would therefore provide greater assurance against misdelivery of
+   packets due to errors undetected by the link-layer.  CLNP also
+   provides an escape mechanism which allows the header checksum to be
+   skipped, enabling cheaper high-speed implementations in environments
+   that are deemed suitable to unprotected network layer header usage.
+
+
+
+
+Ford, Knopper                                                   [Page 9]
+
+
+
+
+
+TUBA White Paper      TUBA as IPng: A White Paper          20 March 1994
+
+
+   The topology issues for individual communication media revolve mainly
+   around addressing capabilities: broadcast vs multicast vs point-to-
+   point, and the MAC-layer to IPng layer address resolution, etc.
+
+
+2.14 Robustness and fault tolerance
+
+   The semantics of global network layer addressing and hop-by-hop
+   forwarding in CLNP allow a high degree of robustness with simple
+   dynamic re-routing as in IPv4. Stability and robustness may be
+   increased with use of protocols such as IS-IS which include
+   specification for resource exhaustion conditions.
+
+
+2.15 Technology pull
+
+   There are a number of factors that should "pull" the Internet in the
+   direction of incorporation of additional features at the network
+   layer, and a few of these are listed next. There is nothing specific
+   in CLNP and the TUBA approach to immediately support these features
+   however there are no known limits or drawbacks that will prevent
+   further development of these protocols.
+
+   a) Multicast transmission and multiple content types;
+
+   b) The trend toward ubiquitous access to the Internet via switching
+   and integration with telephony technologies (e.g. public Internet
+   jacks);
+
+   c) Support of accounting and chargeback for services. This may
+   influence the evolution of a number of services that would not be
+   introduced if billing was not possible;
+
+   d) Availability of large scale parallel computers;
+
+   e) Network interface virtual hardware, or physical interfaces for
+   Internet access being provided on devices carrying alternative
+   traffic;
+
+   f) Software defined networks allowing closed user groups and multiple
+   communities to be served with the appearance of separately provided
+   networks;
+
+   g) Widespread deployment of switched infrastructure such as ATM,
+   SMDS, and Frame Relay may allow relaxation of the current geographic
+   boundaries for Internet routing, e.g. network providers using the
+   switch fabric may be able to peer directly though they are located in
+   different continents.
+
+
+
+Ford, Knopper                                                  [Page 10]
+
+
+
+
+
+TUBA White Paper      TUBA as IPng: A White Paper          20 March 1994
+
+
+2.16 Action items
+
+   The Internet community has been extremely focused on the packet
+   format for IPng.  At the same time significant requirements have been
+   established for IPng including multicast, support for mobility,
+   security, policy based routing, etc.  The TUBA working group supports
+   designing IPng to meet these requirements, and indeed believes that
+   there will be future requirements over and beyond the set of
+   requirements currently identified.
+    It is this unpredictability which drives the TUBA effort to opt for
+   flexibility in its IPng efforts. For example, it is unrealistic to
+   expect that we understand what addressing and routing plans will be
+   needed 5 years out, let alone 10-20 years from now. Thus, the TUBA
+   effort has adopted NSAPs to meet the requirements for addressing.
+   The Flexibility of NSAPs will allow the adoption of new addressing
+   and routing structures as the Internet evolves.
+
+   There are several other key areas where the IPng efforts have
+   identified that the current degree of flexibility in either the
+   design or common implementations of key components of the Internet is
+   insufficient to meet future evolution  of the Internet:
+
+     1) The current DNS representation of information other than Names
+   and IPv4         addresses is quite limited. To add a new type to the
+   DNS requires         recompilation of both servers and resolver
+   libraries.
+     2) Common API for the DNS.  Even Posix does not have a defined
+   standard         for basic functionality as gethostbyname(char *) ->
+   Internet_Addr.          Winsock addresses this, but the current spec
+   does not adequately         handle  for variable length addresses.
+
+     3) Socket APIs.  Current socket APIs need to be made to work on
+   opaque         handles.  Most of todays internet application base is
+   too familiar         with the internal representation of Internet
+   addresses.          An API that allows coding the following simple
+   code         sequence would benefit application developers
+   tremendously:                                          read(hostname)
+                           host_addr<-gethostbyname(hostname)
+                           s<-socket(host_addr)
+
+3 Security Considerations
+
+   Network layer security provided by the TUBA protocols for IPng is
+   discussed in section 2.4 of this memo. Application layer security is
+   mentioned but outside the scope of TUBA itself.
+
+4 Acknowledgements
+
+
+
+
+Ford, Knopper                                                  [Page 11]
+
+
+
+
+
+TUBA White Paper      TUBA as IPng: A White Paper          20 March 1994
+
+
+   Grateful thanks are extended to Ross Callon, Richard Colella, Dave
+   Katz, Tracy Mallory, Bill Manning, Doug Montgomery, Dave Piscitello
+   and Yakov Rekhter for contribution and review of this paper.
+
+5 Author's Addresses
+
+   Peter Ford
+   Los Alamos National Laboratory
+   Los Alamos, NM 87544
+
+   Phone: 505-665-0058
+
+   Email: peter@goshawk.lanl.gov
+
+   Mark Knopper
+   Ameritech Advanced Data Services
+   339 E. Liberty, Suite 310
+   Ann Arbor, MI 48104
+
+   Phone: 313-913-0800
+
+   Email: mak@aads.net
+
+Bibliography
+
+    [1] Postel, J., Transmission Control Protocol (TCP). STD 7,
+        RFC 793, September 1981.
+    [2] Postel, J., Internet Protocol (IP). STD 5, RFC 791,
+        September 1981.
+    [3] Rekhter, Y., and Li, T., Architecture for IP Address
+        Allocation with CIDR, RFC 1518, September 1993.
+    [4] Callon, R., TCP/UDP over Bigger Addresses (TUBA), RFC
+        1347,  May 1992.
+    [5] Piscitello, D., Use of ISO CLNP in TUBA environments,
+        RFC 1562, December 1993.
+    [6] ISO/IEC 8348-1992. International Standards Organization-
+        -Data Communications--OSI Network Layer Service and
+        Addressing.
+    [7] Callon, R., R. Colella, and R. Hagens, NSAP Addressing Guidelines
+        for the Internet, RFC 1237, July 1991 (note obsolete by [48]).
+    [8] ISO/IEC 8473. International Standards Organization --
+        Data Communications -- Protocol for Providing the
+        Connectionless-mode Network Service, ISO/IEC 8473:1992,
+        Edition 2.
+    [9] Callon, R., "A proposal for adding flow support to
+        CLNP", Internet-Draft
+   [10] Marlow, D., "Host group extensions for CLNP Multicast",
+        Internet-Draft
+
+
+
+Ford, Knopper                                                  [Page 12]
+
+
+
+
+
+TUBA White Paper      TUBA as IPng: A White Paper          20 March 1994
+
+
+   [11]
+   [12] Partridge, C., "Criteria for choosing IPv7 Selection",
+        Internet-draft.
+   [13] ISO/IEC 9542. International Standards Organization --
+        Telecommunications and Information Exchange between
+        Systems -- End System to intermediate system routeing
+        exchange protocol for use in conjunction with the
+        protocol for providing the connectionless-mode network
+        service (ISO/IEC 8473), ISO 9542:1988.
+   [14] ISO/IEC 10589, Intermediate system to intermediate
+        system routeing exchange protocol for use in
+        conjunction with the protocol for providing the
+        connectionless-mode network service (ISO/IEC 8473), ISO
+        10589:1992.
+   [15] ISO/IEC 10747, Protocol for exchange of interdomain
+        routeing information among intermediate systems to
+        support forwarding of ISO/IEC 8473 PDUs, ISO /IEC
+        10747:1992.
+   [16] Piscitello, D., Assignment of System Identifiers for
+        TUBA/CLNP hosts, RFC 1526, November 1993.
+   [17] Katz, D., Tunneling the OSI Network Layer over CLNP
+        (EON), Internet-draft.
+   [18] Hanks. S, T. Li, D. Farinacci, P. Traina, Generic
+        Routing Encapsulation over IPv4 networks, Internet-
+        draft, September 1993.
+   [19] Hanks. S, T. Li, D. Farinacci, P. Traina, Generic
+        Routing Encapsulation, Internet-Draft, September 1993.
+   [20] Leiner, B., Rehkter, Y., The Multiprotocol Internet,
+        RFC 1560, December 1993.
+   [21] Callon, R., and Perlman, R., Integrated IS-IS, RFC
+        1195.
+   [22] Tsuchiya, P. NAT paper from SIGCOMM/CCR.
+   [23] H. W. Braun, P.Ford, Y.Rekhter,"CIDR and the Evolution
+        of the Internet Protocol",  Proceedings of INET '93,
+        August 1993.
+   [24] Callon, "how to extend IP", Internet-draft in
+        preparation.
+   [25] Piscitello, D., FTP Operation Over Big Address Records
+        (FOOBAR), RFC 1545, October 1993.
+   [26] Manning, Colella, DNS RRs for NSAPAs, RFC in
+        preparation
+   [27a] Rose, M., SNMP over OSI. RFC 1418, 1993 March.
+   [27b] Rose, M., SNMP over OSI. RFC 1283 1991 December
+   [28] Katz, "Suggested System ID Option for the ES-IS
+        Protocol", Internet-Draft in preparation
+   [29] Katz, "Dynamic Assignment of OSI NSAP Addresses in the
+        Internet", Internet-Draft in preparation.
+   [31] Mogul, J., and S. Deering, RFC 1191, MTU Discovery.
+
+
+
+Ford, Knopper                                                  [Page 13]
+
+
+
+
+
+TUBA White Paper      TUBA as IPng: A White Paper          20 March 1994
+
+
+   [31] Piscitello, D.,"MTU discovery for CLNP-based hosts",
+        Internet-Draft in preparation.
+   [32] Whyman, "ICAO CLNP Header Compression
+        algorithm",available by anonymous FTP, in compressed
+        postscript form, from comm.cenaath.cena.dgac.fr as
+        /atn/icao-clnp-compress-ps.zand
+   [33] IPv4 header compression RFCs
+   [34] Satz, G., Request for Comments 1238, Connectionless-
+        mode Network Service Management Information Base - for
+        use with Connectionless Network Protocol (ISO 8473) and
+        End system to Intermediate System Protocol (ISO 9452)",
+        Internet Architecture Board, June 1991.
+   [35] Gilligan, R., and B. Hinden, "IPAE: The SIPP
+        Interoperability and Transition Mechanism", Internet-
+        draft, November 1993.
+   [36] Katz, D., P. Ford, "TUBA: Replacing IP with CLNP",
+        March 24 1993.
+   [37] Wittbrodt, C., and S. Hares, Essential Tools for the
+        OSI Internet, Request for Comments 1574, March 1994.
+   [38] Wittbrodt, C., and S. Hares, CLNP Ping (Echo), Request
+        for Comments 1575, March 1994.
+   [39] Bound, J., IPng Host Implementation Analysis, IPng
+        white paper, February 1994.
+   [40] Phil Karn, electronic mail message to ipsec@ans.net
+        entitled "Re:  IPSEC & ROAD", 29 November 1992.
+   [42] SDNS, "Security Protocol 3 (SP3)," Specification
+        SDN.301/Revision 1.5, May 1989.
+   [43] ISO/IEC, "Information technology -- Open Systems
+        Interconnection -- Network Layer Security Protocol,"
+        International Standard 11577, November 1993.
+   [44] Glenn, K. Robert, "Integrated Network Layer Security
+        Protocol," Internet Draft (draft-glenn-layer-security-
+        00.txt), September 1993 (work in progress).
+   [45] Hanks, S., Li, T., Farinacci, D., Traina, P., Generic
+        Routing Encapsulation (GRE), draft-hanks-gre-00.txt,
+        work in progress, September, 1993.
+   [46] Estrin, D., Zappala, D., Li, T., Rekhter, Y., Source Demand
+        Routing: Packet Format and Forwarding Specification (Version 1),
+        draft-estrin-sdrp-03.txt, work in progress, September, 1993.
+   [47] Cellular Digital Packet Data System Specification, Release 1.0,
+        July 19, 1993.
+   [48] Colella, R., Callon, R., Gardner, E., Rekhter, Y., Guidelines
+        for OSI NSAP Allocation in the Internet,
+        draft-ietf-osinsap-allocation-00.txt, work in progress,
+        December 25, 1993.
+   [49] Hares, S., Scudder, J., IDRP for IP, draft-hares-idrp-05.txt,
+        work in progress, September, 1993.
+   [50] Kleinrock, L., Farouk, K., Hierarchical Routing
+
+
+
+Ford, Knopper                                                  [Page 14]
+
+
+
+
+
+TUBA White Paper      TUBA as IPng: A White Paper          20 March 1994
+
+
+        for Large Networks, Computer Networks 1, 1977.
+   [51] Fuller, V., Li, T., Yu, J., Varadhan, K., Classless Inter-Domain
+        Routing (CIDR): an Address Assignment and Aggregation Strategy,
+        Request for Comments 1519, September, 1993.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ford, Knopper                                                  [Page 15]
+
+
+
