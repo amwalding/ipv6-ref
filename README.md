@@ -17,7 +17,7 @@ If you have anything you would like to see added, please let me know.
 * [Comparing IPv4 to IPv6](https://github.com/amwalding/ipv6-ref/blob/main/README.md#comparing-ipv4-to-ipv6)<br />
 * [IPv6 Address Types - Prefixes/Special](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-address-types---prefixesspecial)<br />
   * [IPv6 Address Tools](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-address-tools)<br />
-  * [IPv6 Address Notes](https://github.com/amwalding/ipv6-ref/blob/main/README.md#notes-on-addressing)<br /
+  * [IPv6 Address Notes](https://github.com/amwalding/ipv6-ref/blob/main/README.md#notes-on-addressing)<br />
 * [IPv6 vs. IPv4 Multicast Address Comparison Chart](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-vs-ipv4-multicast-address-comparison-chart)<br />
 * [IPv6 Usage in Various OS Systems](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-usage-in-various-os-systems)<br />
 
