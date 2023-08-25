@@ -92,6 +92,7 @@ Multicast | 11111111 | ff00::/8
 Global Unicast Address (GUA) | 0010 | 2xxx::/3 
 
 Check your own GUA IPv6 Address (if you have one) here: http://whatismyipv6address.com
+
 Check out the full IPv6 Special Addresses here: https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml
 
 * Every device selects a Link-local unicast address that is unique
@@ -99,6 +100,25 @@ Check out the full IPv6 Special Addresses here: https://www.iana.org/assignments
 * Public prefix provided either by Router Advertisement or DHCPv6
 * No more need of "NAT"
 * Fragmentation function removed from routers, replaced by Path MTU Discovery
+
+## IPv6 vs. IPv4 Multicast Address Comparison Chart
+IPv6 Address | Description | IPv4 Address | Description
+-------------------- | ------------------------------- | -------------------- | -------------------------------
+ | | 224.0.0.0	| Multicast Network Address (Reserved)
+FF02::1	| All Nodes on Link Local	|	224.0.0.1	| All systems on the subnetwork
+FF02::2	| All Routers on Link Local	|	224.0.0.2	| All Routers on the subnetwork
+FF02::3	| Unassigned	|	224.0.0.3	| Unassigned
+FF02::4	| DVMRP Routers	|	224.0.0.4	| DVMRP Routers
+FF02::5	| All OSPF Routers	|	224.0.0.5	| All OSPF Routers
+FF02::6	| ll OSPF Designated Routers	|	224.0.0.6	| All OSPF Designated Routers
+FF02::7	| ST Routers	|	224.0.0.7	| ST Routers
+FF02::8	| ST Hosts	|	224.0.0.8	| ST Hosts
+FF02::9	| RIPv2 Routers	| 224.0.0.9	| RIPv2 Routers
+FF02::A	| EIGRP Routers	|	224.0.0.10	| IGRP Routers
+FF02::B	| Mobile Agents	|	224.0.0.11	| Mobile Agents
+FF02::C	| DHCP Servers/Relay Agents	|	224.0.0.12	| DHCP Servers/Relay Agents
+FF02::D	| All PIM Routers	|	224.0.0.13	| All PIM Routers
+FF02::E	| RSVP-Encapsulation	|	224.0.0.14	| RSVP-Encapsulation
 
 ## IPv6 Usage in Various OS Systems
 Operating System | Link to Article
