@@ -104,7 +104,7 @@ Check out the full IPv6 Special Addresses here: https://www.iana.org/assignments
 ## IPv6 vs. IPv4 Multicast Address Comparison Chart
 IPv6 Address | Description | IPv4 Address | Description
 -------------------- | ------------------------------- | -------------------- | -------------------------------
- | | 224.0.0.0	| Multicast Network Address (Reserved)
+   |   | 224.0.0.0	| Multicast Network Address (Reserved)
 FF02::1	| All Nodes on Link Local	|	224.0.0.1	| All systems on the subnetwork
 FF02::2	| All Routers on Link Local	|	224.0.0.2	| All Routers on the subnetwork
 FF02::3	| Unassigned	|	224.0.0.3	| Unassigned
