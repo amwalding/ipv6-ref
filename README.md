@@ -6,17 +6,18 @@ This is my IPv6 References repository.  I try to add items here of interest to a
 If you have anything you would like to see added, please let me know.
 
 
-## IPv4/IPv6 Comparison
+## Comparing IPv4 to IPv6
 Setting | IPv4 | IPv6
 ------------------------------------ |------------------------------------ | ---------------------------------------------
-Address | 32 bits | 128 bits
+Address Length | 32 bits | 128 bits
+Transmission Types | Unicast / Broadcast / Multicast | Unicast / Multicast
 Neighbor Discovery | ARP | NDP, ICMPv6
-Auto configuration |  ICMP & DHCP | ICMPv6 & DHCPv6 (optional) 
-Packet transmition | Broadcast / Multicast | Multicast
+Address Configuration |  Static/ICMP/DHCP | Static/ICMPv6/DHCPv6 (optional) 
 ICMP | ICMPv4 | ICMPv6
-Fragmentation | Both in hosts and routers | Only in hosts
-Local network | 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 | ULA fc00::/7, fd00::/8
-Headers Comparison 1 | Options | Extensions
-Headers Comparison 2 | Next Header | Protocol
-Headers Comparison 3 | Hop Limit | Time to Live
-Loopback address | 127.0.0.1 | ::1
+Headers Difference 1 | Options | Extensions
+Headers Difference 2 | Next Header | Protocol
+Headers Difference 3 | Hop Limit | Time to Live
+Fragmentation | Both in hosts and routers | Only in hosts, PMTU Discovery
+Private Network Prefixes | 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 | ULA fc00::/7, fd00::/8 but no translation
+Loopback Address | 127.0.0.1 | ::1
+Multicast Address | 224.x.y.z | FF0s::/8, where s is the scope
