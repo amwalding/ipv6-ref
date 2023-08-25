@@ -91,10 +91,15 @@ Loopback | 00...1 (128 bits) | ::1/128
 Multicast | 11111111 | ff00::/8
 Global Unicast Address (GUA) | 0010 | 2xxx::/3 
 
-Check your own GUA IPv6 Address (if you have one) here: http://whatismyipv6address.com
+### IPv6 Address Tools
+Tool Description | Link/Reference
+------------------------------------ |------------------------------------ 
+Check your own GUA IPv6 Address (if you have one) | http://whatismyipv6address.com
+Check out the full IPv6 Special Addresses | https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml
+IPv6 Subnet Tool in Python | https://github.com/aipi/IPv6-subnet-calculator
+IPv6 Subnet Calculator | https://subnetonline.com/pages/subnet-calculators/ipv6-subnet-calculator.php
 
-Check out the full IPv6 Special Addresses here: https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml
-
+### Notes on Addressing
 * Every device selects a Link-local unicast address that is unique
 * Interfaces can have multiple IPv6 Addresses
 * Public prefix provided either by Router Advertisement or DHCPv6
