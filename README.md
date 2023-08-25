@@ -65,7 +65,7 @@ Multicast Address | 224.x.y.z | FF0s::/8, where s is the scope
 Address Type | Binary Prefix | IPv6 Notation
 ------------------------------------ |------------------------------------ | ---------------------------------------------
 Link-local unicast | 1111111010 | fe80::/64
-Site-local unicast | 1111111011 | fec0::/10 (redacted)
+Site-local unicast | 1111111011 | fec0::/10 (deprecated)
 Unique local address (ULA) | 1111 110L | FC00::7 and FD00::7 
 Unspecified | 00...0 (128 bits) | ::/128
 Loopback | 00...1 (128 bits) | ::1/128
