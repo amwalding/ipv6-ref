@@ -21,14 +21,33 @@ Decription/Name | URL
 Original Dec 1998 IPv6 Spec | https://www.rfc-editor.org/rfc/rfc2460.txt
 IPv6 Addressing Architecture | https://www.rfc-editor.org/rfc/rfc4291.txt
 Neighbor Discovery for IPv6 | https://www.rfc-editor.org/rfc/rfc4861.txt
+IPv6 Standardization | https://www.rfc-editor.org/rfc/rfc8200.txt
+
+## :chart_with_upwards_trend:IPv6 Statistics of Interest 
+Name | URL 
+------------------------------------ | ---------------------------------------------
+Google | https://www.google.com/intl/en/ipv6/statistics.html :+1:
+APNIC Labs | https://stats.labs.apnic.net/ipv6/ :+1:
+IPv6 BPG Table | https://bgp.potaroo.net/v6/as6447/ :+1:
+More IPv6 Stats | http://ipv6-test.com/stats/
+Cisco | https://6lab.cisco.com/stats/
+Top Alexa by country | https://www.vyncke.org/ipv6status/ :+1:
+NRO | https://www.nro.net/statistics
+Ripe | https://www.ripe.net/publications/ipv6-info-centre/statistics-and-tools
+World IPv6 Launch | http://www.worldipv6launch.org/measurements/
+M.R.P. | http://www.mrp.net/ipv6_survey/
+Microsoft IPv6 page | https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/dd379473(v=ws.10)?redirectedfrom=MSDN
 
 ## IPv6 Specific/Related/Capable Tools and Tool Sets
 Description/Name | URL 
 ------------------------------------ | ---------------------------------------------
 Wireshark | https://www.wireshark.org :+1:
+Test your IPv6 Connectivity 1 | http://test-ipv6.com
+Test your IPv6 Connectivity 2 | https://ipv6-test.com
 IPv6 addresses calculator | https://packages.debian.org/jessie/ipv6calc
 IPv6 Security Testing: thc-ipv6 | https://github.com/vanhauser-thc/thc-ipv6
 IPv6 Security Testing: ipv6-toolkit | https://github.com/fgont/ipv6toolkit
+Pinkie | http://www.ipuptime.net/pinkie/
 Diagnostic tools | https://packages.debian.org/jessie/ndisc6
 Scapy | http://www.secdev.org/projects/scapy/
 Chiron | http://www.secfu.net/tools-scripts/
@@ -72,11 +91,22 @@ Loopback | 00...1 (128 bits) | ::1/128
 Multicast | 11111111 | ff00::/8
 Global Unicast Address (GUA) | 0010 | 2xxx::/3 
 
+Check your own GUA IPv6 Address (if you have one) here: http://whatismyipv6address.com
+Check out the full IPv6 Special Addresses here: https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml
 
 * Every device selects a Link-local unicast address that is unique
 * Interfaces can have multiple IPv6 Addresses
 * Public prefix provided either by Router Advertisement or DHCPv6
 * No more need of "NAT"
 * Fragmentation function removed from routers, replaced by Path MTU Discovery
+
+## IPv6 Usage in Various OS Systems
+Operating System | Link to Article
+-------------------------------------- | ----------------------------------------------------------------------
+Windows IPv6 Command Line Examples | https://www.cellstream.com/2013/09/12/ipv6-windowslinux-command-line-examples/ :+1:
+MAC OS IPv6 Command Line Examples | https://www.cellstream.com/2013/09/12/ipv6-osx-command-line-examples/ :+1:
+GNU/Linux IPv6 Command Line Examples | https://www.cellstream.com/2013/09/12/ipv6-linux-command-line-examples/ :+1:
+
+
 
 
