@@ -16,14 +16,14 @@ To see all the IPv6 Related RFC's click here: https://www.rfc-editor.org/search/
 
 That said, there are some really important IPv6 RFC's I have listed below.  This filtered list simply point to the online version of the RFC at the IETF web site.
 
-Name | URL 
+Decription/Name | URL 
 ------------------------------------ | ---------------------------------------------
 Original Dec 1998 IPv6 Spec | https://www.rfc-editor.org/rfc/rfc2460.txt
 IPv6 Addressing Architecture | https://www.rfc-editor.org/rfc/rfc4291.txt
 Neighbor Discovery for IPv6 | https://www.rfc-editor.org/rfc/rfc4861.txt
 
 ## IPv6 Specific/Related/Capable Tool Sets
-Name | URL 
+Description/Name | URL 
 ------------------------------------ | ---------------------------------------------
 IPv6 addresses calculator | https://packages.debian.org/jessie/ipv6calc
 IPv6 Security Testing: thc-ipv6 | https://github.com/vanhauser-thc/thc-ipv6
@@ -61,7 +61,7 @@ Loopback Address | 127.0.0.1 | ::1
 Multicast Address | 224.x.y.z | FF0s::/8, where s is the scope
 
 ## IPv6 Address Types - Prefixes/Special
-Address type | Binary prefix | IPv6 notation
+Address Type | Binary Prefix | IPv6 Notation
 ------------------------------------ |------------------------------------ | ---------------------------------------------
 Link-local unicast | 1111111010 | fe80::/64
 Site-local unicast | 1111111011 | fec0::/10 (redacted)
