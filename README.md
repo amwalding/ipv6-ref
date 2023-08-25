@@ -1,4 +1,4 @@
-# IPv6 Reference and Repository
+# IPv6 Reference and Repository :round_pushpin:
 Hello and Welcome!
 
 This is my IPv6 References repository.  I try to add items here of interest to anyone learning about or using IPv6.  It is a bunch of different stuff that I hope helps everyone is some way.
@@ -9,7 +9,7 @@ This is my IPv6 References repository.  I try to add items here of interest to a
 
 If you have anything you would like to see added, please let me know.
 
-## Index of Items on This Page
+## :card_index:Index of Items on This Page
 
 * [IPv6 Standards and RFC's](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-standards-and-rfcs)<br />
 * [IPv6 Statistics of Interest](https://github.com/amwalding/ipv6-ref/blob/main/README.md#chart_with_upwards_trendipv6-statistics-of-interest)<br />
@@ -21,11 +21,11 @@ If you have anything you would like to see added, please let me know.
 * [IPv6 vs. IPv4 Multicast Address Comparison Chart](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-vs-ipv4-multicast-address-comparison-chart)<br />
 * [IPv6 Usage in Various OS Systems](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-usage-in-various-os-systems)<br />
 
-## Links to My Main Web Sites
+## :link:Links to My Main Web Sites
 * The main CellStream, Inc. Web Site with tons of articles and how to's: https://www.cellstream.com
 * The Online School of Network Sciences: https://www.netscionline.com (create a freee user account - lots of free References and more)
 
-## IPv6 Standards and RFCs
+## :page_with_curl:IPv6 Standards and RFCs
 I have a ZIP file in the repo called IPv6 RFCs.zip that contains all the RFC's.  I update it from time to time.  Essentially it is a complete library of the IPv6 related RFC's in TXT format in one place to save time.
 
 To see all the IPv6 Related RFC's click here: https://www.rfc-editor.org/search/rfc_search_detail.php?page=25&title=ipv6
@@ -54,7 +54,7 @@ World IPv6 Launch | http://www.worldipv6launch.org/measurements/
 M.R.P. | http://www.mrp.net/ipv6_survey/
 Microsoft IPv6 page | https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/dd379473(v=ws.10)?redirectedfrom=MSDN
 
-## IPv6 Specific/Related/Capable Tools and Tool Sets
+## :hammer:IPv6 Specific/Related/Capable Tools and Tool Sets
 Description/Name | URL 
 ------------------------------------ | ---------------------------------------------
 Wireshark | https://www.wireshark.org :+1:
@@ -78,7 +78,7 @@ Evil foca | http://www.informatica64.com/
 Firewall tester | https://github.com/timsgit/ipscan
 Online Network Utilities | https://centralops.net/
 
-## Comparing IPv4 to IPv6
+## :vs:Comparing IPv4 to IPv6
 Setting | IPv4 | IPv6
 ------------------------------------ |------------------------------------ | ---------------------------------------------
 Address Length | 32 bits | 128 bits
@@ -96,7 +96,7 @@ Private Network Prefixes | 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 | Site Loca
 Loopback Address | 127.0.0.1 | ::1
 Multicast Address | 224.x.y.z | FF0s::/8, where s is the scope
 
-## IPv6 Address Types - Prefixes/Special
+## :envelope:IPv6 Address Types - Prefixes/Special
 Address Type | Binary Prefix | IPv6 Notation
 ------------------------------------ |------------------------------------ | ---------------------------------------------
 Link-local unicast | 1111111010 | fe80::/64
@@ -107,7 +107,7 @@ Loopback | 00...1 (128 bits) | ::1/128
 Multicast | 11111111 | ff00::/8
 Global Unicast Address (GUA) | 0010 | 2xxx::/3 
 
-### IPv6 Address Tools
+### :hammer:IPv6 Address Tools
 Tool Description | Link/Reference
 ------------------------------------ |------------------------------------ 
 Check your own GUA IPv6 Address (if you have one) | http://whatismyipv6address.com
@@ -115,14 +115,14 @@ Check out the full IPv6 Special Addresses | https://www.iana.org/assignments/ian
 IPv6 Subnet Tool in Python | https://github.com/aipi/IPv6-subnet-calculator
 IPv6 Subnet Calculator | https://subnetonline.com/pages/subnet-calculators/ipv6-subnet-calculator.php
 
-### Notes on Addressing
+### :notebook:Notes on Addressing
 * Every device selects a Link-local unicast address that is unique
 * Interfaces can have multiple IPv6 Addresses
 * Public prefix provided either by Router Advertisement or DHCPv6
 * No more need of "NAT"
 * Fragmentation function removed from routers, replaced by Path MTU Discovery
 
-## IPv6 vs. IPv4 Multicast Address Comparison Chart
+## :vs:IPv6 vs. IPv4 Multicast Address Comparison Chart
 IPv6 Address | Description | IPv4 Address | Description
 -------------------- | ------------------------------- | -------------------- | -------------------------------
 na | na  | 224.0.0.0	| Multicast Network Address (Reserved)
@@ -141,7 +141,7 @@ FF02::C	| DHCP Servers/Relay Agents	|	224.0.0.12	| DHCP Servers/Relay Agents
 FF02::D	| All PIM Routers	|	224.0.0.13	| All PIM Routers
 FF02::E	| RSVP-Encapsulation	|	224.0.0.14	| RSVP-Encapsulation
 
-## IPv6 Usage in Various OS Systems
+## :computer:IPv6 Usage in Various OS Systems
 Operating System | Link to Article
 -------------------------------------- | ----------------------------------------------------------------------
 Windows IPv6 Command Line Examples | https://www.cellstream.com/2013/09/12/ipv6-windowslinux-command-line-examples/ :+1:
