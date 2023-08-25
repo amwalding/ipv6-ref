@@ -17,7 +17,13 @@ If you have anything you would like to see added, please let me know.
 * [Comparing IPv4 to IPv6](https://github.com/amwalding/ipv6-ref/blob/main/README.md#comparing-ipv4-to-ipv6)<br />
 * [IPv6 Address Types - Prefixes/Special](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-address-types---prefixesspecial)<br />
   * [IPv6 Address Tools](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-address-tools)<br />
-  * 
+  * [IPv6 Address Notes](https://github.com/amwalding/ipv6-ref/blob/main/README.md#notes-on-addressing)<br /
+* [IPv6 vs. IPv4 Multicast Address Comparison Chart](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-vs-ipv4-multicast-address-comparison-chart)<br />
+* [IPv6 Usage in Various OS Systems](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-usage-in-various-os-systems)<br />
+
+## Links to My Main Web Sites
+* The main CellStream, Inc. Web Site with tons of articles and how to's: https://www.cellstream.com
+* The Online School of Network Sciences: https://www.netscionline.com (create a freee user account - lots of free References and more)
 
 ## IPv6 Standards and RFCs
 I have a ZIP file in the repo called IPv6 RFCs.zip that contains all the RFC's.  I update it from time to time.  Essentially it is a complete library of the IPv6 related RFC's in TXT format in one place to save time.
