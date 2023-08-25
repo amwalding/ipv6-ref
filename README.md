@@ -52,7 +52,7 @@ Header Difference 3 | Protocol | Next Header
 Header Difference 4 | TTL - Time to Live | Hop Limit
 Header Difference 5 | Not applicable | Flow Label (generally not used) 
 Fragmentation | Both in hosts and routers | Only in hosts, PMTU Discovery
-Private Network Prefixes | 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 | ULA fc00::/7, fd00::/8 but no translation
+Private Network Prefixes | 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 | Site Local fec0::/10, ULA fc00::/7, fd00::/8 but no translation
 Loopback Address | 127.0.0.1 | ::1
 Multicast Address | 224.x.y.z | FF0s::/8, where s is the scope
 
@@ -60,12 +60,12 @@ Multicast Address | 224.x.y.z | FF0s::/8, where s is the scope
 Address type | Binary prefix | IPv6 notation
 ------------------------------------ |------------------------------------ | ---------------------------------------------
 Link-local unicast | 1111111010 | fe80::/64
-Site-local unicast | 1111111011 | fec0::/10
+Site-local unicast | 1111111011 | fec0::/10 (redacted)
 Unique local address (ULA) | 1111 110L | FC00::7 and FD00::7 
 Unspecified | 00...0 (128 bits) | ::/128
 Loopback | 00...1 (128 bits) | ::1/128
 Multicast | 11111111 | ff00::/8
-Global unicast | 0010 | 2xxx::/3 
+Global Unicast Address (GUA) | 0010 | 2xxx::/3 
 
 
 * Every device selects a Link-local unicast address that is unique
