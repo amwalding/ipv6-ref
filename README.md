@@ -158,9 +158,12 @@ Enabling IPv6 on a Computer (Windows/MAC/Linux) | https://www.cellstream.com/201
 Disabling IPv6 on Windows | https://www.cellstream.com/2013/09/12/disabling-ipv6-communications/
 
 ## Some IPv6 Basic Networking Commands by OS
+Replace IPV6ADDR with the IPv6 address in the commands below.
+Replace DOMAIN with the Domain Name in the commands below.
+
 Action | Linux Command | MAC OS Command | Windows Command | Notes
 ------------------------------- | ----------------------------------- | --------------------------------- | ------------------------------------ | ----------------------------
-Ping an IPv6 Address | `$ ping6 -I eth0 IPv6ADDR` |  | |  
+Ping an IPv6 Address | `$ ping6 -I eth0 IPV6ADDR` |  | |  
 Domain ping | `$ ping6 -I eth0 DOMAIN` | | |
 Traceroute | `$ traceroute6 DOMAIN` | | | 
 Traceroute EH-enabled | `$ sudo ./path6 -v -u 72 -d DOMAIN` | | | 
@@ -173,11 +176,11 @@ DNS lookup | `$ host DOMAIN` | | |
 IP show | `$ ip -6 addr` or `$ sudo ifconfig | grep inet6` | | | 
 IPtables | `$ sudo ip6tables -L -v --line-numbers` | | | 
 NETCAT | Listen `$ nc6 -lp 12345 -v -e "/bin/bash"` & Connect `$ nc6 localhost 12345` | | | 
-SSH | `$ ssh -6 user@IPv6ADDR%eth0` | | | 
+SSH | `$ ssh -6 user@IPV6ADDR%eth0` | | | 
 TCPDUMP | `$ sudo tcpdump -i eth0 -evv ip6 or proto ipv6` | | | 
-TELNET | `$ telnet IPv6ADDR PORT` | | | 
-Determining Address Type | `$ addr6 -a IPv6ADDR`  | | | Requires addr6 tool
-Identifying the Flow ID generation policy | `$ sudo ./flow6 -i eth0 -v --flow-label-policy -d IPv6ADDR` | | | Requires flow6 tool
+TELNET | `$ telnet IPV6ADDR PORT` | | | 
+Determining Address Type | `$ addr6 -a IPV6ADDR`  | | | Requires addr6 tool
+Identifying the Flow ID generation policy | `$ sudo ./flow6 -i eth0 -v --flow-label-policy -d IPV6ADDR` | | | Requires flow6 tool
 
 ## Security in IPv6 Networking
 
