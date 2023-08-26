@@ -20,6 +20,7 @@ If you have anything you would like to see added, please let me know.
   * [IPv6 Address Notes](https://github.com/amwalding/ipv6-ref/blob/main/README.md#notes-on-addressing)<br />
 * [IPv6 vs. IPv4 Multicast Address Comparison Chart](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-vs-ipv4-multicast-address-comparison-chart)<br />
 * [IPv6 Usage in Various OS Systems](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-usage-in-various-os-systems)<br />
+* [Some IPv6 Basic Networking Commands](https://github.com/amwalding/ipv6-ref/blob/main/README.md#some-ipv6-basic-networking-commands-by-os)<br />
 
 ## :link:Links to My Main Web Sites
 * The main CellStream, Inc. Web Site with tons of articles and how to's: https://www.cellstream.com
@@ -157,24 +158,29 @@ Neighbor Discovery (ND) Table in IPv6 Windows, Linux and MAC Machines | https://
 Enabling IPv6 on a Computer (Windows/MAC/Linux) | https://www.cellstream.com/2013/09/12/enabling-ipv6-on-a-computer/
 Disabling IPv6 on Windows | https://www.cellstream.com/2013/09/12/disabling-ipv6-communications/
 
-## Some IPv6 Basic Networking Commands by OS
+## :computer:Some IPv6 Basic Networking Commands by OS
 Replace IPV6ADDR with the IPv6 address in the commands below.
 Replace DOMAIN with the Domain Name in the commands below.
 
 Action | Linux Command | MAC OS Command | Windows Command | Notes
 ------------------------------- | ----------------------------------- | --------------------------------- | ------------------------------------ | ----------------------------
-Ping an IPv6 Address | `$ ping6 -I eth0 IPV6ADDR` |  | |  
+Show general IPv6 Configuration | | | | 'netsh int ipv6 show global' | 
+Ping an IPv6 Address | `$ ping6 -I eth0 IPV6ADDR` |  | 'pathping -6 DOMAIN' |  
 Domain ping | `$ ping6 -I eth0 DOMAIN` | | |
-Traceroute | `$ traceroute6 DOMAIN` | | | 
+Traceroute | `$ traceroute6 DOMAIN` or 'tracepath -n IPV6ADDR' | | 'tracert -6 DOMAIN' | 
 Traceroute EH-enabled | `$ sudo ./path6 -v -u 72 -d DOMAIN` | | | 
 Traceroute with MTR | `$ mtr -6 DOMAIN` | | | 
 Trace the path to discover the MTU | `$ tracepath6 DOMAIN` | | | View IPv6 Connections | `$ netstat -A inet6` | | | 
-Display the Routing Table | `$ ip -6 route` or `$ netstat -rnA inet6` or `$ sudo route -A inet6` | | | 
+Display the Routing Table | `$ ip -6 route` or `$ netstat -rnA inet6` or `$ sudo route -A inet6` | | 'route print -6' | 
 Display Neighbor Discovery Cache | `$ ip -6 neigh show` | | | 
 Flush the Neighbor Discovery Cache | `$ ip -6 neigh flush` | | | 
+Display the PMTU information | 'ip route get IPV6ADDR' and 'tracepath -n IPV6ADDR'| | 'netsh interface ipv6 show destinationcache address' | 
 DNS lookup | `$ host DOMAIN` | | | 
+General IP Configuration | '$ ifconfig' | 'ifconfig' | 'ipconfig' or 'ipconfig /all' or 'netsh interface ipv6 show addresses' | 
 IP show | `$ ip -6 addr` or `$ sudo ifconfig | grep inet6` | | | 
-IPtables | `$ sudo ip6tables -L -v --line-numbers` | | | 
+Routing tables/IPtables | `$ sudo ip6tables -L -v --line-numbers` | | 'route print -6' or 'netstat -r' | 
+Any IPv6 Traffic? | | | 'netstat -ps IPv6' | 
+Any ICMPv6 Traffic? | | | 'netstat -ps ICMPv6' | 
 NETCAT | Listen `$ nc6 -lp 12345 -v -e "/bin/bash"` & Connect `$ nc6 localhost 12345` | | | 
 SSH | `$ ssh -6 user@IPV6ADDR%eth0` | | | 
 TCPDUMP | `$ sudo tcpdump -i eth0 -evv ip6 or proto ipv6` | | | 
