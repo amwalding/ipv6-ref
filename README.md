@@ -58,13 +58,19 @@ Microsoft IPv6 page | https://learn.microsoft.com/en-us/previous-versions/window
 Description/Name | URL 
 ------------------------------------ | ---------------------------------------------
 Wireshark | https://www.wireshark.org :+1:
+Use Google to test IPv6 | https://ipv6test.google.com/
 Test your IPv6 Connectivity 1 | http://test-ipv6.com
 Test your IPv6 Connectivity 2 | https://ipv6-test.com
+Test your IPv6 Connectivity 3 | http://v6.testmyipv6.com/
+Test your IPv6 Connectivity 4 | http://whatismyv6.com/
+IPv6 Speed Test 1 | http://www.speedtest6.com/
+IPv6 Speed Test 2 | http://ipv6-speedtest.net/
 IPv6 addresses calculator | https://packages.debian.org/jessie/ipv6calc
 IPv6 Security Testing: thc-ipv6 | https://github.com/vanhauser-thc/thc-ipv6
 IPv6 Security Testing: ipv6-toolkit | https://github.com/fgont/ipv6toolkit
 Pinkie | http://www.ipuptime.net/pinkie/
 Diagnostic tools | https://packages.debian.org/jessie/ndisc6
+IPv6 DNS Lookup Tool | http://www.webdnstools.com/dnstools/dns-lookup-ipv6
 Scapy | http://www.secdev.org/projects/scapy/
 Chiron | http://www.secfu.net/tools-scripts/
 Scanners | Nmap / Metasploit / Scan6 / Halfscan6
@@ -151,6 +157,27 @@ Neighbor Discovery (ND) Table in IPv6 Windows, Linux and MAC Machines | https://
 Enabling IPv6 on a Computer (Windows/MAC/Linux) | https://www.cellstream.com/2013/09/12/enabling-ipv6-on-a-computer/
 Disabling IPv6 on Windows | https://www.cellstream.com/2013/09/12/disabling-ipv6-communications/
 
+## Some IPv6 Basic Networking Commands by OS
+Action | Linux Command | MAC OS Command | Windows Command | Notes
+------------------------------- | ----------------------------------- | --------------------------------- | ------------------------------------ | ----------------------------
+Ping an IPv6 Address | `$ ping6 -I eth0 IPv6ADDR` |  | |  
+Domain ping | `$ ping6 -I eth0 DOMAIN` | | |
+Traceroute | `$ traceroute6 DOMAIN` | | | 
+Traceroute EH-enabled | `$ sudo ./path6 -v -u 72 -d DOMAIN` | | | 
+Traceroute with MTR | `$ mtr -6 DOMAIN` | | | 
+Trace the path to discover the MTU | `$ tracepath6 DOMAIN` | | | View IPv6 Connections | `$ netstat -A inet6` | | | 
+Display the Routing Table | `$ ip -6 route` or `$ netstat -rnA inet6` or `$ sudo route -A inet6` | | | 
+Display Neighbor Discovery Cache | `$ ip -6 neigh show` | | | 
+Flush the Neighbor Discovery Cache | `$ ip -6 neigh flush` | | | 
+DNS lookup | `$ host DOMAIN` | | | 
+IP show | `$ ip -6 addr` or `$ sudo ifconfig | grep inet6` | | | 
+IPtables | `$ sudo ip6tables -L -v --line-numbers` | | | 
+NETCAT | Listen `$ nc6 -lp 12345 -v -e "/bin/bash"` & Connect `$ nc6 localhost 12345` | | | 
+SSH | `$ ssh -6 user@IPv6ADDR%eth0` | | | 
+TCPDUMP | `$ sudo tcpdump -i eth0 -evv ip6 or proto ipv6` | | | 
+TELNET | `$ telnet IPv6ADDR PORT` | | | 
+Determining Address Type | `$ addr6 -a IPv6ADDR`  | | | Requires addr6 tool
+Identifying the Flow ID generation policy | `$ sudo ./flow6 -i eth0 -v --flow-label-policy -d IPv6ADDR` | | | Requires flow6 tool
 
 ## Security in IPv6 Networking
 
