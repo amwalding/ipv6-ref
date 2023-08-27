@@ -163,6 +163,10 @@ Replace IPV6ADDR with the IPv6 address in the commands below.
 Replace DOMAIN with the Domain Name in the commands below.
 Replace INTFC with the system name for the network interface below.
 
+[!NOTE]If you have any that I should add, please let me know.
+
+[!IMPORTANT]The best ping to test worldwide IPv6 connectivity `$ ping 2600::1` or `ping6 2600::1`  This is actually SPRINT's IPv6 address.
+
 Action | Linux Command | MAC OS Command | Windows Command | Notes
 ------------------------------- | ----------------------------------- | --------------------------------- | ------------------------------------ | ----------------------------
 Display IPv6 Settings | `$ sysctl net.ipv6` | `$ sysctl net.inet6` | | Attempt to show what IPv6 settings are present in the OS
