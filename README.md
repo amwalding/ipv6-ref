@@ -172,19 +172,19 @@ Traceroute EH-enabled | `$ sudo ./path6 -v -u 72 -d DOMAIN` | | |
 Traceroute with MTR | `$ mtr -6 DOMAIN` | | | 
 Trace the path to discover the MTU | `$ tracepath6 DOMAIN` | | | 
 View IPv6 Connections | `$ netstat -A inet6` | | | 
-Display the Routing Table | `$ ip -6 route` or `$ netstat -rnA inet6` or `$ sudo route -A inet6` | | '$ route print -6' | 
+Display the Routing Table | `$ ip -6 route` or `$ netstat -rnA inet6` or `$ sudo route -A inet6` | | `$ route print -6` | 
 Display Neighbor Discovery Cache | `$ ip -6 neigh show` | | | 
 Flush the Neighbor Discovery Cache | `$ ip -6 neigh flush` | | | 
-Display the PMTU information | '$ ip route get IPV6ADDR' and '$ tracepath -n IPV6ADDR'| | '$ netsh interface ipv6 show destinationcache address' | 
+Display the PMTU information | `$ ip route get IPV6ADDR` and `$ tracepath -n IPV6ADDR`| | `$ netsh interface ipv6 show destinationcache address` | 
 DNS lookup | `$ host DOMAIN` | | | 
-General IP Configuration | '$ ifconfig' | '$ ifconfig' | '$ ipconfig' or '$ ipconfig /all' or '$ netsh interface ipv6 show addresses' | 
-IP show | `$ ip -6 addr` or `$ sudo ifconfig' | '$ grep inet6` | | | 
-Routing tables/IPtables | `$ sudo ip6tables -L -v --line-numbers` | | '$ route print -6' or '$ netstat -r' | 
-Any IPv6 Traffic? | | | '$ netstat -ps IPv6' | 
-Any ICMPv6 Traffic? | | | '$ netstat -ps ICMPv6' | 
+General IP Configuration | `$ ifconfig` | `$ ifconfig` | `$ ipconfig` or `$ ipconfig /all` or `$ netsh interface ipv6 show addresses` | 
+IP show | `$ ip -6 addr` or `$ sudo ifconfig` | `$ grep inet6` | | | 
+Routing tables/IPtables | `$ sudo ip6tables -L -v --line-numbers` | | `$ route print -6` or `$ netstat -r` | 
+Any IPv6 Traffic? | | | `$ netstat -ps IPv6` | 
+Any ICMPv6 Traffic? | | | `$ netstat -ps ICMPv6` | 
 NETCAT | Listen `$ nc6 -lp 12345 -v -e "/bin/bash"` & Connect `$ nc6 localhost 12345` | | | 
 SSH | `$ ssh -6 user@IPV6ADDR%eth0` | | | 
-TCPDUMP | `$ sudo tcpdump -i eth0 -evv ip6' or '$ proto ipv6` | | | 
+TCPDUMP | `$ sudo tcpdump -i eth0 -evv ip6` or `$ proto ipv6` | | | 
 TELNET | `$ telnet IPV6ADDR PORT` | | | 
 Determining Address Type | `$ addr6 -a IPV6ADDR`  | | | Requires addr6 tool
 Identifying the Flow ID generation policy | `$ sudo ./flow6 -i eth0 -v --flow-label-policy -d IPV6ADDR` | | | Requires flow6 tool
