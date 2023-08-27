@@ -161,12 +161,14 @@ Disabling IPv6 on Windows | https://www.cellstream.com/2013/09/12/disabling-ipv6
 ## :computer:Some IPv6 Basic Networking Commands by OS
 Replace IPV6ADDR with the IPv6 address in the commands below.
 Replace DOMAIN with the Domain Name in the commands below.
+Replace INTFC with the system name for the network interface below.
 
 Action | Linux Command | MAC OS Command | Windows Command | Notes
 ------------------------------- | ----------------------------------- | --------------------------------- | ------------------------------------ | ----------------------------
-Display IPv6 Settings | | `$ sysctl net.inet6` | | Attempt to show what IPv6 settings are present in the OS
-General IP Interface Configuration 1 | `$ ifconfig` | `$ ifconfig` | `$ ipconfig` or `$ ipconfig /all` or `$ netsh interface ipv6 show addresses` | These are network interface configuration settings
-General IPv6 Interface Configuration 2 | `$ ifconfig -a` | `$ ifconfig -a` or for a specific interface `$ ifconfig -L en0 inet6` | `$ netsh int ipv6 show global` | These are network interface configuration settings
+Display IPv6 Settings | `$ sysctl net.ipv6` | `$ sysctl net.inet6` | | Attempt to show what IPv6 settings are present in the OS
+General IP Interface Configuration 1 | `$ ifconfig` or `$ ip -6 a s INTFC` | `$ ifconfig` | `$ ipconfig` or `$ ipconfig /all` or `$ netsh interface ipv6 show addresses` | These are network interface configuration settings
+General IPv6 Interface Configuration 2 | `$ ifconfig -a` or `$ cat /proc/net/if_inet6` | `$ ifconfig -a` or for a specific interface `$ ifconfig -L en0 inet6` | `$ netsh int ipv6 show global` | These are network interface configuration settings
+Support for Temporary IPv6 Addresses | | `$ sysctl net.inte6 | grep temp` | | Different OS versions support different IPv6 addressing features
 Ping an IPv6 Address | `$ ping6 -I eth0 IPV6ADDR` | `$ ping6 IPV6ADDR' | `$ pathping -6 DOMAIN` | Use ICMP Ping to see if the target device is able to answer 
 Domain ping | `$ ping6 -I eth0 DOMAIN` | `$ ping6 DOMAIN`| | Use ICMP Ping to see if a given domain name can be resolved and then reached
 Traceroute | `$ traceroute6 DOMAIN` or `$ tracepath -n IPV6ADDR` | `$ traceroute6 DOMAIN`| `$ tracert -6 DOMAIN` | What is the path of routers to a given IPv6 destination
@@ -180,8 +182,8 @@ Flush the Neighbor Discovery Cache | `$ ip -6 neigh flush` | | | Clear the Neigh
 Display the PMTU information | `$ ip route get IPV6ADDR` and `$ tracepath -n IPV6ADDR`| | `$ netsh interface ipv6 show destinationcache address` | Attempt to display the Path MTU information for a given destination
 DNS lookup | `$ host DOMAIN` | Check DNS `$ scutil --dns | grep nameserver | grep "::"` Lookup: `$ dig AAAA DOMAIN` | | Looking up IPv6 DNS records
 IP show | `$ ip -6 addr` or `$ sudo ifconfig` | `$ grep inet6` | | | 
-Routing tables/IPtables | `$ sudo ip6tables -L -v --line-numbers` | `$ netstat -r -f inet6` | `$ route print -6` or `$ netstat -r` | 
-Any IPv6 Traffic? | | `netstat -s -f inet6` | `$ netstat -ps IPv6` | 
+IPv6 Routing tables/IPtables | `$ sudo ip6tables -L -v --line-numbers` or `route -A inet6` | `$ netstat -r -f inet6` | `$ route print -6` or `$ netstat -r` | 
+Any IPv6 Traffic? | `$ netstat -ps -6`| `netstat -s -f inet6` | `$ netstat -ps IPv6` | 
 Any ICMPv6 Traffic? | | | `$ netstat -ps ICMPv6` | 
 NETCAT | Listen `$ nc6 -lp 12345 -v -e "/bin/bash"` & Connect `$ nc6 localhost 12345` | | | 
 SSH | `$ ssh -6 user@IPV6ADDR%eth0` | | | Using SSH in IPv6 mode
