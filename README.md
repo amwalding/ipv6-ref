@@ -199,11 +199,30 @@ Determining Address Type | `$ addr6 -a IPV6ADDR`  | | | Requires addr6 tool
 Identifying the Flow ID generation policy | `$ sudo ./flow6 -i eth0 -v --flow-label-policy -d IPV6ADDR` | | | Requires flow6 tool
 
 ## Security in IPv6 Networking
+> [!WARNING]
+> The content below is provided as educational information.
+> Executing some of the commands shown with certain tools installed can be considered malicious by others.
+> Please use caution when using any of the information below.
 
-### IPv6 Security References
+I would like to start with the following statement: IPv6 should not be considered any more or less secure than IPv4.
+
+That said, there are known vulnerabilities in IPv6 with a number of exploits.  Below are some IPv6 security references and tools.
+
+### IPv6 Security Reading and References
+Reference Name | URL/RFC
+------------------------------------ | ---------------------------------------------
+IPv6 Fragmentation Attack | https://www.cellstream.com/2019/08/06/example-ipv6-frag-attack/
+Example IPv6 SYN Flood Attack | https://www.cellstream.com/2019/08/05/example-ipv6-syn-flood-attack/
+Observations on the Dropping of Packets with IPv6 Extension Headers in the Real World | https://datatracker.ietf.org/doc/html/rfc7872
+Rogue IPv6 Router Advertisement | https://www.rfc-editor.org/rfc/rfc6104.txt
+Neighbor Discovery Problems | https://www.rfc-editor.org/rfc/rfc6583.txt
+Network Reconnaissance in IPv6 | https://www.rfc-editor.org/rfc/rfc7707.txt
 
 ### IPv6 Security Tools
-
+Name | Link URL
+------------------------------------- | --------------------------------------------
+IPv6 Security Testing: thc-ipv6 | https://github.com/vanhauser-thc/thc-ipv6
+IPv6 Security Testing: ipv6-toolkit | https://github.com/fgont/ipv6toolkit
 
 
 
