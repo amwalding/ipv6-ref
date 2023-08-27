@@ -164,10 +164,10 @@ Replace DOMAIN with the Domain Name in the commands below.
 
 Action | Linux Command | MAC OS Command | Windows Command | Notes
 ------------------------------- | ----------------------------------- | --------------------------------- | ------------------------------------ | ----------------------------
-Show general IPv6 Configuration | | | | 'netsh int ipv6 show global' | 
-Ping an IPv6 Address | `$ ping6 -I eth0 IPV6ADDR` |  | '$ pathping -6 DOMAIN' |  
+Show general IPv6 Configuration | | | `$ netsh int ipv6 show global` | 
+Ping an IPv6 Address | `$ ping6 -I eth0 IPV6ADDR` |  | `$ pathping -6 DOMAIN` |  
 Domain ping | `$ ping6 -I eth0 DOMAIN` | | |
-Traceroute | `$ traceroute6 DOMAIN` or '$ tracepath -n IPV6ADDR' | | '$ tracert -6 DOMAIN' | 
+Traceroute | `$ traceroute6 DOMAIN` or `$ tracepath -n IPV6ADDR` | | `$ tracert -6 DOMAIN` | 
 Traceroute EH-enabled | `$ sudo ./path6 -v -u 72 -d DOMAIN` | | | 
 Traceroute with MTR | `$ mtr -6 DOMAIN` | | | 
 Trace the path to discover the MTU | `$ tracepath6 DOMAIN` | | | 
