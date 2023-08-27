@@ -219,6 +219,9 @@ Neighbor Discovery Problems | https://www.rfc-editor.org/rfc/rfc6583.txt
 Network Reconnaissance in IPv6 | https://www.rfc-editor.org/rfc/rfc7707.txt
 
 ### IPv6 Security Tools
+>[!NOTE]
+>I believe both these tool sets are standard in both Kali Linux and Parrot Linux.
+
 Name | Link URL
 ------------------------------------- | --------------------------------------------
 IPv6 Security Testing: thc-ipv6 | https://github.com/vanhauser-thc/thc-ipv6
