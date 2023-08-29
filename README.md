@@ -303,7 +303,7 @@ DNS lookup | `$ dig -6 AAAA DOMAIN`
 Reverse lookup | `$ dig -x IPv6ADDR`
 DNS enumeration | `$ ./dnsdict6 -d DOMAIN` :+1:
 DNS enumeration (PTR request) | `$ ./dnsrevenum6 DNSSERVER IPv6ADDR/64`
-DNS lookup with a domain list | `$ cat domainsList.txt | sudo script6 get-aaaa` (Didn't succeed to get script6 working in my test)
+DNS lookup with a domain list | `$ cat domainsList.txt \| sudo script6 get-aaaa` (Didn't succeed to get script6 working in my test)
 DNS enumeration | `$ sudo script6 get-bruteforce-aaaa DOMAIN`
 AS-related info | `$ sudo script6 get­-as IPv6ADDR`
 AS-related info | `$ sudo script6 get­-asn IPv6ADDR`
