@@ -4,4 +4,14 @@ IPv6 Security References
 https://github.com/vanhauser-thc/thc-ipv6 - this is the repository of the THC IPv6 Attack Tools
 https://github.com/fgont/ipv6toolkit - this is the SI6 repository for their IPv6 Attack Tools
 https://github.com/aatlasis/Chiron - this is the Chiron IPv6 Security Assessment home on Github
+IPv6 Fragmentation Attack	https://www.cellstream.com/2019/08/06/example-ipv6-frag-attack/
+Example IPv6 SYN Flood Attack	https://www.cellstream.com/2019/08/05/example-ipv6-syn-flood-attack/
+Monitoring new related IPv6 vulnerabilites	https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ipv6
+IPv6 attack detector	https://github.com/mzweilin/ipv6-attack-detector/
+https://www.honeynet.org/node/944
+Observations on the Dropping of Packets with IPv6 Extension Headers in the Real World	https://datatracker.ietf.org/doc/html/rfc7872
+Rogue IPv6 Router Advertisement	https://www.rfc-editor.org/rfc/rfc6104.txt
+Neighbor Discovery Problems	https://www.rfc-editor.org/rfc/rfc6583.txt
+A Discard Prefix for IPv6	https://tools.ietf.org/html/rfc6666
+Network Reconnaissance in IPv6	https://www.rfc-editor.org/rfc/rfc7707.txt
 
