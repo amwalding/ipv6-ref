@@ -198,7 +198,7 @@ TELNET | `$ telnet IPV6ADDR PORT` | | |
 Determining Address Type | `$ addr6 -a IPV6ADDR`  | | | Requires addr6 tool
 Identifying the Flow ID generation policy | `$ sudo ./flow6 -i eth0 -v --flow-label-policy -d IPV6ADDR` | | | Requires flow6 tool
 
-## Security in IPv6 Networking
+## :lock:Security in IPv6 Networking
 > [!WARNING]
 > The content below is provided as educational information.
 > Executing some of the commands shown with certain tools installed can be considered malicious by others.
@@ -208,7 +208,7 @@ I would like to start with the following statement: IPv6 should not be considere
 
 That said, there are known vulnerabilities in IPv6 with a number of exploits.  Below are some IPv6 security references and tools.
 
-### IPv6 Security Reading and References
+### :notebook:IPv6 Security Reading and References
 Reference Name | URL/RFC
 ------------------------------------ | ---------------------------------------------
 IPv6 Fragmentation Attack | https://www.cellstream.com/2019/08/06/example-ipv6-frag-attack/
@@ -221,7 +221,7 @@ Neighbor Discovery Problems | https://www.rfc-editor.org/rfc/rfc6583.txt
 A Discard Prefix for IPv6 | https://tools.ietf.org/html/rfc6666
 Network Reconnaissance in IPv6 | https://www.rfc-editor.org/rfc/rfc7707.txt
 
-### IPv6 Security Tools
+### :hammer_and_wrench:IPv6 Security Tools
 >[!NOTE]
 >I believe both these tool sets are standard in Parrot Linux, you can add the ipv6toolkit
 >to Kali with `$ sudo apt install ipv6toolkit`
@@ -273,7 +273,7 @@ Firewall audit & Filter bypass tests | `$ sudo ./firewall6 -H eth0 TARGETIPv6ADD
 Search for a black hole | `$ blackhole6` and other options with `$ scan6 ` | Search for a black hole can be useful to find out who is dropping specific packets, network reconnaissance or just checking if you EH-enabled attacks would work
 Playing with IPv6 Addressing | `$ addr6` Look at `$ man addr6` then try `$ cat file.txt | addr6 -i -s` | Learn IPv6 addressing through IPv6 manipulation tools
 
-### IPv6 addresses & domains Research/Investigation
+### :mag:IPv6 addresses & domains Research/Investigation
 Name | URL
 ------------------------------------ | ---------------------------------------------
 IP research | https://whatismyipaddress.com/
@@ -294,14 +294,14 @@ Black list | https://mxtoolbox.com/blacklists.aspx
 extract_hosts6.sh | https://github.com/vanhauser-thc/thc-ipv6/blob/master/extract_hosts6.sh
 extract_networks6.sh | https://github.com/vanhauser-thc/thc-ipv6/blob/master/extract_networks6.sh
 
-### Domain Name System and Autonomous System Research/Investigation
+### :mag:Domain Name System and Autonomous System Research/Investigation
 Action | Command
 ------------------------------------ | ---------------------------------------------
 DNS lookup | `$ nslookup -query=AAAA DOMAIN`
 DNS lookup | `$ host -t AAAA DOMAIN`
 DNS lookup | `$ dig -6 AAAA DOMAIN`
 Reverse lookup | `$ dig -x IPv6ADDR`
-DNS enumeration | `$ ./dnsdict6 -d DOMAIN` :+1:
+DNS enumeration | `$ ./dnsdict6 -d DOMAIN`
 DNS enumeration (PTR request) | `$ ./dnsrevenum6 DNSSERVER IPv6ADDR/64`
 DNS lookup with a domain list | `$ cat domainsList.txt \| sudo script6 get-aaaa`
 DNS enumeration | `$ sudo script6 get-bruteforce-aaaa DOMAIN`
