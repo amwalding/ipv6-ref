@@ -220,12 +220,22 @@ Network Reconnaissance in IPv6 | https://www.rfc-editor.org/rfc/rfc7707.txt
 
 ### IPv6 Security Tools
 >[!NOTE]
->I believe both these tool sets are standard in both Kali Linux and Parrot Linux.
+>I believe both these tool sets are standard in Parrot Linux, you can add the ipv6toolkit
+>to Kali with `$ sudo apt install ipv6toolkit`
 
 Name | Link URL
 ------------------------------------- | --------------------------------------------
 IPv6 Security Testing: thc-ipv6 | https://github.com/vanhauser-thc/thc-ipv6
 IPv6 Security Testing: ipv6-toolkit | https://github.com/fgont/ipv6toolkit
+
+### IPv6 Tool Kit Command Examples
+Action | Command | Notes
+-------------------------------------- | ------------------------------------------------------ | -------------------------------------------------
+DAD (Duplicate Address Detection) | `$ sudo ./na6 -i eth0 --accept-src ::/128 --solicited --override --listen --verbose` or `$ sudo ./dos-new-ip6 eth0` | DAD is the mechanism of IPv6 stateless autoconfiguration to detect whether an IPv6 address exists on the network. Every time a new computer asks about IPv6 existence, the attacker replies and claims that he is that IPv6. The new computer cannot join the network since it does not have IPv6 address. It use ICMPv6 neighbor solicitation which sends to all nodes multicast address
+Neighbor Solicitation | `$ sudo ./flood_solicitate6 eth0 TARGETIPv6ADDR` | Flood the network with neighbor solicitations. If no target is supplied, query address will be 'ff02::1'
+
+
+
 
 
 
