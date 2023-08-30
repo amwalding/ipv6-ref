@@ -22,6 +22,7 @@ If you have anything you would like to see added, please let me know.
 * [IPv6 vs. IPv4 Multicast Address Comparison Chart](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-vs-ipv4-multicast-address-comparison-chart)<br />
 * [IPv6 Usage in Various OS Systems](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-usage-in-various-os-systems)<br />
 * [Some IPv6 Basic Networking Commands](https://github.com/amwalding/ipv6-ref/blob/main/README.md#some-ipv6-basic-networking-commands-by-os)<br />
+* [Security in IPv6 Networking](https://github.com/amwalding/ipv6-ref/blob/main/README.md#locksecurity-in-ipv6-networking)<br />
 
 ## :link:Links to My Main Web Sites
 * The main CellStream, Inc. Web Site with tons of articles and how to's: https://www.cellstream.com
