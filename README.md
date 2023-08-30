@@ -1,5 +1,3 @@
-[![Andy's GitHub stats](https://github-readme-stats.vercel.app/api?username=amwalding)](https://github.com/amwalding/github-readme-stats)
-
 # IPv6 Reference and Repository :round_pushpin:
 Hello and Welcome!
 
