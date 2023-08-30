@@ -1,7 +1,8 @@
 # IPv6 Reference and Repository :round_pushpin:
 Hello and Welcome!
 
-This is my IPv6 References repository.  I try to add items here of interest to anyone learning about or using IPv6.  It is a bunch of different stuff that I hope helps everyone is some way.
+This is my IPv6 References repository.  The goal is to provide key information regarding IPv6 of interest to anyone learning about or using IPv6.  This repository is a bunch of different stuff that I hope helps everyone is some way.
+* This README.md page - with a ton of info (see below)
 * Cheat Sheets
 * Packet Captures
 * RFC Documents
