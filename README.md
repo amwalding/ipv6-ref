@@ -64,7 +64,7 @@ World IPv6 Launch | http://www.worldipv6launch.org/measurements/
 M.R.P. | http://www.mrp.net/ipv6_survey/
 Microsoft IPv6 page | https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/dd379473(v=ws.10)?redirectedfrom=MSDN
 
-## :hammer:IPv6 Specific/Related/Capable Tools and Tool Sets
+## 🛠️:IPv6 Specific/Related/Capable Tools and Tool Sets
 Description/Name | URL 
 ------------------------------------ | ---------------------------------------------
 Wireshark | https://www.wireshark.org :+1:
@@ -123,7 +123,7 @@ Loopback | 00...1 (128 bits) | ::1/128
 Multicast | 11111111 | ff00::/8
 Global Unicast Address (GUA) | 0010 | 2xxx::/3 
 
-## :envelope:SLAAC - Stateless Address Autoconfiguration
+## ⚒️:SLAAC - Stateless Address Autoconfiguration
 IPv6 devices can obtain addresses through multiple methods, depending on how the network is configured.
 
 Here are the main IPv6 address assignment methods:
