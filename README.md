@@ -3,6 +3,8 @@
 Hello and Welcome!
 
 This is my IPv6 References repository.  The goal is to provide key information regarding IPv6 of interest to anyone learning about or using IPv6.  This repository is a bunch of different stuff that I hope helps everyone is some way.
+Comments are welcomed at our Discord server here: https://discord.gg/3U8q5USm
+If you would like to see more content and articles like this, please support us by clicking the patron link https://www.patreon.com/cellstream?fan_landing=true where you will receive free bonus access to courses and more, or simply buying us a cup of coffee here: https://www.buymeacoffee.com/awalding !
 * This README.md page - with a ton of info (see below)
 * Cheat Sheets
 * Packet Captures
