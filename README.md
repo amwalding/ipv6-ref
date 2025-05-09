@@ -233,6 +233,7 @@ GNU/Linux IPv6 Command Line Examples | https://www.cellstream.com/2013/09/12/ipv
 Neighbor Discovery (ND) Table in IPv6 Windows, Linux and macOS Machines | https://www.cellstream.com/2013/09/12/neighbor-discovery-nd-table-in-ipv6-windows-machines/
 Enabling IPv6 on a Computer (Windows/Mac/Linux) | https://www.cellstream.com/2013/09/12/enabling-ipv6-on-a-computer/
 Disabling IPv6 on Windows | https://www.cellstream.com/2013/09/12/disabling-ipv6-communications/
+Does Starlink support IPv6? | https://www.cellstream.com/2025/05/06/does-starlink-support-ipv6/
 
 >[!NOTE]
 >Besides macOS, IPv6 is supported on iOS, ipadOS, tvOS, watchOS as well as on visionOS. The kernel that drives all those is called Darwin. In the context of Wireshark and packet capture, all Darwin-based operating systems support pcapng capture, either direclty (macOS), or via the rvi network interface (all other OSes).
