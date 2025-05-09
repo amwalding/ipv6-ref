@@ -228,11 +228,14 @@ FF02::E	| RSVP-Encapsulation	|	224.0.0.14	| RSVP-Encapsulation
 Operating System | Link to Article
 -------------------------------------- | ----------------------------------------------------------------------
 Windows IPv6 Command Line Examples | https://www.cellstream.com/2013/09/12/ipv6-windowslinux-command-line-examples/ :+1:
-MAC OS IPv6 Command Line Examples | https://www.cellstream.com/2013/09/12/ipv6-osx-command-line-examples/ :+1:
+MacOS IPv6 Command Line Examples | https://www.cellstream.com/2013/09/12/ipv6-osx-command-line-examples/ :+1:
 GNU/Linux IPv6 Command Line Examples | https://www.cellstream.com/2013/09/12/ipv6-linux-command-line-examples/ :+1:
-Neighbor Discovery (ND) Table in IPv6 Windows, Linux and MAC Machines | https://www.cellstream.com/2013/09/12/neighbor-discovery-nd-table-in-ipv6-windows-machines/
-Enabling IPv6 on a Computer (Windows/MAC/Linux) | https://www.cellstream.com/2013/09/12/enabling-ipv6-on-a-computer/
+Neighbor Discovery (ND) Table in IPv6 Windows, Linux and macOS Machines | https://www.cellstream.com/2013/09/12/neighbor-discovery-nd-table-in-ipv6-windows-machines/
+Enabling IPv6 on a Computer (Windows/Mac/Linux) | https://www.cellstream.com/2013/09/12/enabling-ipv6-on-a-computer/
 Disabling IPv6 on Windows | https://www.cellstream.com/2013/09/12/disabling-ipv6-communications/
+
+>[!NOTE]
+>Besides macOS, IPv6 is supported on iOS, ipadOS, tvOS, watchOS as well as on visionOS. The kernel that drives all those is called Darwin. In the context of Wireshark and packet capture, all Darwin-based operating systems support pcapng capture, either direclty (macOS), or via the rvi network interface (all other OSes).
 
 ## :computer:Some IPv6 Basic Networking Commands by OS
 Replace IPV6ADDR with the IPv6 address in the commands below.
@@ -245,7 +248,7 @@ Replace INTFC with the system name for the network interface below.
 >[!IMPORTANT]
 >The best ping to test worldwide IPv6 connectivity `$ ping 2600::1` or `ping6 2600::1`  This is actually SPRINT's IPv6 address.
 
-Action | Linux Command | MAC OS Command | Windows Command | Notes
+Action | Linux Command | macOS Command | Windows Command | Notes
 ------------------------------- | ----------------------------------- | --------------------------------- | ------------------------------------ | ----------------------------
 Display IPv6 Settings | `$ sysctl net.ipv6` | `$ sysctl net.inet6` | | Attempt to show what IPv6 settings are present in the OS
 General IP Interface Configuration 1 | `$ ifconfig` or `$ ip -6 a s INTFC` | `$ ifconfig` | `$ ipconfig` or `$ ipconfig /all` or `$ netsh interface ipv6 show addresses` | These are network interface configuration settings
