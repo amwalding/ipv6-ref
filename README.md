@@ -39,6 +39,16 @@ If you have anything you would like to see added, please let me know.
 * My IPv6 Extension Header PCAPs can be found here: https://github.com/amwalding/IPv6_Extension_Header_PCAPs
 
 ## :page_with_curl:IPv6 Standards and RFCs
+Referencing **Standards** is extremely important in both defining, understanding, and designing - well - anything.  When it comes to the Internet Protocols, the standards body is the Internet Engineering Task Force (the IETF).  The standards are called RFC's (Request for Comments) and these were preceded by IEN's (Internet Engineering Notes). All development of ideas and later standards can be found within these documents/specifications.
+
+In fact, the development of IPv6 was a **bakeoff** that occured in 1995 but works began before that.  The results of this bakeoff for the next generation of the IP protocol were several proposals:
+* PIP (The `P' Internet Protocol by Paul Tsuchiya: https://www.ietf.org/archive/id/draft-tsuchiya-pip-00.txt
+* CATNIP (Common Address Technology for Next-Generation IP) by Robert Ullman: https://www.ietf.org/archive/id/draft-ietf-catnip-base-03.txt
+* TUBA (TCP and UDP with Bigger Addresses) by Peter Ford & Mark Knopper: https://www.ietf.org/archive/id/draft-ford-ipng-tuba-whitepaper-00.txt
+* SIP (Simple IP) by Steve Deering: https://www.ietf.org/archive/id/draft-deering-sip-00.txt
+
+Steve Deering's Simple IP was selected and eventually became what we now call IPv6 - the next generation of IP.  Dr. Deering did attempt some compatibility with IPv4 in his original specification, however that is not the case today.  **IPv6 is not backwards compatible with IPv4.** While IPv4 to IPv6 translation can be done (see below), they essentially work today as "ships in the night" at Layer 3 meaning most systems run as "dual stack" supporting IPv4 and IPv6 simultaneously.  You can read more in RFC9318 where Vint Cerf points out the backwards compatibility issue in his keynote. 
+
 I have a ZIP file in the repo called IPv6 RFCs.zip that contains all the RFC's.  I update it from time to time.  Essentially it is a complete library of the IPv6 related RFC's in TXT format in one place to save time.
 
 To see all the IPv6 Related RFC's click here: https://www.rfc-editor.org/search/rfc_search_detail.php?page=25&title=ipv6
