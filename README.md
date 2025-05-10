@@ -114,6 +114,46 @@ Private Network Prefixes | 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 | Site Loca
 Loopback Address | 127.0.0.1 | ::1
 Multicast Address | 224.x.y.z | FF0s::/8, where s is the scope
 
+## :vs:IPv6 vs IPv4 Address Scopes
+IPv6 introduces more clearly defined **address scopes** than IPv4, enhancing control over where packets can be delivered. Here's a concise comparison:
+
+### IPv4 Address Scopes
+
+IPv4 does not explicitly define address scopes, but some ranges are understood as having limited reach:
+
+| **Scope**           | **IPv4 Example**               | **Description**                                                         |
+| ------------------- | ------------------------------ | ----------------------------------------------------------------------- |
+| **Host-local**      | `127.0.0.1`                    | Loopback — used for internal host communication.                        |
+| **Link-local**      | `169.254.0.0/16`               | Automatic addressing when DHCP fails (APIPA); non-routable.             |
+| **Private**         | `10.0.0.0/8`, `192.168.0.0/16` | Routable only within private networks.                                  |
+| **Global (public)** | e.g. `8.8.8.8`                 | Globally routable on the Internet.                                      |
+| **Multicast**       | `224.0.0.0 – 239.255.255.255`  | For one-to-many communication, limited in scope based on address block. |
+
+### IPv6 Address Scopes
+
+IPv6 explicitly defines address scopes in the protocol:
+
+| **Scope**               | **IPv6 Prefix/Type**  | **Description**                                                                       |
+| ----------------------- | --------------------- | ------------------------------------------------------------------------------------- |
+| **Host-local**          | `::1`                 | Loopback — local to the host only.                                                    |
+| **Link-local**          | `FE80::/10`           | Auto-configured on every interface; used for local link communication only.           |
+| **Unique-local**        | `FC00::/7`            | Private addressing within an organization; like IPv4 private addresses.               |
+| **Global unicast**      | `2000::/3`            | Globally routable addresses.                                                          |
+| **Multicast (various)** | `FF00::/8`            | Includes scopes: interface-local, link-local, site-local, organization-local, global. |
+| **Anycast**             | Not a separate prefix | Same address assigned to multiple nodes; nearest node responds.                       |
+
+IPv6 **multicast addresses** have a defined scope field, e.g.:
+
+* `FF02::1` — link-local all-nodes
+* `FF05::2` — site-local all-routers
+
+
+### Key Address Scope Differences
+
+* **IPv6 scopes are formalized** in the protocol, enabling routers and hosts to enforce rules.
+* **IPv6 uses link-local by default** for neighbor discovery and routing protocols.
+* **IPv6 multicast is scoped**, unlike IPv4’s broader multicast address interpretation.
+
 ## :envelope:IPv6 Address Types - Prefixes/Special
 Address Type | Binary Prefix | IPv6 Notation
 ------------------------------------ |------------------------------------ | ---------------------------------------------
