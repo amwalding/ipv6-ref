@@ -320,7 +320,7 @@ Flush the Neighbor Discovery Cache | `$ ip -6 neigh flush` | 'ndp -c'  | | Clear
 Display the PMTU information | `$ ip route get IPV6ADDR` and `$ tracepath -n IPV6ADDR`| | `$ netsh interface ipv6 show destinationcache address` | Attempt to display the Path MTU information for a given destination
 DNS lookup | `$ host DOMAIN` | Check DNS `$ scutil --dns \| grep nameserver \| grep "::"` Lookup: `$ dig AAAA DOMAIN` | | Looking up IPv6 DNS records
 IP config | `$ ip -6 addr` or `$ sudo ifconfig {pipe} grep inet6` | | | 
-IPv6 Routing tables/IPtables | `$ sudo ip6tables -L -v --line-numbers` or `route -A inet6` | `$ netstat -r -f inet6` | `$ route print -6` or `$ netstat -r` | 
+IPv6 Packet Filtering | `$ sudo ip6tables -L -v --line-numbers` or `route -A inet6` | `$ netstat -r -f inet6` | `$ route print -6` or `$ netstat -r` | 
 Any IPv6 Traffic? | `$ netstat -ps -6`| `netstat -s -f inet6` | `$ netstat -ps IPv6` | 
 Any ICMPv6 Traffic? | | | `$ netstat -ps ICMPv6` | 
 NETCAT | Listen `$ nc6 -lp 12345 -v -e "/bin/bash"` & Connect `$ nc6 localhost 12345` | | | 
