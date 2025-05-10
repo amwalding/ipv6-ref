@@ -157,7 +157,6 @@ IPv6 **multicast addresses** have a defined scope field, e.g.:
 * `FF02::1` — link-local all-nodes
 * `FF05::2` — site-local all-routers
 
-
 ### Key Address Scope Differences
 
 * **IPv6 scopes are formalized** in the protocol, enabling routers and hosts to enforce rules.
@@ -275,6 +274,56 @@ FF02::B	| Mobile Agents	|	224.0.0.11	| Mobile Agents
 FF02::C	| DHCP Servers/Relay Agents	|	224.0.0.12	| DHCP Servers/Relay Agents
 FF02::D	| All PIM Routers	|	224.0.0.13	| All PIM Routers
 FF02::E	| RSVP-Encapsulation	|	224.0.0.14	| RSVP-Encapsulation
+
+## 🛠️IPv6 / IPv4 Address Translation
+There are several IPv6-to-IPv4 translation mechanisms designed to facilitate communication between IPv6-only and IPv4-only systems or networks. These methods are standardized by the IETF and can be broadly categorized into **stateless** and **stateful** mechanisms. 
+
+### 1. Stateless Translation (SIIT - Stateless IP/ICMP Translation)
+
+* **RFC 6145** (updated by RFC 7915)
+* **How it works**: Translates IPv6 headers into IPv4 headers and vice versa without keeping any session state.
+* **Use case**: Works well for one-to-one address mappings.
+* **Common in**: Network edge translation (e.g., between IPv6 clients and IPv4-only servers).
+
+### 2. NAT64
+
+* **RFC 6146**
+* **How it works**: Stateful translation that allows IPv6-only clients to access IPv4-only servers. Requires a **DNS64** service to synthesize AAAA records from A records.
+* **Key component**: Maintains per-session state like classic NAT.
+* **Use case**: IPv6 clients to legacy IPv4 services.
+* **Common deployments**: Mobile networks, ISP core networks, enterprise edge.
+
+### 3. 464XLAT
+
+* **RFC 6877**
+* **How it works**: Combination of:
+  * **CLAT (Customer-side translator)**: Uses **SIIT** for local IPv4 apps to talk over IPv6.
+  * **PLAT (Provider-side translator)**: Uses **NAT64** to access IPv4 internet.
+* **Use case**: Enables IPv4-only apps on IPv6-only mobile networks.
+* **Common in**: Android and iOS mobile networks.
+
+### 4. MAP-T (Mapping of Address and Port with Translation)
+
+* **RFC 7599**
+* **How it works**: Stateless IPv6-to-IPv4 translation, supports address and port mapping.
+* **Use case**: Scalable ISP deployments; avoids full NAT state tracking.
+
+### 5. DS-Lite (Dual Stack Lite)
+
+* **RFC 6333**
+* **How it works**: Encapsulates IPv4 packets inside IPv6, IPv4 address sharing via CGNAT.
+* **Not a true translation**, more of a tunneling and NAT technique.
+
+### 📌 IPv6/IPv4 XLAT Summary:
+
+| Method  | Type      | Key Feature                         | Direction               | Use Case                        |
+| ------- | --------- | ----------------------------------- | ----------------------- | ------------------------------- |
+| SIIT    | Stateless | Header translation only             | Bidirectional           | Simple IPv6 ↔ IPv4 edge use     |
+| NAT64   | Stateful  | Requires DNS64, maintains state     | IPv6 → IPv4             | IPv6 clients to IPv4 servers    |
+| 464XLAT | Hybrid    | SIIT (client) + NAT64 (provider)    | IPv4 apps → IPv6 → IPv4 | IPv4 apps on IPv6-only networks |
+| MAP-T   | Stateless | Encodes port/address info into IPv6 | IPv6 → IPv4             | Scalable ISP deployments        |
+| DS-Lite | Tunneling | IPv4-in-IPv6 + CGNAT                | IPv4 ↔ IPv4 over IPv6   | IPv4 access over IPv6 networks  |
+
 
 ## :computer:IPv6 Usage in Various OS Systems
 Operating System | Link to Article
