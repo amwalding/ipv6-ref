@@ -275,7 +275,7 @@ Any IPv6 Traffic? | `$ netstat -ps -6`| `netstat -s -f inet6` | `$ netstat -ps I
 Any ICMPv6 Traffic? | | | `$ netstat -ps ICMPv6` | 
 NETCAT | Listen `$ nc6 -lp 12345 -v -e "/bin/bash"` & Connect `$ nc6 localhost 12345` | | | 
 SSH | `$ ssh -6 user@IPV6ADDR%eth0` | | | Using SSH in IPv6 mode
-TCPDUMP | `$ sudo tcpdump -i eth0 -evv ip6` or `$ proto ipv6` | | | 
+TCPDUMP | `$ sudo tcpdump -i eth0 -evv ip6` or `$ sudo tcpdum -i eth0 -evv proto ipv6` | | | 
 TELNET | `$ telnet IPV6ADDR PORT` | | | 
 Determining Address Type | `$ addr6 -a IPV6ADDR`  | | | Requires addr6 tool
 Identifying the Flow ID generation policy | `$ sudo ./flow6 -i eth0 -v --flow-label-policy -d IPV6ADDR` | | | Requires flow6 tool
