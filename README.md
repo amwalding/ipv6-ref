@@ -315,11 +315,11 @@ Traceroute with MTR | `$ mtr -6 DOMAIN` | | |
 Trace the path to discover the MTU | `$ tracepath6 DOMAIN` | | | Same as traceroute except with MTU allowed
 View IPv6 Connections | `$ netstat -A inet6` | | | What IPv6 connections exist on the system
 Display the Routing Table | `$ ip -6 route` or `$ netstat -rnA inet6` or `$ sudo route -A inet6` | `$ netstat -r -f inet6` | `$ route print -6` | Display the routing table of the system
-Display Neighbor Discovery Cache | `$ ip -6 neigh show` | ndp -a | | Display the Neighbor Discovery cach of the system (the replacement of the ARP cache)
-Flush the Neighbor Discovery Cache | `$ ip -6 neigh flush` | ndp -c  | | Clear the Neighbor cache to force rediscovery
+Display Neighbor Discovery Cache | `$ ip -6 neigh show` | 'ndp -a' | | Display the Neighbor Discovery cach of the system (the replacement of the ARP cache)
+Flush the Neighbor Discovery Cache | `$ ip -6 neigh flush` | 'ndp -c'  | | Clear the Neighbor cache to force rediscovery
 Display the PMTU information | `$ ip route get IPV6ADDR` and `$ tracepath -n IPV6ADDR`| | `$ netsh interface ipv6 show destinationcache address` | Attempt to display the Path MTU information for a given destination
 DNS lookup | `$ host DOMAIN` | Check DNS `$ scutil --dns \| grep nameserver \| grep "::"` Lookup: `$ dig AAAA DOMAIN` | | Looking up IPv6 DNS records
-IP config | `$ ip -6 addr` or `$ sudo ifconfig` | `$ sudo ifconfig|grep inet6` | | | 
+IP config | `$ ip -6 addr` or `$ sudo ifconfig {pipe} grep inet6` | | | 
 IPv6 Routing tables/IPtables | `$ sudo ip6tables -L -v --line-numbers` or `route -A inet6` | `$ netstat -r -f inet6` | `$ route print -6` or `$ netstat -r` | 
 Any IPv6 Traffic? | `$ netstat -ps -6`| `netstat -s -f inet6` | `$ netstat -ps IPv6` | 
 Any ICMPv6 Traffic? | | | `$ netstat -ps ICMPv6` | 
