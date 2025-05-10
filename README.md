@@ -314,7 +314,7 @@ There are several IPv6-to-IPv4 translation mechanisms designed to facilitate com
 * **How it works**: Encapsulates IPv4 packets inside IPv6, IPv4 address sharing via CGNAT.
 * **Not a true translation**, more of a tunneling and NAT technique.
 
-### 📌 IPv6/IPv4 XLAT Summary:
+### IPv6/IPv4 XLAT Summary:
 
 | Method  | Type      | Key Feature                         | Direction               | Use Case                        |
 | ------- | --------- | ----------------------------------- | ----------------------- | ------------------------------- |
