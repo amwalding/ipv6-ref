@@ -20,7 +20,6 @@ If you have anything you would like to see added, please let me know.
 * [SLAAC](https://github.com/amwalding/ipv6-ref/blob/main/docs/slaac.md)<br />
 * [IPv6 Tools](https://github.com/amwalding/ipv6-ref/blob/main/docs/ipv6-tools.md)<br />
 * [IPv6 Usage in Various OS Systems](https://github.com/amwalding/ipv6-ref/blob/main/docs/ipv6-os-commands.md)<br />
-* [Some IPv6 Basic Networking Commands](https://github.com/amwalding/ipv6-ref/blob/main/README.md#some-ipv6-basic-networking-commands-by-os)<br />
 * [IPv6 Security](https://github.com/amwalding/ipv6-ref/blob/main/docs/ipv6-security.md)<br />
 * [IPv6 addresses & domains Research/Investigation](https://github.com/amwalding/ipv6-ref/blob/main/README.md#magipv6-addresses--domains-researchinvestigation)<br />
 * [Domain Name System and Autonomous System Research/Investigation](https://github.com/amwalding/ipv6-ref/blob/main/README.md#magdomain-name-system-and-autonomous-system-researchinvestigation)<br />
