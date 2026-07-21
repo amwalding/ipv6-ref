@@ -18,7 +18,7 @@ If you have anything you would like to see added, please let me know.
 * [IPv6 Statistics of Interest](https://github.com/amwalding/ipv6-ref/blob/main/README.md#chart_with_upwards_trendipv6-statistics-of-interest)<br />
 * [IPv6 Addressing](https://github.com/amwalding/ipv6-ref/blob/main/docs/addressing.md)<br />
 * [SLAAC](https://github.com/amwalding/ipv6-ref/blob/main/docs/slaac.md)<br />
-* [IPv6 Tools](https://github.com/amwalding/ipv6-ref/blob/main/docs/ipv6-tools)<br />
+* [IPv6 Tools](https://github.com/amwalding/ipv6-ref/blob/main/docs/ipv6-tools.md)<br />
 * [IPv6 Usage in Various OS Systems](https://github.com/amwalding/ipv6-ref/blob/main/docs/ipv6-os-commands)<br />
 * [Some IPv6 Basic Networking Commands](https://github.com/amwalding/ipv6-ref/blob/main/README.md#some-ipv6-basic-networking-commands-by-os)<br />
 * [IPv6 Security](https://github.com/amwalding/ipv6-ref/blob/main/docs/ipv6-security.md)<br />
