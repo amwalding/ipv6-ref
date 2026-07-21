@@ -6,7 +6,7 @@ Comments are welcomed at our Discord server here: https://discord.gg/3U8q5USm
 If you would like to see more content and articles like this, please support us by clicking the patron link https://www.patreon.com/cellstream?fan_landing=true where you will receive free bonus access to courses and more, or simply buying us a cup of coffee here: https://www.buymeacoffee.com/awalding !
 * This README.md page - with a ton of info (see below)
 * [Cheat Sheets](https://github.com/amwalding/ipv6-ref/tree/main/cheetsheets)<br />
-* [Packet Captures](https://github.com/amwalding/ipv6-ref/tree/main/pcaps)<br />
+* [Packet Captures](https://github.com/amwalding/ipv6-ref/tree/main/pcaps)<br /> Click Here for Extension Header pcaps: https://github.com/amwalding/IPv6_Extension_Header_PCAPs
 * [RFC Standards and other Documents](https://github.com/amwalding/ipv6-ref/tree/main/rfc-and-other-docs)<br />
 * more to come
 
