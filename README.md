@@ -149,7 +149,10 @@ IPv6 explicitly defines address scopes in the protocol:
 | **Unique-local**        | `FC00::/7`            | Private addressing within an organization; like IPv4 private addresses.               |
 | **Global unicast**      | `2000::/3`            | Globally routable addresses.                                                          |
 | **Multicast (various)** | `FF00::/8`            | Includes scopes: interface-local, link-local, site-local, organization-local, global. |
+| **Documentation Prefix**| `2001:db8::/32`       | The original Documentation prefix                                                     |
+|                         | `3FFF::/20`           | Newer Dcomentation Prefix                                                             |
 | **Anycast**             | Not a separate prefix | Same address assigned to multiple nodes; nearest node responds.                       |
+| **Deprecated**          | `FEC0::/10`           | Former Site-local prefix                                                              |
 
 IPv6 **multicast addresses** have a defined scope field, e.g.:
 
@@ -181,6 +184,8 @@ Here are the main IPv6 address assignment methods:
 🔹 1. Stateless Address Autoconfiguration (SLAAC)
 The device uses Router Advertisements (RA) from routers to auto-configure its own IP address.
 Combines the network prefix from the RA and a host identifier (often derived from the MAC address).
+RFC 8064 recommends stable, semantically opaque interface identifiers and recommends against embedding stable link-layer addresses.
+Temporary addresses are separately standardized by RFC 8981.
 
 No DHCPv6 server is needed.
 
@@ -206,7 +211,8 @@ Here’s a step-by-step breakdown of the SLAAC process:
 
 * The device generates a **link-local address** (prefix `fe80::/10`) using its interface MAC address (via EUI-64 or a random identifier).
 * It performs **Duplicate Address Detection (DAD)** using Neighbor Solicitation to ensure it's not already in use.
-* This DAD process is done for all IPv6 Addressing methods, so in a way everything starts with SLAAC.
+* This DAD process is done for all IPv6 Addressing methods.
+* DAD is an address-validation procedure used by multiple address-configuration methods; it is not itself SLAAC.
 
 ### 🔹 2. **Router Solicitation (RS)**
 
@@ -225,18 +231,22 @@ Here’s a step-by-step breakdown of the SLAAC process:
 * If the **A flag is set**, the device:
 
   * Combines the **prefix** from the RA and a **host identifier** (based on EUI-64 or random).
-  * Forms a **global unicast address** (e.g., `2001:db8:abcd::1a2b:3c4d:5e6f:7g8h`)
+  * Forms a **global unicast address** (e.g., `2001:db8:abcd::1a2b:3c4d:5e6f:7a8b`)
   * Runs **DAD again** for this address.
 
 ### 🔹 5. **Optional: DNS Configuration**
 
 * If the **O flag** is set, the host may use **stateless DHCPv6** to get **additional info** like DNS servers.
+* DNS information can be delivered through RDNSS and DNSSL options in Router Advertisements. This is not dependent on the RA O flag being set.
 
 ### 🧠 Key Points:
 
 * **"Stateless"** means routers don’t maintain state about individual clients.
 * SLAAC is **lightweight** and suitable for **home or unmanaged networks**.
 * It doesn’t provide everything—**DNS info often requires DHCPv6 or RDNSS options** in RA.
+
+### Host Address Lifecycle Diagram:
+Link-local creation → DAD → RS → RA → stable address → temporary address → DNS learning → preferred lifetime expires → address deprecated → valid lifetime expires  
 
 ---
 
@@ -252,10 +262,10 @@ IPv6 Subnet Calculator | https://subnetonline.com/pages/subnet-calculators/ipv6-
 * Every device selects a Link-local unicast address that is unique
 * Interfaces can have multiple IPv6 Addresses
 * Public prefix provided either by Router Advertisement or DHCPv6
-* No more need of "NAT"
+* IPv6 does not require address-conservation NAT for ordinary Internet access. Firewalls provide security policy independently of address translation. Translation may still be used for IPv4 interoperability through mechanisms such as NAT64 and 464XLAT.
 * Fragmentation function removed from routers, replaced by Path MTU Discovery
 
-## :vs:IPv6 vs. IPv4 Multicast Address Comparison Chart
+## :vs:IPv6 vs. IPv4 Multicast Address Comparison Table
 IPv6 Address | Description | IPv4 Address | Description
 -------------------- | ------------------------------- | -------------------- | -------------------------------
 na | na  | 224.0.0.0	| Multicast Network Address (Reserved)
@@ -267,12 +277,15 @@ FF02::5	| All OSPF Routers	|	224.0.0.5	| All OSPF Routers
 FF02::6	| ll OSPF Designated Routers	|	224.0.0.6	| All OSPF Designated Routers
 FF02::7	| ST Routers	|	224.0.0.7	| ST Routers
 FF02::8	| ST Hosts	|	224.0.0.8	| ST Hosts
-FF02::9	| RIPv2 Routers	| 224.0.0.9	| RIPv2 Routers
+FF02::9	| IPv6/RIPng Routers	| 224.0.0.9	| RIPv2 Routers
 FF02::A	| EIGRP Routers	|	224.0.0.10	| IGRP Routers
 FF02::B	| Mobile Agents	|	224.0.0.11	| Mobile Agents
-FF02::C	| DHCP Servers/Relay Agents	|	224.0.0.12	| DHCP Servers/Relay Agents
+FF02::1:2	| DHCP Servers/Relay Agents	|	224.0.0.12	| DHCP Servers/Relay Agents
 FF02::D	| All PIM Routers	|	224.0.0.13	| All PIM Routers
 FF02::E	| RSVP-Encapsulation	|	224.0.0.14	| RSVP-Encapsulation
+
+>[!NOTE]
+>I should probably not be showing IPv4 and IPv6 multicast registries presented as a direct one-for-one conversion table.
 
 ## 🛠️IPv6 / IPv4 Address Translation
 There are several IPv6-to-IPv4 translation mechanisms designed to facilitate communication between IPv6-only and IPv4-only systems or networks. These methods are standardized by the IETF and can be broadly categorized into **stateless** and **stateful** mechanisms. 
@@ -354,8 +367,8 @@ Action | Linux Command | macOS Command | Windows Command | Notes
 Display IPv6 Settings | `$ sysctl net.ipv6` | `$ sysctl net.inet6` | | Attempt to show what IPv6 settings are present in the OS
 General IP Interface Configuration 1 | `$ ifconfig` or `$ ip -6 a s INTFC` | `$ ifconfig` | `$ ipconfig` or `$ ipconfig /all` or `$ netsh interface ipv6 show addresses` | These are network interface configuration settings
 General IPv6 Interface Configuration 2 | `$ ifconfig -a` or `$ cat /proc/net/if_inet6` | `$ ifconfig -a` or for a specific interface `$ ifconfig -L en0 inet6` | `$ netsh int ipv6 show global` | These are network interface configuration settings
-Support for Temporary IPv6 Addresses | | `$ sysctl net.inte6 \| grep temp` | | Different OS versions support different IPv6 addressing features
-Ping an IPv6 Address | `$ ping6 -I eth0 IPV6ADDR` | `$ ping6 IPV6ADDR` | `$ pathping -6 DOMAIN` | Use ICMP Ping to see if the target device is able to answer 
+Support for Temporary IPv6 Addresses | | `$ sysctl net.inet6 \| grep temp` | | Different OS versions support different IPv6 addressing features
+Ping an IPv6 Address | `$ ping6 -I eth0 IPV6ADDR` | `$ ping6 IPV6ADDR` | `$ ping -6 DOMAIN` | Use ICMP Ping to see if the target device is able to answer 
 Domain ping | `$ ping6 -I eth0 DOMAIN` | `$ ping6 DOMAIN`| | Use ICMP Ping to see if a given domain name can be resolved and then reached
 Traceroute | `$ traceroute6 DOMAIN` or `$ tracepath -n IPV6ADDR` | `$ traceroute6 DOMAIN`| `$ tracert -6 DOMAIN` | What is the path of routers to a given IPv6 destination
 Traceroute EH-enabled | `$ sudo ./path6 -v -u 72 -d DOMAIN` | | | 
@@ -367,7 +380,7 @@ Display Neighbor Discovery Cache | `$ ip -6 neigh show` | 'ndp -a' | | Display t
 Flush the Neighbor Discovery Cache | `$ ip -6 neigh flush` | 'ndp -c'  | | Clear the Neighbor cache to force rediscovery
 Display the PMTU information | `$ ip route get IPV6ADDR` and `$ tracepath -n IPV6ADDR`| | `$ netsh interface ipv6 show destinationcache address` | Attempt to display the Path MTU information for a given destination
 DNS lookup | `$ host DOMAIN` | Check DNS `$ scutil --dns \| grep nameserver \| grep "::"` Lookup: `$ dig AAAA DOMAIN` | | Looking up IPv6 DNS records
-IP config | `$ ip -6 addr` or `$ sudo ifconfig {pipe} grep inet6` | | | 
+IP config | `$ ip -6 route get ADDRESS` or `$ sudo ifconfig {pipe} grep inet6` | | | 
 IPv6 Packet Filtering | `$ sudo ip6tables -L -v --line-numbers` or `route -A inet6` | `$ netstat -r -f inet6` | `$ route print -6` or `$ netstat -r` | 
 Any IPv6 Traffic? | `$ netstat -ps -6`| `netstat -s -f inet6` | `$ netstat -ps IPv6` | 
 Any ICMPv6 Traffic? | | | `$ netstat -ps ICMPv6` | 
@@ -377,6 +390,9 @@ TCPDUMP | `$ sudo tcpdump -i eth0 -evv ip6` or `$ sudo tcpdum -i eth0 -evv proto
 TELNET | `$ telnet IPV6ADDR PORT` | | | 
 Determining Address Type | `$ addr6 -a IPV6ADDR`  | | | Requires addr6 tool
 Identifying the Flow ID generation policy | `$ sudo ./flow6 -i eth0 -v --flow-label-policy -d IPV6ADDR` | | | Requires flow6 tool
+
+## Some Powershell Commands
+Get-NetIPConfiguration, Get-NetIPAddress, Get-NetNeighbor, Get-NetRoute, and Test-NetConnection
 
 ## :lock:Security in IPv6 Networking
 > [!WARNING]
