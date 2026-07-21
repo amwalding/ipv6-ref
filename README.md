@@ -17,13 +17,9 @@ If you have anything you would like to see added, please let me know.
 * [IPv6 Standards and RFC's](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-standards-and-rfcs)<br />
 * [IPv6 Statistics of Interest](https://github.com/amwalding/ipv6-ref/blob/main/README.md#chart_with_upwards_trendipv6-statistics-of-interest)<br />
 * [IPv6 Specific/Related/Capable Tools and Tool Sets](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-specificrelatedcapable-tools-and-tool-sets)<br />
-* [Comparing IPv4 to IPv6](https://github.com/amwalding/ipv6-ref/blob/main/README.md#comparing-ipv4-to-ipv6)<br />
-* [IPv6 Address Types - Prefixes/Special](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-address-types---prefixesspecial)<br />
-  * [SLAAC](https://github.com/amwalding/ipv6-ref/blob/main/README.md#%EF%B8%8Fslaac---stateless-address-autoconfiguration)<br />
-  * [IPv6 Address Tools](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-address-tools)<br />
-  * [IPv6 Address Notes](https://github.com/amwalding/ipv6-ref/blob/main/README.md#notes-on-addressing)<br />
-* [IPv6 vs. IPv4 Multicast Address Comparison Chart](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-vs-ipv4-multicast-address-comparison-chart)<br />
-* [IPv6 Usage in Various OS Systems](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-usage-in-various-os-systems)<br />
+* [IPv6 Addressing](https://github.com/amwalding/ipv6-ref/blob/main/docs/addressing.md)<br />
+* [SLAAC](https://github.com/amwalding/ipv6-ref/blob/main/docs/slaac.md)<br />
+* [IPv6 Usage in Various OS Systems](https://github.com/amwalding/ipv6-ref/blob/main/docs/ipv6-os-commands)<br />
 * [Some IPv6 Basic Networking Commands](https://github.com/amwalding/ipv6-ref/blob/main/README.md#some-ipv6-basic-networking-commands-by-os)<br />
 * [Security in IPv6 Networking](https://github.com/amwalding/ipv6-ref/blob/main/README.md#locksecurity-in-ipv6-networking)<br />
   * [IPv6 Security Reading and References](https://github.com/amwalding/ipv6-ref/blob/main/README.md#notebookipv6-security-reading-and-references)<br />
