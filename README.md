@@ -14,7 +14,7 @@ If you have anything you would like to see added, please let me know.
 
 ## :card_index:Index of Items on This Page
 
-* [IPv6 Standards and RFC's](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-standards-and-rfcs)<br />
+* [IPv6 Standards and RFC's](https://github.com/amwalding/ipv6-ref/blob/main/README.md#page_with_curlipv6-standards-and-rfcs)<br />
 * [IPv6 Statistics of Interest](https://github.com/amwalding/ipv6-ref/blob/main/README.md#chart_with_upwards_trendipv6-statistics-of-interest)<br />
 * [IPv6 Specific/Related/Capable Tools and Tool Sets](https://github.com/amwalding/ipv6-ref/blob/main/README.md#ipv6-specificrelatedcapable-tools-and-tool-sets)<br />
 * [IPv6 Addressing](https://github.com/amwalding/ipv6-ref/blob/main/docs/addressing.md)<br />
