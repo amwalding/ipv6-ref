@@ -5,10 +5,10 @@ This is my IPv6 References repository.  The goal is to provide key information r
 Comments are welcomed at our Discord server here: https://discord.gg/3U8q5USm
 If you would like to see more content and articles like this, please support us by clicking the patron link https://www.patreon.com/cellstream?fan_landing=true where you will receive free bonus access to courses and more, or simply buying us a cup of coffee here: https://www.buymeacoffee.com/awalding !
 * This README.md page - with a ton of info (see below)
-* Cheat Sheets
-* Packet Captures
-* RFC Documents
-* more
+* [Cheat Sheets](https://github.com/amwalding/ipv6-ref/tree/main/cheetsheets)<br />
+* [Packet Captures](https://github.com/amwalding/ipv6-ref/tree/main/pcaps)<br />
+* [RFC Standards and other Documents](https://github.com/amwalding/ipv6-ref/tree/main/rfc-and-other-docs)<br />
+* more to come
 
 If you have anything you would like to see added, please let me know.
 
